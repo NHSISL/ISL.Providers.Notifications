@@ -14,7 +14,7 @@ namespace ISL.NotificationClient.Infrastructure
 
             scriptGenerationService.GenerateBuildScript(
                 branchName: "main",
-                projectName: "ISL.NotificationClient");
+                projectName: "ISL.Providers.Notifications.Abstractions");
         }
     }
 }
