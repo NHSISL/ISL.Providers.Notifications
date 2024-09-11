@@ -15,7 +15,7 @@
 		<PackageProjectUrl>https://github.com/NHSISL/ISL.Providers.Notifications</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/NHSISL/ISL.Providers.Notifications</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<PackageTags>NHSISL; Notifications; Provider; Abstractions; .NET; The Standard; Standard;</PackageTags>
+		<PackageTags>NHSISL; Notifications; Provider; .NET; The Standard; Standard;</PackageTags>
 		<PackageReleaseNotes>
 			Initial release of ISL.Providers.Notifications.GovukNotify.
 		</PackageReleaseNotes>
