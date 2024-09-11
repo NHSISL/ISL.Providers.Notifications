@@ -51,46 +51,46 @@ namespace ISL.Providers.Notifications.Abstractions
         private NotificationValidationProviderException CreateValidationException(
             Xeption exception)
         {
-            var serializationValidationException =
+            var notificationValidationProviderException =
                 new NotificationValidationProviderException(
                     message: "Notification validation errors occurred, please try again.",
                     innerException: exception,
                     data: exception.Data);
 
-            return serializationValidationException;
+            return notificationValidationProviderException;
         }
 
         private NotificationDependencyProviderException CreateDependencyException(
             Xeption exception)
         {
-            var serializationDependencyException = new NotificationDependencyProviderException(
+            var notificationDependencyProviderException = new NotificationDependencyProviderException(
                 message: "Notification dependency error occurred, contact support.",
                 innerException: exception,
                 data: exception.Data);
 
-            return serializationDependencyException;
+            return notificationDependencyProviderException;
         }
 
         private NotificationServiceProviderException CreateServiceException(
             Xeption exception)
         {
-            var serializationServiceException = new NotificationServiceProviderException(
+            var notificationServiceProviderException = new NotificationServiceProviderException(
                 message: "Notification service error occurred, contact support.",
                 innerException: exception,
                 data: exception.Data);
 
-            return serializationServiceException;
+            return notificationServiceProviderException;
         }
 
         private NotificationServiceProviderException CreateUncatagorizedServiceException(
             Exception exception)
         {
-            var serializationServiceException = new NotificationServiceProviderException(
-                message: "Uncatagorized serialization service error occurred, contact support.",
+            var notificationServiceProviderException = new NotificationServiceProviderException(
+                message: "Uncatagorized notification service error occurred, contact support.",
                 innerException: exception as Xeption,
                 data: exception.Data);
 
-            return serializationServiceException;
+            return notificationServiceProviderException;
         }
     }
 }

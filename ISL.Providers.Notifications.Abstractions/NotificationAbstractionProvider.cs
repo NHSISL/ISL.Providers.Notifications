@@ -14,7 +14,7 @@ namespace ISL.Providers.Notifications.Abstractions
         public NotificationAbstractionProvider(INotificationProvider notificationProvider) =>
             this.notificationProvider = notificationProvider;
 
-        public async ValueTask SendEmailAsync(
+        public ValueTask SendEmailAsync(
             string fromEmail,
             string toEmail,
             string subject,
@@ -25,33 +25,21 @@ namespace ISL.Providers.Notifications.Abstractions
                 await this.notificationProvider.SendEmailAsync(fromEmail, toEmail, subject, body, personalisation);
             });
 
-        public async ValueTask SendLetterAsync(
+        public ValueTask SendLetterAsync(
             string templateId,
             byte[] pdfContents,
-            string postage = null)
-        {
-            try
+            string postage = null) =>
+            TryCatch(async () =>
             {
                 await this.notificationProvider.SendLetterAsync(templateId, pdfContents, postage);
-            }
-            catch (System.Exception)
-            {
-                throw;
-            }
-        }
+            });
 
-        public async ValueTask SendSmsAsync(
+        public ValueTask SendSmsAsync(
             string templateId,
-            Dictionary<string, dynamic> personalisation)
-        {
-            try
+            Dictionary<string, dynamic> personalisation) =>
+            TryCatch(async () =>
             {
                 await this.notificationProvider.SendSmsAsync(templateId, personalisation);
-            }
-            catch (System.Exception)
-            {
-                throw;
-            }
-        }
+            });
     }
 }
