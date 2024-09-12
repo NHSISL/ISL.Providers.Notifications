@@ -9,7 +9,7 @@
 		<PackageId>ISL.Providers.Notifications.Abstractions</PackageId>
 		<Authors>North East London ICB</Authors>
 		<Company>North East London ICB</Company>
-		<Description>ISL.Providers.Notifications.Abstractions provides abstractions of serialization. Interfaces defined in this package are implemented by classes in SPAL implementations of ISerializationProvider.</Description>
+		<Description>ISL.Providers.Notifications.Abstractions provides abstractions of notifications. Interfaces defined in this package are implemented by classes in SPAL implementations of INotificationOperations.</Description>
 		<Copyright>North East London ICB - 2024 (c)</Copyright>
 		<PackageIcon>notification.png</PackageIcon>
 		<PackageProjectUrl>https://github.com/NHSISL/ISL.Providers.Notifications</PackageProjectUrl>
@@ -43,6 +43,10 @@
 			<Pack>True</Pack>
 			<PackagePath></PackagePath>
 		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Xeption" Version="2.8.0" />
 	</ItemGroup>
 
 </Project>
