@@ -38,6 +38,8 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
             string emailReplyToId = GetValueOrNull(personalisation, "emailReplyToId");
             string oneClickUnsubscribeURL = GetValueOrNull(personalisation, "oneClickUnsubscribeURL");
 
+            await ValidateDictionaryOnSendEmail(personalisation);
+
             await this.govukNotifyBroker.SendEmailAsync(
                 toEmail,
                 templateId,

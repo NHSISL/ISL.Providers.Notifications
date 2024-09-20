@@ -24,10 +24,22 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
                 (Rule: await IsInvalid(personalisation), Parameter: nameof(personalisation)));
         }
 
-        private static async ValueTask<dynamic> IsInvalid(string text) => new
+        private async ValueTask ValidateDictionaryOnSendEmail(Dictionary<string, dynamic> personalisation)
+        {
+            string subject = GetValueOrNull(personalisation, "subject");
+            string body = GetValueOrNull(personalisation, "body");
+            string templateId = GetValueOrNull(personalisation, "templateId");
+
+            Validate(
+                (Rule: await IsInvalid(subject, true), Parameter: nameof(subject)),
+                (Rule: await IsInvalid(body, true), Parameter: nameof(body)),
+                (Rule: await IsInvalid(templateId, true), Parameter: nameof(templateId)));
+        }
+
+        private static async ValueTask<dynamic> IsInvalid(string text, bool isDictionaryValue = false) => new
         {
             Condition = String.IsNullOrWhiteSpace(text),
-            Message = "Text is required"
+            Message = isDictionaryValue == false ? "Text is required" : "Text is required for dictionary item"
         };
 
         private static async ValueTask<dynamic> IsInvalid(Dictionary<string, dynamic> dictionary) => new
