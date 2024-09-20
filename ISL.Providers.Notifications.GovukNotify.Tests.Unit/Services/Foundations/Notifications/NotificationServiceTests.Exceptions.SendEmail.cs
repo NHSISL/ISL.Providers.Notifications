@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using ISL.Providers.Notifications.GovukNotify.Models.Foundations.Notifications.Exceptions;
 using Moq;
-using Xeptions;
 
 namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundations.Notifications
 {
@@ -32,10 +31,25 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             inputPersonalization.Add("emailReplyToId", inputEmailReplyToId);
             inputPersonalization.Add("oneClickUnsubscribeURL", inputOneClickUnsubscribeURL);
 
+            this.govukNotifyBroker.Setup(broker =>
+                broker.SendEmailAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<Dictionary<string, dynamic>>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>()))
+                .Throws(dependancyValidationException);
+
+            var failedNotificationClientException = new FailedNotificationClientException(
+                message: "Notification client error occurred, contact support.",
+                innerException: dependancyValidationException,
+                data: dependancyValidationException.Data);
+
             var expectedNotificationDependencyValidationException =
                 new NotificationDependencyValidationException(
-                    message: "Notification dependency validation error occurred, please try again.",
-                    innerException: dependancyValidationException.InnerException as Xeption);
+                    message: "Notification dependency validation error occurred, contact support.",
+                    innerException: failedNotificationClientException);
 
             // when
             ValueTask sendEmailTask = this.notificationService.SendEmailAsync(
