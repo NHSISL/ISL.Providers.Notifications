@@ -142,5 +142,69 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
 
             this.govukNotifyBroker.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public async Task ShouldThrowServiceExceptionOnSendEmail()
+        {
+            // given
+            string inputToEmail = GetRandomEmailAddress();
+            string inputSubject = GetRandomString();
+            string inputBody = GetRandomString();
+            string inputTemplateId = GetRandomString();
+            string inputClientReference = GetRandomString();
+            string inputEmailReplyToId = GetRandomString();
+            string inputOneClickUnsubscribeURL = GetRandomString();
+            Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
+            inputPersonalization.Add("clientReference", inputClientReference);
+            inputPersonalization.Add("templateId", inputTemplateId);
+            inputPersonalization.Add("emailReplyToId", inputEmailReplyToId);
+            inputPersonalization.Add("oneClickUnsubscribeURL", inputOneClickUnsubscribeURL);
+            var serviceException = new Exception();
+
+            this.govukNotifyBroker.Setup(broker =>
+                broker.SendEmailAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<Dictionary<string, dynamic>>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>()))
+                .Throws(serviceException);
+
+            var failedNotificationServiceException = new FailedNotificationServiceException(
+                message: "Failed notification service error occurred, please contact support.",
+                innerException: serviceException);
+
+            var expectedNotificationServiceException =
+                new NotificationServiceException(
+                    message: "Notification service error occurred, please contact support.",
+                    innerException: failedNotificationServiceException);
+
+            // when
+            ValueTask sendEmailTask = this.notificationService.SendEmailAsync(
+                toEmail: inputToEmail,
+                subject: inputSubject,
+                body: inputBody,
+                personalisation: inputPersonalization);
+
+            NotificationDependencyException actualNotificationDependencyValidationException =
+                await Assert.ThrowsAsync<NotificationDependencyException>(sendEmailTask.AsTask);
+
+            // then
+            actualNotificationDependencyValidationException.Should()
+                 .BeEquivalentTo(expectedNotificationServiceException);
+
+            this.govukNotifyBroker.Verify(broker =>
+                broker.SendEmailAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<Dictionary<string, dynamic>>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>()),
+                Times.Once);
+
+            this.govukNotifyBroker.VerifyNoOtherCalls();
+        }
     }
 }
