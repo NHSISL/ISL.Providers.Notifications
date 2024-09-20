@@ -187,11 +187,11 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
                 body: inputBody,
                 personalisation: inputPersonalization);
 
-            NotificationDependencyException actualNotificationDependencyValidationException =
-                await Assert.ThrowsAsync<NotificationDependencyException>(sendEmailTask.AsTask);
+            NotificationServiceException actualNotificationServiceException =
+                await Assert.ThrowsAsync<NotificationServiceException>(sendEmailTask.AsTask);
 
             // then
-            actualNotificationDependencyValidationException.Should()
+            actualNotificationServiceException.Should()
                  .BeEquivalentTo(expectedNotificationServiceException);
 
             this.govukNotifyBroker.Verify(broker =>

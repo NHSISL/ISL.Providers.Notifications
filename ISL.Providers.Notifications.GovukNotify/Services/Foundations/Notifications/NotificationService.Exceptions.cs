@@ -2,6 +2,7 @@
 // Copyright (c) North East London ICB. All rights reserved.
 // ---------------------------------------------------------
 
+using System;
 using System.Threading.Tasks;
 using ISL.Providers.Notifications.GovukNotify.Models.Foundations.Notifications.Exceptions;
 using Xeptions;
@@ -134,6 +135,15 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
 
                 throw CreateDependencyException(failedNotificationServerException);
             }
+            catch (Exception exception)
+            {
+                var failedNotificationServiceException =
+                    new FailedNotificationServiceException(
+                        message: "Failed notification service error occurred, please contact support.",
+                        innerException: exception);
+
+                throw CreateAndLogServiceException(failedNotificationServiceException);
+            }
         }
 
         private NotificationValidationException CreateAndLogValidationException(Xeption exception)
@@ -164,6 +174,16 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
                     innerException: exception);
 
             throw meshDependencyException;
+        }
+
+        private NotificationServiceException CreateAndLogServiceException(Xeption exception)
+        {
+            var notificationServiceException =
+                new NotificationServiceException(
+                    message: "Notification service error occurred, please contact support.",
+                    innerException: exception);
+
+            return notificationServiceException;
         }
     }
 }
