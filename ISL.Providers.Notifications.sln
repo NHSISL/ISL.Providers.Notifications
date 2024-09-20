@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ISL.Providers.Notifications
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GOV.UK Notify", "GOV.UK Notify", "{0B3F9412-F7C7-48F7-8A6D-A8F869109ACE}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SendGrid", "SendGrid", "{658A08EF-E7A2-4246-964E-1A9D0531FAED}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ISL.Providers.Notifications.Abstractions.Tests.Unit", "ISL.Providers.Notifications.Abstractions.Tests.Unit\ISL.Providers.Notifications.Abstractions.Tests.Unit.csproj", "{210BDADE-4D6D-403D-9D27-725560FA75FC}"
 EndProject
 Global

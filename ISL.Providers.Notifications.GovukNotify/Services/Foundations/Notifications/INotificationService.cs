@@ -5,9 +5,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ISL.Providers.Notifications.Abstractions
+namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notifications
 {
-    public interface INotificationOperations
+    internal interface INotificationService
     {
         ValueTask SendEmailAsync(
             string toEmail,

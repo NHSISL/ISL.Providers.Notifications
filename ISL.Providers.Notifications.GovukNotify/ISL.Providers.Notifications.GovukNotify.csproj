@@ -27,6 +27,7 @@
 		<PackageLicenseFile>License.txt</PackageLicenseFile>
 		<IsPackable>true</IsPackable>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<NoWarn>CS1998</NoWarn>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -47,11 +48,13 @@
 
 	<ItemGroup>
 		<InternalsVisibleTo Include="ISL.Providers.Notifications.GovukNotify.Tests.Unit" />
+		<InternalsVisibleTo Include="ISL.Providers.Notifications.GovukNotify.Tests.Acceptance" />
 		<InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="GovukNotify" Version="7.2.0" />
+		<PackageReference Include="Xeption" Version="2.8.0" />
 	</ItemGroup>
 
 </Project>
