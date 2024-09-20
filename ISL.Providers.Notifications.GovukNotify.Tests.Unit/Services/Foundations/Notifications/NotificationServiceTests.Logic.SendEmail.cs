@@ -26,7 +26,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             inputPersonalization.Add("templateId", inputTemplateId);
             inputPersonalization.Add("clientReference", inputClientReference);
             inputPersonalization.Add("emailReplyToId", inputEmailReplyToId);
-            inputPersonalization.Add("clickUnsubscribeURL", inputOneClickUnsubscribeURL);
+            inputPersonalization.Add("oneClickUnsubscribeURL", inputOneClickUnsubscribeURL);
 
             // when
             await this.notificationService.SendEmailAsync(

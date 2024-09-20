@@ -21,8 +21,21 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
             string toEmail,
             string subject,
             string body,
-            Dictionary<string, dynamic> personalisation) =>
-            throw new NotImplementedException();
+            Dictionary<string, dynamic> personalisation)
+        {
+            string templateId = personalisation["templateId"];
+            string clientReference = personalisation["clientReference"];
+            string emailReplyToId = personalisation["emailReplyToId"];
+            string oneClickUnsubscribeURL = personalisation["oneClickUnsubscribeURL"];
+
+            return this.govukNotifyBroker.SendEmailAsync(
+                toEmail,
+                templateId,
+                personalisation: personalisation,
+                clientReference,
+                emailReplyToId,
+                oneClickUnsubscribeURL);
+        }
 
         public ValueTask SendLetterAsync(string templateId, byte[] pdfContents, string postage = null) =>
             throw new NotImplementedException();
