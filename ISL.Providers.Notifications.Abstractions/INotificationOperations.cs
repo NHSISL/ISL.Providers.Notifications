@@ -10,7 +10,6 @@ namespace ISL.Providers.Notifications.Abstractions
     public interface INotificationOperations
     {
         ValueTask SendEmailAsync(
-            string fromEmail,
             string toEmail,
             string subject,
             string body,

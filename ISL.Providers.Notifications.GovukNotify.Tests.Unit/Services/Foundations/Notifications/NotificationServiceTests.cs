@@ -2,8 +2,13 @@
 // Copyright (c) North East London ICB. All rights reserved.
 // ---------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using ISL.Providers.Notifications.GovukNotify.Brokers;
+using ISL.Providers.Notifications.GovukNotify.Models;
 using ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notifications;
+using KellermanSoftware.CompareNetObjects;
 using Moq;
 using Tynamix.ObjectFiller;
 
@@ -12,12 +17,16 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
     public partial class NotificationServiceTests
     {
         private readonly Mock<IGovukNotifyBroker> govukNotifyBroker;
+        private readonly NotifyConfigurations configurations;
         private readonly NotificationService notificationService;
+        private readonly ICompareLogic compareLogic;
 
         public NotificationServiceTests()
         {
             this.govukNotifyBroker = new Mock<IGovukNotifyBroker>();
-            this.notificationService = new NotificationService(this.govukNotifyBroker.Object);
+            this.configurations = GetRandomConfigurations();
+            this.compareLogic = new CompareLogic();
+            this.notificationService = new NotificationService(govukNotifyBroker.Object, configurations);
         }
 
         private static int GetRandomNumber() =>
@@ -28,5 +37,20 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
 
         private static string GetRandomEmailAddress() =>
             new EmailAddresses().GetValue();
+
+        private static NotifyConfigurations GetRandomConfigurations() =>
+            CreateNotifyConfigurationsFiller().Create();
+
+        private static Filler<NotifyConfigurations> CreateNotifyConfigurationsFiller()
+        {
+            var filler = new Filler<NotifyConfigurations>();
+            filler.Setup();
+
+            return filler;
+        }
+
+        private Expression<Func<Dictionary<string, dynamic>, bool>> SameDictionaryAs(
+            Dictionary<string, dynamic> expectedDictionary) =>
+            actualDictionary => this.compareLogic.Compare(expectedDictionary, actualDictionary).AreEqual;
     }
 }

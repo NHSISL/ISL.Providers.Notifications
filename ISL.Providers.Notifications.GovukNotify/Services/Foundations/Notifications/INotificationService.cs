@@ -10,7 +10,6 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
     internal interface INotificationService
     {
         ValueTask SendEmailAsync(
-            string fromEmail,
             string toEmail,
             string subject,
             string body,

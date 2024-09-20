@@ -15,14 +15,13 @@ namespace ISL.Providers.Notifications.Abstractions
             this.notificationProvider = notificationProvider;
 
         public ValueTask SendEmailAsync(
-            string fromEmail,
             string toEmail,
             string subject,
             string body,
             Dictionary<string, dynamic> personalisation) =>
             TryCatch(async () =>
             {
-                await this.notificationProvider.SendEmailAsync(fromEmail, toEmail, subject, body, personalisation);
+                await this.notificationProvider.SendEmailAsync(toEmail, subject, body, personalisation);
             });
 
         public ValueTask SendLetterAsync(

@@ -8,6 +8,8 @@ namespace ISL.Providers.Notifications.GovukNotify.Models
     {
         public string ApiKey { get; set; }
         public string EmailTemplateId { get; set; }
+        public string EmailReplyToId { get; set; }
+        public string EmailOneClickUnsubscribeURL { get; set; }
         public string SmsTemplateId { get; set; }
         public string LetterTemplateId { get; set; }
     }
