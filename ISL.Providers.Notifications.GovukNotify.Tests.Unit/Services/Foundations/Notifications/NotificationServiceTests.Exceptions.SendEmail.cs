@@ -106,15 +106,15 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
                     It.IsAny<string>()))
                 .Throws(dependancyException);
 
-            var failedNotificationClientException = new FailedNotificationServerException(
-                message: "Notification client error occurred, contact support.",
+            var failedNotificationServerException = new FailedNotificationServerException(
+                message: "Notification server error occurred, contact support.",
                 innerException: dependancyException,
                 data: dependancyException.Data);
 
             var expectedNotificationDependencyException =
                 new NotificationDependencyException(
                     message: "Notification dependency error occurred, contact support.",
-                    innerException: failedNotificationClientException);
+                    innerException: failedNotificationServerException);
 
             // when
             ValueTask sendEmailTask = this.notificationService.SendEmailAsync(
@@ -123,8 +123,8 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
                 body: inputBody,
                 personalisation: inputPersonalization);
 
-            NotificationDependencyValidationException actualNotificationDependencyValidationException =
-                await Assert.ThrowsAsync<NotificationDependencyValidationException>(sendEmailTask.AsTask);
+            NotificationDependencyException actualNotificationDependencyValidationException =
+                await Assert.ThrowsAsync<NotificationDependencyException>(sendEmailTask.AsTask);
 
             // then
             actualNotificationDependencyValidationException.Should()

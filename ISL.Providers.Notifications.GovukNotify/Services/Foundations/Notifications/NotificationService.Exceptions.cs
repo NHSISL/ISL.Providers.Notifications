@@ -128,7 +128,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
                 when (notifyClientException.Message == "Internal server error")
             {
                 var failedNotificationServerException = new FailedNotificationServerException(
-                    message: "Notification client error occurred, contact support.",
+                    message: "Notification server error occurred, contact support.",
                     innerException: notifyClientException,
                     data: notifyClientException.Data);
 
@@ -161,7 +161,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
             var meshDependencyException =
                 new NotificationDependencyException(
                     message: "Notification dependency error occurred, contact support.",
-                    innerException: exception.InnerException as Xeption);
+                    innerException: exception);
 
             throw meshDependencyException;
         }
