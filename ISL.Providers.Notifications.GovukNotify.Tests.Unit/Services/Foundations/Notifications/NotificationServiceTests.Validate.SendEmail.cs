@@ -5,7 +5,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Force.DeepCloner;
 using ISL.Providers.Notifications.GovukNotify.Models.Foundations.Notifications.Exceptions;
 using Moq;
 
@@ -29,22 +28,14 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             string inputEmailReplyToId = invalidText;
             string inputOneClickUnsubscribeURL = invalidText;
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
-            inputPersonalization.Add("templateId", inputTemplateId);
-            inputPersonalization.Add("clientReference", inputClientReference);
-            inputPersonalization.Add("emailReplyToId", inputEmailReplyToId);
-            inputPersonalization.Add("oneClickUnsubscribeURL", inputOneClickUnsubscribeURL);
-
-            Dictionary<string, dynamic> internalPersonalization = inputPersonalization.DeepClone();
-            inputPersonalization.Add("subject", inputSubject);
-            inputPersonalization.Add("body", inputBody);
 
             var invalidArgumentNotificationException =
                 new InvalidArgumentNotificationException(
-                    message: "Invalid notification argument, please correct the errors and try again.");
+                    message: "Invalid notification argument exception. Please correct the errors and try again.");
 
             invalidArgumentNotificationException.AddData(
                 key: "toEmail",
-                values: "Test is required");
+                values: "Text is required");
 
             invalidArgumentNotificationException.AddData(
                 key: "subject",
@@ -60,7 +51,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
 
             var expectedNotificationValidationException =
                 new NotificationValidationException(
-                    message: "Notification validation error occurred, please try again.",
+                    message: "Notification validation error occurred, please correct the errors and try again.",
                     innerException: invalidArgumentNotificationException);
 
             // when

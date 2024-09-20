@@ -10,7 +10,7 @@ using ISL.Providers.Notifications.GovukNotify.Models;
 
 namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notifications
 {
-    internal class NotificationService : INotificationService
+    internal partial class NotificationService : INotificationService
     {
         private readonly IGovukNotifyBroker govukNotifyBroker;
         private readonly NotifyConfigurations configurations;
@@ -25,8 +25,12 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
             string toEmail,
             string subject,
             string body,
-            Dictionary<string, dynamic> personalisation)
+            Dictionary<string, dynamic> personalisation) =>
+        TryCatch(async () =>
         {
+
+            await ValidateOnSendEmail(toEmail, subject, body, personalisation);
+
             AddOrUpdate(personalisation, "subject", subject);
             AddOrUpdate(personalisation, "body", body);
             string templateId = GetValueOrNull(personalisation, "templateId");
@@ -34,14 +38,14 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
             string emailReplyToId = GetValueOrNull(personalisation, "emailReplyToId");
             string oneClickUnsubscribeURL = GetValueOrNull(personalisation, "oneClickUnsubscribeURL");
 
-            return this.govukNotifyBroker.SendEmailAsync(
+            await this.govukNotifyBroker.SendEmailAsync(
                 toEmail,
                 templateId,
                 personalisation: personalisation,
                 clientReference,
                 emailReplyToId,
                 oneClickUnsubscribeURL);
-        }
+        });
 
         public ValueTask SendLetterAsync(string templateId, byte[] pdfContents, string postage = null) =>
             throw new NotImplementedException();
