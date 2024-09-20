@@ -77,5 +77,70 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
 
             this.govukNotifyBroker.VerifyNoOtherCalls();
         }
+
+        [Theory]
+        [MemberData(nameof(DependencyExceptions))]
+        public async Task ShouldThrowDependencyExceptionOnSendEmail(Exception dependancyException)
+        {
+            // given
+            string inputToEmail = GetRandomEmailAddress();
+            string inputSubject = GetRandomString();
+            string inputBody = GetRandomString();
+            string inputTemplateId = GetRandomString();
+            string inputClientReference = GetRandomString();
+            string inputEmailReplyToId = GetRandomString();
+            string inputOneClickUnsubscribeURL = GetRandomString();
+            Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
+            inputPersonalization.Add("clientReference", inputClientReference);
+            inputPersonalization.Add("templateId", inputTemplateId);
+            inputPersonalization.Add("emailReplyToId", inputEmailReplyToId);
+            inputPersonalization.Add("oneClickUnsubscribeURL", inputOneClickUnsubscribeURL);
+
+            this.govukNotifyBroker.Setup(broker =>
+                broker.SendEmailAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<Dictionary<string, dynamic>>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>()))
+                .Throws(dependancyException);
+
+            var failedNotificationClientException = new FailedNotificationServerException(
+                message: "Notification client error occurred, contact support.",
+                innerException: dependancyException,
+                data: dependancyException.Data);
+
+            var expectedNotificationDependencyException =
+                new NotificationDependencyException(
+                    message: "Notification dependency error occurred, contact support.",
+                    innerException: failedNotificationClientException);
+
+            // when
+            ValueTask sendEmailTask = this.notificationService.SendEmailAsync(
+                toEmail: inputToEmail,
+                subject: inputSubject,
+                body: inputBody,
+                personalisation: inputPersonalization);
+
+            NotificationDependencyValidationException actualNotificationDependencyValidationException =
+                await Assert.ThrowsAsync<NotificationDependencyValidationException>(sendEmailTask.AsTask);
+
+            // then
+            actualNotificationDependencyValidationException.Should()
+                 .BeEquivalentTo(expectedNotificationDependencyException);
+
+            this.govukNotifyBroker.Verify(broker =>
+                broker.SendEmailAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<Dictionary<string, dynamic>>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>()),
+                Times.Once);
+
+            this.govukNotifyBroker.VerifyNoOtherCalls();
+        }
     }
 }
