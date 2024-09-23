@@ -26,6 +26,14 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
             InitializeClients(serviceProvider);
         }
 
+        /// <summary>
+        /// Sends an email to the specified email address with the specified
+        /// subject, body and personalisation items.
+        /// </summary>
+        /// <exception cref="GovUkNotifyProviderValidationException" />
+        /// <exception cref="GovUkNotifyProviderDependencyValidationException" />
+        /// <exception cref="GovUkNotifyProviderDependencyException" />
+        /// <exception cref="GovUkNotifyProviderServiceException" />
         public async ValueTask SendEmailAsync(
             string toEmail,
             string subject,
@@ -58,6 +66,13 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
             }
         }
 
+        /// <summary>
+        /// Sends a letter using the specified template ID and PDF contents.
+        /// </summary>
+        /// <exception cref="GovUkNotifyProviderValidationException" />
+        /// <exception cref="GovUkNotifyProviderDependencyValidationException" />
+        /// <exception cref="GovUkNotifyProviderDependencyException" />
+        /// <exception cref="GovUkNotifyProviderServiceException" />
         public async ValueTask SendLetterAsync(string templateId, byte[] pdfContents, string postage = null)
         {
             try
@@ -86,6 +101,13 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
             }
         }
 
+        /// <summary>
+        /// Sends a SMS using the specified template ID and personalisation items.
+        /// </summary>
+        /// <exception cref="GovUkNotifyProviderValidationException" />
+        /// <exception cref="GovUkNotifyProviderDependencyValidationException" />
+        /// <exception cref="GovUkNotifyProviderDependencyException" />
+        /// <exception cref="GovUkNotifyProviderServiceException" />
         public async ValueTask SendSmsAsync(string templateId, Dictionary<string, dynamic> personalisation)
         {
             try
