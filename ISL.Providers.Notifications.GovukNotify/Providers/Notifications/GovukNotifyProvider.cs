@@ -17,7 +17,6 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
 {
     public class GovukNotifyProvider : IGovukNotifyProvider
     {
-        private readonly NotifyConfigurations configurations;
         private INotificationService notificationService { get; set; }
 
         public GovukNotifyProvider(NotifyConfigurations configurations)
