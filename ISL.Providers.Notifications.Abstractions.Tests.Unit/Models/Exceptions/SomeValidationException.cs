@@ -8,7 +8,7 @@ using Xeptions;
 
 namespace ISL.Providers.Notifications.Abstractions.Tests.Unit.Models.Exceptions
 {
-    public class SomeNotificationValidationException : Xeption, INotificationValidationException
+    public class SomeNotificationValidationException : Xeption, INotificationProviderValidationException
     {
         public SomeNotificationValidationException(string message, Xeption innerException, IDictionary data)
             : base(message, innerException, data)

@@ -54,7 +54,12 @@
 
 	<ItemGroup>
 		<PackageReference Include="GovukNotify" Version="7.2.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
 		<PackageReference Include="Xeption" Version="2.8.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\ISL.Providers.Notifications.Abstractions\ISL.Providers.Notifications.Abstractions.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -55,7 +55,6 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
         public ValueTask SendSmsAsync(string templateId, Dictionary<string, dynamic> personalisation) =>
             throw new NotImplementedException();
 
-
         private static void AddOrUpdate(Dictionary<string, dynamic> dictionary, string key, dynamic value)
         {
             if (dictionary.ContainsKey(key))
@@ -68,9 +67,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
             }
         }
 
-        public static dynamic GetValueOrNull(Dictionary<string, dynamic> dictionary, string key)
-        {
-            return dictionary.ContainsKey(key) ? dictionary[key] : null;
-        }
+        public static dynamic GetValueOrNull(Dictionary<string, dynamic> dictionary, string key) =>
+            dictionary.ContainsKey(key) ? dictionary[key] : null;
     }
 }

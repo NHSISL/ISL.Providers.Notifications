@@ -2,8 +2,10 @@
 // Copyright (c) North East London ICB. All rights reserved.
 // ---------------------------------------------------------
 
-namespace ISL.Providers.Notifications.Abstractions.Models.Exceptions
+using ISL.Providers.Notifications.Abstractions;
+
+namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
 {
-    public interface INotificationDependencyException
+    public interface IGovukNotifyProvider : INotificationProvider
     { }
 }
