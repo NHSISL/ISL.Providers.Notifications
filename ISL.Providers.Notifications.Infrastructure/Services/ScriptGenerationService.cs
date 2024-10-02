@@ -91,6 +91,13 @@ namespace ISL.NotificationClient.Infrastructure.Services
                             Name = "Tag and Release"
                         }
                     },
+                    {
+                        "publish",
+                        new PublishJob(
+                            runsOn: BuildMachines.UbuntuLatest,
+                            dependsOn: "add_tag",
+                            nugetApiKey: "${{ secrets.NUGET_ACCESS }}")
+                    }
                 }
             };
 
