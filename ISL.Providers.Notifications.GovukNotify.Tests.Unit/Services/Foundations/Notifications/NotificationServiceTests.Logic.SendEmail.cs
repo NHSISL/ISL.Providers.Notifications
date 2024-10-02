@@ -4,6 +4,7 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Force.DeepCloner;
 using Moq;
 
@@ -15,6 +16,8 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
         public async Task ShouldSendEmailAsync()
         {
             // given
+            string randomIdentifier = GetRandomString();
+            string expectedIdentifier = randomIdentifier;
             string inputToEmail = GetRandomEmailAddress();
             string inputSubject = GetRandomString();
             string inputBody = GetRandomString();
@@ -32,22 +35,36 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             internalPersonalization.Add("subject", inputSubject);
             internalPersonalization.Add("body", inputBody);
 
+            this.govukNotifyBroker
+                .Setup(broker =>
+                    broker.SendEmailAsync(
+                        inputToEmail,
+                        inputTemplateId,
+                        It.Is(SameDictionaryAs(internalPersonalization)),
+                        inputClientReference,
+                        inputEmailReplyToId,
+                        inputOneClickUnsubscribeURL))
+                .ReturnsAsync(expectedIdentifier);
+
             // when
-            await this.notificationService.SendEmailAsync(
+            string actualIdentifier = await this.notificationService.SendEmailAsync(
                 toEmail: inputToEmail,
                 subject: inputSubject,
                 body: inputBody,
                 personalisation: inputPersonalization);
 
             // then
-            this.govukNotifyBroker.Verify(broker =>
-                broker.SendEmailAsync(
-                    inputToEmail,
-                    inputTemplateId,
-                    It.Is(SameDictionaryAs(internalPersonalization)),
-                    inputClientReference,
-                    inputEmailReplyToId,
-                    inputOneClickUnsubscribeURL),
+            actualIdentifier.Should().BeEquivalentTo(expectedIdentifier);
+
+            this.govukNotifyBroker
+                .Verify(broker =>
+                    broker.SendEmailAsync(
+                        inputToEmail,
+                        inputTemplateId,
+                        It.Is(SameDictionaryAs(internalPersonalization)),
+                        inputClientReference,
+                        inputEmailReplyToId,
+                        inputOneClickUnsubscribeURL),
                 Times.Once);
 
             this.govukNotifyBroker.VerifyNoOtherCalls();

@@ -29,11 +29,12 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
         /// Sends an email to the specified email address with the specified
         /// subject, body and personalisation items.
         /// </summary>
+        /// <returns>A string representing the unique identifier of the sent email.</returns>
         /// <exception cref="GovUkNotifyProviderValidationException" />
         /// <exception cref="GovUkNotifyProviderDependencyValidationException" />
         /// <exception cref="GovUkNotifyProviderDependencyException" />
         /// <exception cref="GovUkNotifyProviderServiceException" />
-        public async ValueTask SendEmailAsync(
+        public async ValueTask<string> SendEmailAsync(
             string toEmail,
             string subject,
             string body,
@@ -41,42 +42,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
         {
             try
             {
-                await this.notificationService.SendEmailAsync(toEmail, subject, body, personalisation);
-            }
-            catch (NotificationValidationException notificationValidationException)
-            {
-                throw CreateProviderValidationException(
-                    notificationValidationException.InnerException as Xeption);
-            }
-            catch (NotificationDependencyValidationException notificationDependencyValidationException)
-            {
-                throw CreateProviderDependencyValidationException(
-                    notificationDependencyValidationException.InnerException as Xeption);
-            }
-            catch (NotificationDependencyException notificationDependencyException)
-            {
-                throw CreateProviderDependencyException(
-                    notificationDependencyException.InnerException as Xeption);
-            }
-            catch (NotificationServiceException notificationServiceException)
-            {
-                throw CreateProviderServiceException(
-                    notificationServiceException.InnerException as Xeption);
-            }
-        }
-
-        /// <summary>
-        /// Sends a letter using the specified template ID and PDF contents.
-        /// </summary>
-        /// <exception cref="GovUkNotifyProviderValidationException" />
-        /// <exception cref="GovUkNotifyProviderDependencyValidationException" />
-        /// <exception cref="GovUkNotifyProviderDependencyException" />
-        /// <exception cref="GovUkNotifyProviderServiceException" />
-        public async ValueTask SendLetterAsync(string templateId, byte[] pdfContents, string postage = null)
-        {
-            try
-            {
-                await this.notificationService.SendLetterAsync(templateId, pdfContents, postage);
+                return await this.notificationService.SendEmailAsync(toEmail, subject, body, personalisation);
             }
             catch (NotificationValidationException notificationValidationException)
             {
@@ -103,15 +69,94 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
         /// <summary>
         /// Sends a SMS using the specified template ID and personalisation items.
         /// </summary>
+        /// <returns>A string representing the unique identifier of the sent SMS.</returns>
         /// <exception cref="GovUkNotifyProviderValidationException" />
         /// <exception cref="GovUkNotifyProviderDependencyValidationException" />
         /// <exception cref="GovUkNotifyProviderDependencyException" />
         /// <exception cref="GovUkNotifyProviderServiceException" />
-        public async ValueTask SendSmsAsync(string templateId, Dictionary<string, dynamic> personalisation)
+        public async ValueTask<string> SendSmsAsync(string templateId, Dictionary<string, dynamic> personalisation)
         {
             try
             {
-                await this.notificationService.SendSmsAsync(templateId, personalisation);
+                return await this.notificationService.SendSmsAsync(templateId, personalisation);
+            }
+            catch (NotificationValidationException notificationValidationException)
+            {
+                throw CreateProviderValidationException(
+                    notificationValidationException.InnerException as Xeption);
+            }
+            catch (NotificationDependencyValidationException notificationDependencyValidationException)
+            {
+                throw CreateProviderDependencyValidationException(
+                    notificationDependencyValidationException.InnerException as Xeption);
+            }
+            catch (NotificationDependencyException notificationDependencyException)
+            {
+                throw CreateProviderDependencyException(
+                    notificationDependencyException.InnerException as Xeption);
+            }
+            catch (NotificationServiceException notificationServiceException)
+            {
+                throw CreateProviderServiceException(
+                    notificationServiceException.InnerException as Xeption);
+            }
+        }
+
+        /// <summary>
+        /// Sends a letter using the specified template ID and personalisation content.
+        /// </summary>
+        /// <returns>A string representing the unique identifier of the sent letter.</returns>
+        /// <exception cref="GovUkNotifyProviderValidationException" />
+        /// <exception cref="GovUkNotifyProviderDependencyValidationException" />
+        /// <exception cref="GovUkNotifyProviderDependencyException" />
+        /// <exception cref="GovUkNotifyProviderServiceException" />
+        public async ValueTask<string> SendLetterAsync(
+            string templateId,
+            Dictionary<string, dynamic> personalisation = null,
+            string clientReference = null)
+        {
+            try
+            {
+                return await this.notificationService.SendLetterAsync(templateId, personalisation, clientReference);
+            }
+            catch (NotificationValidationException notificationValidationException)
+            {
+                throw CreateProviderValidationException(
+                    notificationValidationException.InnerException as Xeption);
+            }
+            catch (NotificationDependencyValidationException notificationDependencyValidationException)
+            {
+                throw CreateProviderDependencyValidationException(
+                    notificationDependencyValidationException.InnerException as Xeption);
+            }
+            catch (NotificationDependencyException notificationDependencyException)
+            {
+                throw CreateProviderDependencyException(
+                    notificationDependencyException.InnerException as Xeption);
+            }
+            catch (NotificationServiceException notificationServiceException)
+            {
+                throw CreateProviderServiceException(
+                    notificationServiceException.InnerException as Xeption);
+            }
+        }
+
+        /// <summary>
+        /// Sends a letter using the specified template ID and PDF contents.
+        /// </summary>
+        /// <returns>A string representing the unique identifier of the sent letter.</returns>
+        /// <exception cref="GovUkNotifyProviderValidationException" />
+        /// <exception cref="GovUkNotifyProviderDependencyValidationException" />
+        /// <exception cref="GovUkNotifyProviderDependencyException" />
+        /// <exception cref="GovUkNotifyProviderServiceException" />
+        public async ValueTask<string> SendPrecompiledLetterAsync(
+            string templateId,
+            byte[] pdfContents,
+            string postage = null)
+        {
+            try
+            {
+                return await this.notificationService.SendPrecompiledLetterAsync(templateId, pdfContents, postage);
             }
             catch (NotificationValidationException notificationValidationException)
             {

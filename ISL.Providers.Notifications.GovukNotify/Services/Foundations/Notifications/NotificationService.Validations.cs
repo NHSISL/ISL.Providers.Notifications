@@ -44,7 +44,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
 
         private static async ValueTask<dynamic> IsInvalid(Dictionary<string, dynamic> dictionary) => new
         {
-            Condition = dictionary == null || dictionary.Count == 0,
+            Condition = dictionary == null,
             Message = "Dictionary is required"
         };
 

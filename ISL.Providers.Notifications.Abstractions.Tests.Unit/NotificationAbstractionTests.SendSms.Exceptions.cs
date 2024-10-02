@@ -36,7 +36,7 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
                     .ThrowsAsync(someNotificationValidationException);
 
             // when
-            ValueTask sendSmsTask =
+            ValueTask<string> sendSmsTask =
                 this.notificationAbstractionProvider
                     .SendSmsAsync(It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>());
 
@@ -76,7 +76,7 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
                     .ThrowsAsync(someNotificationValidationException);
 
             // when
-            ValueTask sendSmsTask =
+            ValueTask<string> sendSmsTask =
                 this.notificationAbstractionProvider
                     .SendSmsAsync(It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>());
 
@@ -115,7 +115,7 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
                     .ThrowsAsync(someNotificationValidationException);
 
             // when
-            ValueTask sendSmsTask =
+            ValueTask<string> sendSmsTask =
                 this.notificationAbstractionProvider
                     .SendSmsAsync(It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>());
 
@@ -154,7 +154,7 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
                     .ThrowsAsync(someNotificationValidationException);
 
             // when
-            ValueTask sendSmsTask =
+            ValueTask<string> sendSmsTask =
                 this.notificationAbstractionProvider
                     .SendSmsAsync(It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>());
 
@@ -195,7 +195,7 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
                     .ThrowsAsync(someException);
 
             // when
-            ValueTask sendSmsTask =
+            ValueTask<string> sendSmsTask =
                 this.notificationAbstractionProvider
                     .SendSmsAsync(It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>());
 

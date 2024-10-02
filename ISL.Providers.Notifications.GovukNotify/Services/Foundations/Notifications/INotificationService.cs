@@ -9,17 +9,22 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
 {
     internal interface INotificationService
     {
-        ValueTask SendEmailAsync(
+        ValueTask<string> SendEmailAsync(
             string toEmail,
             string subject,
             string body,
             Dictionary<string, dynamic> personalisation);
 
-        ValueTask SendSmsAsync(
+        ValueTask<string> SendSmsAsync(
             string templateId,
             Dictionary<string, dynamic> personalisation);
 
-        ValueTask SendLetterAsync(
+        ValueTask<string> SendLetterAsync(
+            string templateId,
+            Dictionary<string, dynamic> personalisation = null,
+            string clientReference = null);
+
+        ValueTask<string> SendPrecompiledLetterAsync(
             string templateId,
             byte[] pdfContents,
             string postage = null);

@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ISL.Providers.Notifications
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GOV.UK Notify", "GOV.UK Notify", "{0B3F9412-F7C7-48F7-8A6D-A8F869109ACE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ISL.Providers.Notifications.Abstractions.Tests.Unit", "ISL.Providers.Notifications.Abstractions.Tests.Unit\ISL.Providers.Notifications.Abstractions.Tests.Unit.csproj", "{210BDADE-4D6D-403D-9D27-725560FA75FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ISL.Providers.Notifications.Abstractions.Tests.Unit", "ISL.Providers.Notifications.Abstractions.Tests.Unit\ISL.Providers.Notifications.Abstractions.Tests.Unit.csproj", "{210BDADE-4D6D-403D-9D27-725560FA75FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ISL.Providers.Notifications.Abstractions.Tests.Acceptance", "ISL.Providers.Notifications.Abstractions.Tests.Acceptance\ISL.Providers.Notifications.Abstractions.Tests.Acceptance.csproj", "{CE957637-828E-483E-96A5-F6CFAD9B78F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{210BDADE-4D6D-403D-9D27-725560FA75FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{210BDADE-4D6D-403D-9D27-725560FA75FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{210BDADE-4D6D-403D-9D27-725560FA75FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE957637-828E-483E-96A5-F6CFAD9B78F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE957637-828E-483E-96A5-F6CFAD9B78F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE957637-828E-483E-96A5-F6CFAD9B78F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE957637-828E-483E-96A5-F6CFAD9B78F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

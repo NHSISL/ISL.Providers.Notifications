@@ -11,13 +11,13 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
 {
     internal partial class NotificationService
     {
-        private delegate ValueTask ReturningNothingFunction();
+        private delegate ValueTask<string> ReturningStringFunction();
 
-        private async ValueTask TryCatch(ReturningNothingFunction returningNothingFunction)
+        private async ValueTask<string> TryCatch(ReturningStringFunction returningStringFunction)
         {
             try
             {
-                await returningNothingFunction();
+                return await returningStringFunction();
             }
             catch (InvalidArgumentNotificationException invalidArgumentNotificationException)
             {
