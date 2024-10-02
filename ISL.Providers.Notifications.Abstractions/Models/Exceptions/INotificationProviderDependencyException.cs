@@ -4,6 +4,6 @@
 
 namespace ISL.Providers.Notifications.Abstractions.Models.Exceptions
 {
-    public interface INotificationProviderServiceException
+    public interface INotificationProviderDependencyException
     { }
 }

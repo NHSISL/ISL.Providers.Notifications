@@ -52,7 +52,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
                     innerException: failedNotificationClientException);
 
             // when
-            ValueTask sendEmailTask = this.notificationService.SendEmailAsync(
+            ValueTask<string> sendEmailTask = this.notificationService.SendEmailAsync(
                 toEmail: inputToEmail,
                 subject: inputSubject,
                 body: inputBody,
@@ -117,7 +117,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
                     innerException: failedNotificationServerException);
 
             // when
-            ValueTask sendEmailTask = this.notificationService.SendEmailAsync(
+            ValueTask<string> sendEmailTask = this.notificationService.SendEmailAsync(
                 toEmail: inputToEmail,
                 subject: inputSubject,
                 body: inputBody,
@@ -181,7 +181,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
                     innerException: failedNotificationServiceException);
 
             // when
-            ValueTask sendEmailTask = this.notificationService.SendEmailAsync(
+            ValueTask<string> sendEmailTask = this.notificationService.SendEmailAsync(
                 toEmail: inputToEmail,
                 subject: inputSubject,
                 body: inputBody,

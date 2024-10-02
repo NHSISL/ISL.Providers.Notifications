@@ -9,7 +9,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Brokers
 {
     internal interface IGovukNotifyBroker
     {
-        ValueTask SendEmailAsync(
+        ValueTask<string> SendEmailAsync(
             string emailAddress,
             string templateId,
             Dictionary<string, dynamic> personalisation = null,
@@ -17,16 +17,21 @@ namespace ISL.Providers.Notifications.GovukNotify.Brokers
             string emailReplyToId = null,
             string oneClickUnsubscribeURL = null);
 
-        ValueTask SendSmsAsync(
+        ValueTask<string> SendSmsAsync(
             string mobileNumber,
             string templateId,
             Dictionary<string, dynamic> personalisation = null,
             string clientReference = null,
             string smsSenderId = null);
 
-        ValueTask SendLetterAsync(
+        ValueTask<string> SendLetterAsync(
             string templateId,
             Dictionary<string, dynamic> personalisation = null,
             string clientReference = null);
+
+        ValueTask<string> SendPrecompiledLetterAsync(
+            string templateId,
+            byte[] pdfContents,
+            string postage = null);
     }
 }

@@ -11,27 +11,27 @@ namespace ISL.Providers.Notifications.Abstractions
 {
     public partial class NotificationAbstractionProvider
     {
-        private delegate ValueTask ReturningNothingFunction();
+        private delegate ValueTask<string> ReturningStringFunction();
 
-        private async ValueTask TryCatch(ReturningNothingFunction returningNothingFunction)
+        private async ValueTask<string> TryCatch(ReturningStringFunction returningStringFunction)
         {
             try
             {
-                await returningNothingFunction();
+                return await returningStringFunction();
             }
-            catch (Xeption ex) when (ex is INotificationValidationException)
+            catch (Xeption ex) when (ex is INotificationProviderValidationException)
             {
                 throw CreateValidationException(ex);
             }
-            catch (Xeption ex) when (ex is INotificationDependencyValidationException)
+            catch (Xeption ex) when (ex is INotificationProviderDependencyValidationException)
             {
                 throw CreateValidationException(ex);
             }
-            catch (Xeption ex) when (ex is INotificationDependencyException)
+            catch (Xeption ex) when (ex is INotificationProviderDependencyException)
             {
                 throw CreateDependencyException(ex);
             }
-            catch (Xeption ex) when (ex is INotificationServiceException)
+            catch (Xeption ex) when (ex is INotificationProviderServiceException)
             {
                 throw CreateServiceException(ex);
             }

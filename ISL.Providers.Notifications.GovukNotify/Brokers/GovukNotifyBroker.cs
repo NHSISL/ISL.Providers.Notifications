@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ISL.Providers.Notifications.GovukNotify.Models;
 using Notify.Client;
+using Notify.Models.Responses;
 
 namespace ISL.Providers.Notifications.GovukNotify.Brokers
 {
@@ -16,7 +17,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Brokers
         public GovukNotifyBroker(NotifyConfigurations configurations) =>
             this.client = new NotificationClient(configurations.ApiKey);
 
-        public async ValueTask SendEmailAsync(
+        public async ValueTask<string> SendEmailAsync(
             string emailAddress,
             string templateId,
             Dictionary<string, dynamic> personalisation = null,
@@ -24,50 +25,58 @@ namespace ISL.Providers.Notifications.GovukNotify.Brokers
             string emailReplyToId = null,
             string oneClickUnsubscribeURL = null)
         {
-            await this.client.SendEmailAsync(
+            EmailNotificationResponse response = await this.client.SendEmailAsync(
                 emailAddress,
                 templateId,
                 personalisation,
                 clientReference,
                 emailReplyToId,
                 oneClickUnsubscribeURL);
+
+            return response.id;
         }
 
-        public async ValueTask SendSmsAsync(
+        public async ValueTask<string> SendSmsAsync(
             string mobileNumber,
             string templateId,
             Dictionary<string, dynamic> personalisation = null,
             string clientReference = null,
             string smsSenderId = null)
         {
-            await this.client.SendSmsAsync(
+            SmsNotificationResponse response = await this.client.SendSmsAsync(
                 mobileNumber,
                 templateId,
                 personalisation,
                 clientReference,
                 smsSenderId);
+
+            return response.id;
         }
 
-        public async ValueTask SendLetterAsync(
+        public async ValueTask<string> SendLetterAsync(
             string templateId,
             Dictionary<string, dynamic> personalisation = null,
             string clientReference = null)
         {
-            await this.client.SendLetterAsync(
+            LetterNotificationResponse response = await this.client.SendLetterAsync(
                 templateId,
                 personalisation,
                 clientReference);
+
+            return response.id;
         }
 
-        public async ValueTask SendPrecompiledLetterAsync(
+        public async ValueTask<string> SendPrecompiledLetterAsync(
             string templateId,
             byte[] pdfContents,
             string postage = null)
         {
-            await this.client.SendPrecompiledLetterAsync(
+            LetterNotificationResponse response = await this.client.SendPrecompiledLetterAsync(
                 templateId,
                 pdfContents,
                 postage);
+
+            return response.id;
         }
     }
 }
