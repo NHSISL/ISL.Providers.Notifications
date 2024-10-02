@@ -396,5 +396,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-/ISL.Providers.Notifications.GovukNotify.Tests.Acceptance/appsettings.Development.json
 /ISL.Providers.Notifications.Abstractions.Tests.Acceptance/appsettings.Development.json
+/ISL.Providers.Notifications.GovukNotify.Tests.Acceptance/appsettings.Development.json
