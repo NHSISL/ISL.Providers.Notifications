@@ -45,6 +45,12 @@ namespace ISL.NotificationClient.Infrastructure.Services
                             Name = "Build",
                             RunsOn = BuildMachines.WindowsLatest,
 
+                            EnvironmentVariables = new Dictionary<string, string>
+                            {
+                                { "NOTIFYCONFIGURATIONS__APIKEY", "${{ secrets.NOTIFYCONFIGURATIONS__APIKEY }}" },
+                                { "NOTIFYCONFIGURATIONS__TEMPLATEID", "${{ secrets.NOTIFYCONFIGURATIONS__TEMPLATEID }}" }
+                            },
+
                             Steps = new List<GithubTask>
                             {
                                 new CheckoutTaskV3

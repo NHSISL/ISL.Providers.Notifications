@@ -31,21 +31,18 @@
 		</PackageReference>
 	</ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\ISL.Providers.Notifications.GovukNotify\ISL.Providers.Notifications.GovukNotify.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ISL.Providers.Notifications.Abstractions\ISL.Providers.Notifications.Abstractions.csproj" />
+    <ProjectReference Include="..\ISL.Providers.Notifications.GovukNotify\ISL.Providers.Notifications.GovukNotify.csproj" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<Using Include="Xunit" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Update="appsettings.Development.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="appsettings.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	</ItemGroup>
+  <ItemGroup>
+    <None Update="appsettings.Development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>
