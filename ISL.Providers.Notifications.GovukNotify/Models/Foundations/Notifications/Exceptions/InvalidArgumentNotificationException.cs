@@ -8,7 +8,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Models.Foundations.Notificatio
 {
     public class InvalidArgumentNotificationException : Xeption
     {
-        public InvalidArgumentNotificationException(string message)
+        internal InvalidArgumentNotificationException(string message)
             : base(message)
         { }
     }

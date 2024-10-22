@@ -8,7 +8,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Models.Foundations.Notificatio
 {
     public class NotificationValidationException : Xeption
     {
-        public NotificationValidationException(string message, Xeption innerException)
+        internal NotificationValidationException(string message, Xeption innerException)
             : base(message, innerException)
         { }
     }

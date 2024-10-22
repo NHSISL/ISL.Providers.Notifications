@@ -26,8 +26,8 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
                     innerException: someException,
                     data: someException.Data);
 
-            NotificationValidationProviderException expectedNotificationValidationProviderException =
-                new NotificationValidationProviderException(
+            NotificationProviderValidationException expectedNotificationValidationProviderException =
+                new NotificationProviderValidationException(
                     message: "Notification validation errors occurred, please try again.",
                     innerException: someNotificationValidationException);
 
@@ -40,8 +40,8 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
                 this.notificationAbstractionProvider
                     .SendSmsAsync(It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>());
 
-            NotificationValidationProviderException actualNotificationValidationProviderException =
-                await Assert.ThrowsAsync<NotificationValidationProviderException>(testCode: sendSmsTask.AsTask);
+            NotificationProviderValidationException actualNotificationValidationProviderException =
+                await Assert.ThrowsAsync<NotificationProviderValidationException>(testCode: sendSmsTask.AsTask);
 
             // then
             actualNotificationValidationProviderException.Should().BeEquivalentTo(
@@ -66,8 +66,8 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
                     innerException: someException,
                     data: someException.Data);
 
-            NotificationValidationProviderException expectedNotificationValidationProviderException =
-                new NotificationValidationProviderException(
+            NotificationProviderValidationException expectedNotificationValidationProviderException =
+                new NotificationProviderValidationException(
                     message: "Notification validation errors occurred, please try again.",
                     innerException: someNotificationValidationException);
 
@@ -80,8 +80,8 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
                 this.notificationAbstractionProvider
                     .SendSmsAsync(It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>());
 
-            NotificationValidationProviderException actualNotificationValidationProviderException =
-                await Assert.ThrowsAsync<NotificationValidationProviderException>(testCode: sendSmsTask.AsTask);
+            NotificationProviderValidationException actualNotificationValidationProviderException =
+                await Assert.ThrowsAsync<NotificationProviderValidationException>(testCode: sendSmsTask.AsTask);
 
             // then
             actualNotificationValidationProviderException.Should().BeEquivalentTo(
@@ -105,8 +105,8 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
                     message: "Some notification dependency exception occurred",
                     innerException: someException);
 
-            NotificationDependencyProviderException expectedNotificationDependencyProviderException =
-                new NotificationDependencyProviderException(
+            NotificationProviderDependencyException expectedNotificationDependencyProviderException =
+                new NotificationProviderDependencyException(
                     message: "Notification dependency error occurred, contact support.",
                     innerException: someNotificationValidationException);
 
@@ -119,8 +119,8 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
                 this.notificationAbstractionProvider
                     .SendSmsAsync(It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>());
 
-            NotificationDependencyProviderException actualNotificationDependencyProviderException =
-                await Assert.ThrowsAsync<NotificationDependencyProviderException>(testCode: sendSmsTask.AsTask);
+            NotificationProviderDependencyException actualNotificationDependencyProviderException =
+                await Assert.ThrowsAsync<NotificationProviderDependencyException>(testCode: sendSmsTask.AsTask);
 
             // then
             actualNotificationDependencyProviderException.Should().BeEquivalentTo(
@@ -144,8 +144,8 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
                     message: "Some notification service exception occurred",
                     innerException: someException);
 
-            NotificationServiceProviderException expectedNotificationServiceProviderException =
-                new NotificationServiceProviderException(
+            NotificationProviderServiceException expectedNotificationServiceProviderException =
+                new NotificationProviderServiceException(
                     message: "Notification service error occurred, contact support.",
                     innerException: someNotificationValidationException);
 
@@ -158,8 +158,8 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
                 this.notificationAbstractionProvider
                     .SendSmsAsync(It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>());
 
-            NotificationServiceProviderException actualNotificationServiceProviderException =
-                await Assert.ThrowsAsync<NotificationServiceProviderException>(testCode: sendSmsTask.AsTask);
+            NotificationProviderServiceException actualNotificationServiceProviderException =
+                await Assert.ThrowsAsync<NotificationProviderServiceException>(testCode: sendSmsTask.AsTask);
 
             // then
             actualNotificationServiceProviderException.Should().BeEquivalentTo(
@@ -185,8 +185,8 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
                     innerException: someException,
                     data: someException.Data);
 
-            NotificationServiceProviderException expectedNotificationServiceProviderException =
-                new NotificationServiceProviderException(
+            NotificationProviderServiceException expectedNotificationServiceProviderException =
+                new NotificationProviderServiceException(
                     message: "Uncatagorized notification service error occurred, contact support.",
                     innerException: uncatagorizedNotificationProviderException);
 
@@ -199,8 +199,8 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
                 this.notificationAbstractionProvider
                     .SendSmsAsync(It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>());
 
-            NotificationServiceProviderException actualNotificationServiceProviderException =
-                await Assert.ThrowsAsync<NotificationServiceProviderException>(testCode: sendSmsTask.AsTask);
+            NotificationProviderServiceException actualNotificationServiceProviderException =
+                await Assert.ThrowsAsync<NotificationProviderServiceException>(testCode: sendSmsTask.AsTask);
 
             // then
             actualNotificationServiceProviderException.Should().BeEquivalentTo(

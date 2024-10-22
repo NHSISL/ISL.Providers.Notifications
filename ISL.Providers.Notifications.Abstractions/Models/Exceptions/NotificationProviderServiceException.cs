@@ -7,13 +7,13 @@ using Xeptions;
 
 namespace ISL.Providers.Notifications.Abstractions.Models.Exceptions
 {
-    public class NotificationServiceProviderException : Xeption
+    public class NotificationProviderServiceException : Xeption
     {
-        public NotificationServiceProviderException(string message, Xeption innerException)
+        public NotificationProviderServiceException(string message, Xeption innerException)
             : base(message, innerException)
         { }
 
-        public NotificationServiceProviderException(string message, Xeption innerException, IDictionary data)
+        public NotificationProviderServiceException(string message, Xeption innerException, IDictionary data)
             : base(message, innerException, data)
         { }
     }
