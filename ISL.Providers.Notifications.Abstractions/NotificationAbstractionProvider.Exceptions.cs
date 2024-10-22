@@ -48,11 +48,11 @@ namespace ISL.Providers.Notifications.Abstractions
             }
         }
 
-        private NotificationValidationProviderException CreateValidationException(
+        private NotificationProviderValidationException CreateValidationException(
             Xeption exception)
         {
             var notificationValidationProviderException =
-                new NotificationValidationProviderException(
+                new NotificationProviderValidationException(
                     message: "Notification validation errors occurred, please try again.",
                     innerException: exception,
                     data: exception.Data);
@@ -60,10 +60,10 @@ namespace ISL.Providers.Notifications.Abstractions
             return notificationValidationProviderException;
         }
 
-        private NotificationDependencyProviderException CreateDependencyException(
+        private NotificationProviderDependencyException CreateDependencyException(
             Xeption exception)
         {
-            var notificationDependencyProviderException = new NotificationDependencyProviderException(
+            var notificationDependencyProviderException = new NotificationProviderDependencyException(
                 message: "Notification dependency error occurred, contact support.",
                 innerException: exception,
                 data: exception.Data);
@@ -71,10 +71,10 @@ namespace ISL.Providers.Notifications.Abstractions
             return notificationDependencyProviderException;
         }
 
-        private NotificationServiceProviderException CreateServiceException(
+        private NotificationProviderServiceException CreateServiceException(
             Xeption exception)
         {
-            var notificationServiceProviderException = new NotificationServiceProviderException(
+            var notificationServiceProviderException = new NotificationProviderServiceException(
                 message: "Notification service error occurred, contact support.",
                 innerException: exception,
                 data: exception.Data);
@@ -82,10 +82,10 @@ namespace ISL.Providers.Notifications.Abstractions
             return notificationServiceProviderException;
         }
 
-        private NotificationServiceProviderException CreateUncatagorizedServiceException(
+        private NotificationProviderServiceException CreateUncatagorizedServiceException(
             Exception exception)
         {
-            var notificationServiceProviderException = new NotificationServiceProviderException(
+            var notificationServiceProviderException = new NotificationProviderServiceException(
                 message: "Uncatagorized notification service error occurred, contact support.",
                 innerException: exception as Xeption,
                 data: exception.Data);

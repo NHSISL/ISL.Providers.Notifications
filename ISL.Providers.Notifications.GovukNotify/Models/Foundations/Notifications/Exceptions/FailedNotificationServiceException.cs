@@ -9,7 +9,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Models.Foundations.Notificatio
 {
     public class FailedNotificationServiceException : Xeption
     {
-        public FailedNotificationServiceException(string message, Exception innerException)
+        internal FailedNotificationServiceException(string message, Exception innerException)
             : base(message, innerException)
         { }
     }
