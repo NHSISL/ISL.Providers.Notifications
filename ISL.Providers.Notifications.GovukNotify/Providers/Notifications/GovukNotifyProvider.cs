@@ -31,7 +31,6 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
         /// </summary>
         /// <returns>A string representing the unique identifier of the sent email.</returns>
         /// <exception cref="GovUkNotifyProviderValidationException" />
-        /// <exception cref="GovUkNotifyProviderDependencyValidationException" />
         /// <exception cref="GovUkNotifyProviderDependencyException" />
         /// <exception cref="GovUkNotifyProviderServiceException" />
         public async ValueTask<string> SendEmailAsync(
@@ -71,7 +70,6 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
         /// </summary>
         /// <returns>A string representing the unique identifier of the sent SMS.</returns>
         /// <exception cref="GovUkNotifyProviderValidationException" />
-        /// <exception cref="GovUkNotifyProviderDependencyValidationException" />
         /// <exception cref="GovUkNotifyProviderDependencyException" />
         /// <exception cref="GovUkNotifyProviderServiceException" />
         public async ValueTask<string> SendSmsAsync(string templateId, Dictionary<string, dynamic> personalisation)
@@ -107,7 +105,6 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
         /// </summary>
         /// <returns>A string representing the unique identifier of the sent letter.</returns>
         /// <exception cref="GovUkNotifyProviderValidationException" />
-        /// <exception cref="GovUkNotifyProviderDependencyValidationException" />
         /// <exception cref="GovUkNotifyProviderDependencyException" />
         /// <exception cref="GovUkNotifyProviderServiceException" />
         public async ValueTask<string> SendLetterAsync(
@@ -146,7 +143,6 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
         /// </summary>
         /// <returns>A string representing the unique identifier of the sent letter.</returns>
         /// <exception cref="GovUkNotifyProviderValidationException" />
-        /// <exception cref="GovUkNotifyProviderDependencyValidationException" />
         /// <exception cref="GovUkNotifyProviderDependencyException" />
         /// <exception cref="GovUkNotifyProviderServiceException" />
         public async ValueTask<string> SendPrecompiledLetterAsync(
