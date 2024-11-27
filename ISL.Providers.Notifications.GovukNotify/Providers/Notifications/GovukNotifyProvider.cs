@@ -51,7 +51,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
             }
             catch (NotificationDependencyValidationException notificationDependencyValidationException)
             {
-                throw CreateProviderDependencyValidationException(
+                throw CreateProviderValidationException(
                     notificationDependencyValidationException.InnerException as Xeption);
             }
             catch (NotificationDependencyException notificationDependencyException)
@@ -87,7 +87,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
             }
             catch (NotificationDependencyValidationException notificationDependencyValidationException)
             {
-                throw CreateProviderDependencyValidationException(
+                throw CreateProviderValidationException(
                     notificationDependencyValidationException.InnerException as Xeption);
             }
             catch (NotificationDependencyException notificationDependencyException)
@@ -126,7 +126,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
             }
             catch (NotificationDependencyValidationException notificationDependencyValidationException)
             {
-                throw CreateProviderDependencyValidationException(
+                throw CreateProviderValidationException(
                     notificationDependencyValidationException.InnerException as Xeption);
             }
             catch (NotificationDependencyException notificationDependencyException)
@@ -165,7 +165,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
             }
             catch (NotificationDependencyValidationException notificationDependencyValidationException)
             {
-                throw CreateProviderDependencyValidationException(
+                throw CreateProviderValidationException(
                     notificationDependencyValidationException.InnerException as Xeption);
             }
             catch (NotificationDependencyException notificationDependencyException)
@@ -185,15 +185,6 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
         {
             return new GovUkNotifyProviderValidationException(
                 message: "Gov.UK Notify provider validation error occurred, fix errors and try again.",
-                innerException,
-                data: innerException.Data);
-        }
-
-        private static GovUkNotifyProviderDependencyValidationException CreateProviderDependencyValidationException(
-            Xeption innerException)
-        {
-            return new GovUkNotifyProviderDependencyValidationException(
-                message: "Gov.UK Notify provider dependency validation error occurred, fix errors and try again.",
                 innerException,
                 data: innerException.Data);
         }
