@@ -31,7 +31,6 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
         /// </summary>
         /// <returns>A string representing the unique identifier of the sent email.</returns>
         /// <exception cref="GovUkNotifyProviderValidationException" />
-        /// <exception cref="GovUkNotifyProviderDependencyValidationException" />
         /// <exception cref="GovUkNotifyProviderDependencyException" />
         /// <exception cref="GovUkNotifyProviderServiceException" />
         public async ValueTask<string> SendEmailAsync(
@@ -51,7 +50,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
             }
             catch (NotificationDependencyValidationException notificationDependencyValidationException)
             {
-                throw CreateProviderDependencyValidationException(
+                throw CreateProviderValidationException(
                     notificationDependencyValidationException.InnerException as Xeption);
             }
             catch (NotificationDependencyException notificationDependencyException)
@@ -71,7 +70,6 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
         /// </summary>
         /// <returns>A string representing the unique identifier of the sent SMS.</returns>
         /// <exception cref="GovUkNotifyProviderValidationException" />
-        /// <exception cref="GovUkNotifyProviderDependencyValidationException" />
         /// <exception cref="GovUkNotifyProviderDependencyException" />
         /// <exception cref="GovUkNotifyProviderServiceException" />
         public async ValueTask<string> SendSmsAsync(string templateId, Dictionary<string, dynamic> personalisation)
@@ -87,7 +85,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
             }
             catch (NotificationDependencyValidationException notificationDependencyValidationException)
             {
-                throw CreateProviderDependencyValidationException(
+                throw CreateProviderValidationException(
                     notificationDependencyValidationException.InnerException as Xeption);
             }
             catch (NotificationDependencyException notificationDependencyException)
@@ -107,7 +105,6 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
         /// </summary>
         /// <returns>A string representing the unique identifier of the sent letter.</returns>
         /// <exception cref="GovUkNotifyProviderValidationException" />
-        /// <exception cref="GovUkNotifyProviderDependencyValidationException" />
         /// <exception cref="GovUkNotifyProviderDependencyException" />
         /// <exception cref="GovUkNotifyProviderServiceException" />
         public async ValueTask<string> SendLetterAsync(
@@ -126,7 +123,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
             }
             catch (NotificationDependencyValidationException notificationDependencyValidationException)
             {
-                throw CreateProviderDependencyValidationException(
+                throw CreateProviderValidationException(
                     notificationDependencyValidationException.InnerException as Xeption);
             }
             catch (NotificationDependencyException notificationDependencyException)
@@ -146,7 +143,6 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
         /// </summary>
         /// <returns>A string representing the unique identifier of the sent letter.</returns>
         /// <exception cref="GovUkNotifyProviderValidationException" />
-        /// <exception cref="GovUkNotifyProviderDependencyValidationException" />
         /// <exception cref="GovUkNotifyProviderDependencyException" />
         /// <exception cref="GovUkNotifyProviderServiceException" />
         public async ValueTask<string> SendPrecompiledLetterAsync(
@@ -165,7 +161,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
             }
             catch (NotificationDependencyValidationException notificationDependencyValidationException)
             {
-                throw CreateProviderDependencyValidationException(
+                throw CreateProviderValidationException(
                     notificationDependencyValidationException.InnerException as Xeption);
             }
             catch (NotificationDependencyException notificationDependencyException)
@@ -185,15 +181,6 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
         {
             return new GovUkNotifyProviderValidationException(
                 message: "Gov.UK Notify provider validation error occurred, fix errors and try again.",
-                innerException,
-                data: innerException.Data);
-        }
-
-        private static GovUkNotifyProviderDependencyValidationException CreateProviderDependencyValidationException(
-            Xeption innerException)
-        {
-            return new GovUkNotifyProviderDependencyValidationException(
-                message: "Gov.UK Notify provider dependency validation error occurred, fix errors and try again.",
                 innerException,
                 data: innerException.Data);
         }

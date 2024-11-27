@@ -55,46 +55,6 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
         }
 
         [Fact]
-        public async Task ShouldThrowDependencyValidationExceptionWhenTypeINotificationDependencyValidationException()
-        {
-            // given
-            var someException = new Xeption();
-
-            var someNotificationValidationException =
-                new SomeNotificationDependencyValidationException(
-                    message: "Some notification dependency validation exception occurred",
-                    innerException: someException,
-                    data: someException.Data);
-
-            NotificationProviderValidationException expectedNotificationValidationProviderException =
-                new NotificationProviderValidationException(
-                    message: "Notification validation errors occurred, please try again.",
-                    innerException: someNotificationValidationException);
-
-            this.notificationProviderMock.Setup(provider =>
-                provider.SendSmsAsync(It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>()))
-                    .ThrowsAsync(someNotificationValidationException);
-
-            // when
-            ValueTask<string> sendSmsTask =
-                this.notificationAbstractionProvider
-                    .SendSmsAsync(It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>());
-
-            NotificationProviderValidationException actualNotificationValidationProviderException =
-                await Assert.ThrowsAsync<NotificationProviderValidationException>(testCode: sendSmsTask.AsTask);
-
-            // then
-            actualNotificationValidationProviderException.Should().BeEquivalentTo(
-                expectedNotificationValidationProviderException);
-
-            this.notificationProviderMock.Verify(provider =>
-                provider.SendSmsAsync(It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>()),
-                    Times.Once);
-
-            this.notificationProviderMock.VerifyNoOtherCalls();
-        }
-
-        [Fact]
         public async Task ShouldThrowDependencyExceptionWhenTypeINotificationDependencyException()
         {
             // given

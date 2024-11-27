@@ -14,7 +14,8 @@ namespace ISL.NotificationClient.Infrastructure
 
             scriptGenerationService.GenerateBuildScript(
                 branchName: "main",
-                projectName: "ISL.Providers.Notifications.Abstractions");
+                projectName: "ISL.Providers.Notifications.Abstractions",
+                dotNetVersion: "8.0.302");
         }
     }
 }

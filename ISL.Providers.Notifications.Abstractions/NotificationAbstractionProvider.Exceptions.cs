@@ -23,10 +23,6 @@ namespace ISL.Providers.Notifications.Abstractions
             {
                 throw CreateValidationException(ex);
             }
-            catch (Xeption ex) when (ex is INotificationProviderDependencyValidationException)
-            {
-                throw CreateValidationException(ex);
-            }
             catch (Xeption ex) when (ex is INotificationProviderDependencyException)
             {
                 throw CreateDependencyException(ex);
