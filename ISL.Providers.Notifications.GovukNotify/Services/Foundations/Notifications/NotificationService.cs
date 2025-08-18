@@ -54,6 +54,8 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
             Dictionary<string, dynamic> personalisation = null,
             string clientReference = null)
         {
+            await ValidateOnSendLetter(templateId);
+
             return await this.govukNotifyBroker.SendLetterAsync(
                 templateId,
                 personalisation,
