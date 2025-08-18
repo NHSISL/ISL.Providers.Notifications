@@ -49,18 +49,19 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
         public async ValueTask<string> SendSmsAsync(string templateId, Dictionary<string, dynamic> personalisation) =>
             throw new NotImplementedException();
 
-        public async ValueTask<string> SendLetterAsync(
+        public ValueTask<string> SendLetterAsync(
             string templateId,
             Dictionary<string, dynamic> personalisation = null,
-            string clientReference = null)
-        {
-            await ValidateOnSendLetter(templateId);
+            string clientReference = null) =>
+            TryCatch(async () =>
+            {
+                await ValidateOnSendLetter(templateId);
 
-            return await this.govukNotifyBroker.SendLetterAsync(
-                templateId,
-                personalisation,
-                clientReference);
-        }
+                return await this.govukNotifyBroker.SendLetterAsync(
+                    templateId,
+                    personalisation,
+                    clientReference);
+            });
 
         public ValueTask<string> SendPrecompiledLetterAsync(
             string templateId,
