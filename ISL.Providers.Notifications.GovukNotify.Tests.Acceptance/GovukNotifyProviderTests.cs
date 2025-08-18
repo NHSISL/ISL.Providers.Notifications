@@ -5,6 +5,7 @@
 using ISL.Providers.Notifications.GovukNotify.Models;
 using ISL.Providers.Notifications.GovukNotify.Providers.Notifications;
 using Microsoft.Extensions.Configuration;
+using System;
 using Tynamix.ObjectFiller;
 
 namespace ISL.NotificationClient.Tests.Acceptance
@@ -37,5 +38,15 @@ namespace ISL.NotificationClient.Tests.Acceptance
 
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 10).GetValue();
+
+        private static string GetRandomMobileNumber()
+        {
+            Random random = new Random();
+            var randomNumberEnd = random.Next(1000000000, 2000000000).ToString();
+
+            string randomNumber = $"0{randomNumberEnd}";
+
+            return randomNumber;
+        }
     }
 }

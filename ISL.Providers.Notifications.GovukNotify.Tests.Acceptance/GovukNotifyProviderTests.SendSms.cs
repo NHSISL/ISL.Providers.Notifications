@@ -12,21 +12,17 @@ namespace ISL.NotificationClient.Tests.Acceptance
     public partial class GovukNotifyProviderTests
     {
         [Fact]
-        public async Task ShouldSendEmailAsync()
+        public async Task ShouldSendSmsAsync()
         {
             // given
-            string toEmail = GetRandomEmail();
-            string subject = GetRandomString();
-            string body = GetRandomString();
-            string templateId = configuration.GetValue<string>("notifyConfigurations:emailTemplateId");
+            string mobileNumber = GetRandomMobileNumber();
+            string templateId = configuration.GetValue<string>("notifyConfigurations:smsTemplateId");
             Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>();
-            personalisation.Add("templateId", templateId);
+            personalisation.Add("mobileNumber", templateId);
 
             // when
-            string identifier = await this.govukNotifyProvider.SendEmailAsync(
-                toEmail,
-                subject,
-                body,
+            string identifier = await this.govukNotifyProvider.SendSmsAsync(
+                templateId,
                 personalisation);
 
             // then
