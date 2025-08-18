@@ -54,6 +54,13 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
                 (Rule: await IsInvalidMobileNumber(mobileNumber), Parameter: nameof(mobileNumber)));
         }
 
+        private async ValueTask ValidateOnSendLetter(
+            string templateId)
+        {
+            Validate(
+                (Rule: await IsInvalid(templateId), Parameter: nameof(templateId)));
+        }
+
         private static async ValueTask<dynamic> IsInvalid(string text, bool isDictionaryValue = false) => new
         {
             Condition = String.IsNullOrWhiteSpace(text),
