@@ -2,10 +2,11 @@
 // Copyright (c) North East London ICB. All rights reserved.
 // ---------------------------------------------------------
 
+using ISL.Providers.Notifications.GovukNotify.Models.Foundations.Notifications.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using ISL.Providers.Notifications.GovukNotify.Models.Foundations.Notifications.Exceptions;
 
 namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notifications
 {
@@ -36,10 +37,35 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
                 (Rule: await IsInvalid(templateId, true), Parameter: nameof(templateId)));
         }
 
+        private async ValueTask ValidateOnSendSms(
+            string templateId,
+            Dictionary<string, dynamic> personalisation)
+        {
+            Validate(
+                (Rule: await IsInvalid(templateId), Parameter: nameof(templateId)),
+                (Rule: await IsInvalid(personalisation), Parameter: nameof(personalisation)));
+        }
+
+        private async ValueTask ValidateDictionaryOnSendSms(Dictionary<string, dynamic> personalisation)
+        {
+            string mobileNumber = GetValueOrNull(personalisation, "mobileNumber");
+
+            Validate(
+                (Rule: await IsInvalidMobileNumber(mobileNumber), Parameter: nameof(mobileNumber)));
+        }
+
         private static async ValueTask<dynamic> IsInvalid(string text, bool isDictionaryValue = false) => new
         {
             Condition = String.IsNullOrWhiteSpace(text),
             Message = isDictionaryValue == false ? "Text is required" : "Text is required for dictionary item"
+        };
+
+        private static async ValueTask<dynamic> IsInvalidMobileNumber(string mobileNumber) => new
+        {
+            Condition = !Regex.IsMatch(mobileNumber, @"^0\d{10}$"),
+
+            Message = "Mobile number in dictionary item must begin with 0, "
+                + "only contain numbers and be exactly 11 digits long"
         };
 
         private static async ValueTask<dynamic> IsInvalid(Dictionary<string, dynamic> dictionary) => new
