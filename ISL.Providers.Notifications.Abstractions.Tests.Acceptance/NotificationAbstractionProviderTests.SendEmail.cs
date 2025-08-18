@@ -19,7 +19,7 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Acceptance
             string toEmail = GetRandomEmail();
             string subject = GetRandomString();
             string body = GetRandomString();
-            string templateId = configuration.GetValue<string>("notifyConfigurations:emailTemplateId");
+            string templateId = configuration.GetValue<string>("notifyConfigurations:templateId");
             Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>();
             personalisation.Add("templateId", templateId);
 

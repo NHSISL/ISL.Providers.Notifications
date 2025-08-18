@@ -16,7 +16,7 @@ namespace ISL.NotificationClient.Tests.Acceptance
         {
             // given
             string mobileNumber = GetRandomMobileNumber();
-            string templateId = configuration.GetValue<string>("notifyConfigurations:smsTemplateId");
+            string templateId = configuration.GetValue<string>("notifyConfigurations:templateId");
             Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>();
             personalisation.Add("mobileNumber", templateId);
 
