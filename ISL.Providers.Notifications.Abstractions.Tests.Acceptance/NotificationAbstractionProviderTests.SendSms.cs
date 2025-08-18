@@ -19,7 +19,7 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Acceptance
             string mobileNumber = GetRandomMobileNumber();
             string templateId = configuration.GetValue<string>("notifyConfigurations:templateId");
             Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>();
-            personalisation.Add("mobileNumber", templateId);
+            personalisation.Add("mobileNumber", mobileNumber);
 
             // when
             string identifier = await this.notificationAbstractionProvider.SendSmsAsync(
