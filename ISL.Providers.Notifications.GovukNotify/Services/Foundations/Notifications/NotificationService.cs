@@ -52,8 +52,13 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
         public async ValueTask<string> SendLetterAsync(
             string templateId,
             Dictionary<string, dynamic> personalisation = null,
-            string clientReference = null) =>
-            throw new NotImplementedException();
+            string clientReference = null)
+        {
+            return await this.govukNotifyBroker.SendLetterAsync(
+                templateId,
+                personalisation,
+                clientReference);
+        }
 
         public ValueTask<string> SendPrecompiledLetterAsync(
             string templateId,
