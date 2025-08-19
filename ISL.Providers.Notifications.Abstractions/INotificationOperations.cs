@@ -21,6 +21,17 @@ namespace ISL.Providers.Notifications.Abstractions
             Dictionary<string, dynamic> personalisation);
 
         /// <summary>
+        /// Sends an email to the specified email address using the specified
+        /// template ID and personalisation items.
+        /// </summary>
+        /// <returns>A string representing the unique identifier of the sent email.</returns>
+        ValueTask<string> SendEmailAsync(
+            string templateId,
+            string toEmail,
+            Dictionary<string, dynamic> personalisation,
+            string clientReference = null);
+
+        /// <summary>
         /// Sends a SMS using the specified template ID and personalisation items.
         /// </summary>
         /// <returns>A string representing the unique identifier of the sent SMS.</returns>

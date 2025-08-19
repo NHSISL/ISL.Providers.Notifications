@@ -33,6 +33,24 @@ namespace ISL.Providers.Notifications.Abstractions
             });
 
         /// <summary>
+        /// Sends an email to the specified email address using the specified
+        /// template ID and personalisation items.
+        /// </summary>
+        /// <returns>A string representing the unique identifier of the sent email.</returns>
+        /// <exception cref="NotificationValidationProviderException" />
+        /// <exception cref="NotificationDependencyProviderException" />
+        /// <exception cref="NotificationServiceProviderException" />
+        public ValueTask<string> SendEmailAsync(
+            string templateId,
+            string toEmail,
+            Dictionary<string, dynamic> personalisation,
+            string clientReference = null) =>
+            TryCatch(async () =>
+            {
+                return await this.notificationProvider.SendEmailAsync(templateId, toEmail, personalisation, clientReference);
+            });
+
+        /// <summary>
         /// Sends a SMS using the specified template ID and personalisation items.
         /// </summary>
         /// <returns>A string representing the unique identifier of the sent SMS.</returns>

@@ -66,6 +66,46 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
         }
 
         /// <summary>
+        /// Sends an email to the specified email address using the specified
+        /// template ID and personalisation items.
+        /// </summary>
+        /// <returns>A string representing the unique identifier of the sent email.</returns>
+        /// <exception cref="GovUkNotifyProviderValidationException" />
+        /// <exception cref="GovUkNotifyProviderDependencyException" />
+        /// <exception cref="GovUkNotifyProviderServiceException" />
+        public async ValueTask<string> SendEmailAsync(
+            string templateId,
+            string toEmail,
+            Dictionary<string, dynamic> personalisation,
+            string clientReference = null)
+        {
+            try
+            {
+                return await this.notificationService.SendEmailAsync(templateId, toEmail, personalisation, clientReference);
+            }
+            catch (NotificationValidationException notificationValidationException)
+            {
+                throw CreateProviderValidationException(
+                    notificationValidationException.InnerException as Xeption);
+            }
+            catch (NotificationDependencyValidationException notificationDependencyValidationException)
+            {
+                throw CreateProviderValidationException(
+                    notificationDependencyValidationException.InnerException as Xeption);
+            }
+            catch (NotificationDependencyException notificationDependencyException)
+            {
+                throw CreateProviderDependencyException(
+                    notificationDependencyException.InnerException as Xeption);
+            }
+            catch (NotificationServiceException notificationServiceException)
+            {
+                throw CreateProviderServiceException(
+                    notificationServiceException.InnerException as Xeption);
+            }
+        }
+
+        /// <summary>
         /// Sends a SMS using the specified template ID and personalisation items.
         /// </summary>
         /// <returns>A string representing the unique identifier of the sent SMS.</returns>
