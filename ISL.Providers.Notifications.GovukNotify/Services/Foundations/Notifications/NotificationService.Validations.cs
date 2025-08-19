@@ -90,13 +90,18 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
             Message = isDictionaryValue == false ? "Text is required" : "Text is required for dictionary item"
         };
 
-        private static async ValueTask<dynamic> IsInvalidMobileNumber(string mobileNumber) => new
-        {
-            Condition = !Regex.IsMatch(mobileNumber, @"^07\d{9}$"),
+        private static async ValueTask<dynamic> IsInvalidMobileNumber(string mobileNumber) {
+            bool isInvalidLocalNumber = !Regex.IsMatch(mobileNumber, @"^07\d{9}$");
+            bool isInvalidInternationalNumber = !Regex.IsMatch(mobileNumber, @"^\+447\d{9}$");
 
-            Message = "Mobile number in dictionary item must begin with 0, "
+            return new
+            {
+                Condition = isInvalidLocalNumber && isInvalidInternationalNumber,
+
+                Message = "Mobile number in dictionary item must begin with 07 or +447, "
                 + "only contain numbers and be exactly 11 digits long"
-        };
+            };
+        }
 
         private static async ValueTask<dynamic> IsInvalid(Dictionary<string, dynamic> dictionary) => new
         {

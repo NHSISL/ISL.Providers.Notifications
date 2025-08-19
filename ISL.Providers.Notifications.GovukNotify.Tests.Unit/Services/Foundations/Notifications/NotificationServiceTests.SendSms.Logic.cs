@@ -12,7 +12,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
     public partial class NotificationServiceTests
     {
         [Fact]
-        public async Task ShouldSendSmsAsync()
+        public async Task ShouldSendSmsAsyncWithLocalNumber()
         {
             // given
             string randomIdentifier = GetRandomString();
@@ -20,7 +20,55 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             string inputTemplateId = GetRandomString();
             string inputClientReference = GetRandomString();
             string inputMessage = GetRandomString();
-            string inputMobileNumber = GetRandomMobileNumber();
+            string inputMobileNumber = GetRandomLocalMobileNumber();
+            string inputSmsSenderId = GetRandomString();
+            Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
+            inputPersonalization.Add("clientReference", inputClientReference);
+            inputPersonalization.Add("message", inputMessage);
+            inputPersonalization.Add("smsSenderId", inputSmsSenderId);
+
+            this.govukNotifyBroker
+                .Setup(broker =>
+                    broker.SendSmsAsync(
+                        inputMobileNumber,
+                        inputTemplateId,
+                        It.Is(SameDictionaryAs(inputPersonalization)),
+                        inputClientReference,
+                        inputSmsSenderId))
+                .ReturnsAsync(expectedIdentifier);
+
+            // when
+            string actualIdentifier = await this.notificationService.SendSmsAsync(
+                templateId: inputTemplateId,
+                mobileNumber: inputMobileNumber,
+                personalisation: inputPersonalization);
+
+            // then
+            actualIdentifier.Should().BeEquivalentTo(expectedIdentifier);
+
+            this.govukNotifyBroker
+                .Verify(broker =>
+                    broker.SendSmsAsync(
+                        inputMobileNumber,
+                        inputTemplateId,
+                        It.Is(SameDictionaryAs(inputPersonalization)),
+                        inputClientReference,
+                        inputSmsSenderId),
+                Times.Once);
+
+            this.govukNotifyBroker.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldSendSmsAsyncWithInternationalNumber()
+        {
+            // given
+            string randomIdentifier = GetRandomString();
+            string expectedIdentifier = randomIdentifier;
+            string inputTemplateId = GetRandomString();
+            string inputClientReference = GetRandomString();
+            string inputMessage = GetRandomString();
+            string inputMobileNumber = GetRandomInternationalMobileNumber();
             string inputSmsSenderId = GetRandomString();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
             inputPersonalization.Add("clientReference", inputClientReference);

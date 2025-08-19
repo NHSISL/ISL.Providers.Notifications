@@ -22,7 +22,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             string inputClientReference = GetRandomString();
             string inputSmsSenderId = GetRandomString();
             string inputMessage = GetRandomString();
-            string inputMobileNumber = GetRandomMobileNumber();
+            string inputMobileNumber = GetRandomLocalMobileNumber();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
             inputPersonalization.Add("clientReference", inputClientReference);
             inputPersonalization.Add("smsSenderId", inputSmsSenderId);
@@ -81,7 +81,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             string inputClientReference = GetRandomString();
             string inputSmsSenderId = GetRandomString();
             string inputMessage = GetRandomString();
-            string inputMobileNumber = GetRandomMobileNumber();
+            string inputMobileNumber = GetRandomLocalMobileNumber();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
             inputPersonalization.Add("clientReference", inputClientReference);
             inputPersonalization.Add("smsSenderId", inputSmsSenderId);
@@ -139,7 +139,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             string inputClientReference = GetRandomString();
             string inputSmsSenderId = GetRandomString();
             string inputMessage = GetRandomString();
-            string inputMobileNumber = GetRandomMobileNumber();
+            string inputMobileNumber = GetRandomLocalMobileNumber();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
             inputPersonalization.Add("clientReference", inputClientReference);
             inputPersonalization.Add("smsSenderId", inputSmsSenderId);

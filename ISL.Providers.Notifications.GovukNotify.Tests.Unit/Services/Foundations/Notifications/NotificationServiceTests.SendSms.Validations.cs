@@ -20,7 +20,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
         {
             // given
             string inputTemplateId = invalidText;
-            string inputMobileNumber = GetRandomMobileNumber();
+            string inputMobileNumber = GetRandomLocalMobileNumber();
             Dictionary<string, dynamic> inputPersonalization = null;
 
             var invalidArgumentNotificationException =
@@ -70,8 +70,9 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
         [InlineData("")]
         [InlineData(" ")]
         [InlineData("12345678901")]
-        [InlineData("0123456789")]
-        [InlineData("01234abc890")]
+        [InlineData("0723456789")]
+        [InlineData("07234abc890")]
+        [InlineData("+447234abc890")]
         public async Task ShouldValidateMobileNumberOnSendSmsAsync(string invalidMobileNumber)
         {
             // given
@@ -86,7 +87,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
 
             invalidArgumentNotificationException.AddData(
                 key: "mobileNumber",
-                values: "Mobile number in dictionary item must begin with 0, " +
+                values: "Mobile number in dictionary item must begin with 07 or +447, " +
                     "only contain numbers and be exactly 11 digits long");
 
             var expectedNotificationValidationException =
@@ -125,7 +126,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
         {
             // given
             string inputTemplateId = GetRandomString();
-            string inputMobileNumber = GetRandomMobileNumber();
+            string inputMobileNumber = GetRandomLocalMobileNumber();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
             inputPersonalization.Add("inputClientReference", GetRandomString());
 
