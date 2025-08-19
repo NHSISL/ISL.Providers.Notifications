@@ -46,11 +46,12 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
                 oneClickUnsubscribeURL);
         });
 
-        public async ValueTask<string> SendEmailAsync(
+        public ValueTask<string> SendEmailAsync(
             string templateId,
             string toEmail,
             Dictionary<string, dynamic> personalisation = null,
-            string clientReference = null)
+            string clientReference = null) =>
+        TryCatch(async () =>
         {
             await ValidateOnSendEmailWithTemplateId(toEmail, templateId, personalisation);
             string emailReplyToId = GetValueOrNull(personalisation, "emailReplyToId");
@@ -64,7 +65,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
                 clientReference: clientReference,
                 emailReplyToId: emailReplyToId,
                 oneClickUnsubscribeURL: oneClickUnsubscribeURL);
-        }
+        });
 
         public async ValueTask<string> SendSmsAsync(string templateId, Dictionary<string, dynamic> personalisation) =>
             throw new NotImplementedException();
