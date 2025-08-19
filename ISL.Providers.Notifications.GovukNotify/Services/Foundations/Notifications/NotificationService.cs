@@ -46,6 +46,15 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
                 oneClickUnsubscribeURL);
         });
 
+        public ValueTask<string> SendEmailAsync(
+            string templateId,
+            string toEmail,
+            Dictionary<string, dynamic> personalisation = null,
+            string clientReference = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public async ValueTask<string> SendSmsAsync(string templateId, Dictionary<string, dynamic> personalisation) =>
             throw new NotImplementedException();
 
