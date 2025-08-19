@@ -14,7 +14,7 @@ namespace ISL.NotificationClient.Tests.Acceptance
     {
         private readonly IGovukNotifyProvider govukNotifyProvider;
         private readonly IConfiguration configuration;
-
+        private readonly string TEST_MOBILE_NUMBER = "07700900000";
         public GovukNotifyProviderTests()
         {
             var configurationBuilder = new ConfigurationBuilder()
@@ -38,15 +38,5 @@ namespace ISL.NotificationClient.Tests.Acceptance
 
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 10).GetValue();
-
-        private static string GetRandomMobileNumber()
-        {
-            Random random = new Random();
-            var randomNumberEnd = random.Next(100000000, 200000000).ToString();
-
-            string randomNumber = $"07{randomNumberEnd}";
-
-            return randomNumber;
-        }
     }
 }

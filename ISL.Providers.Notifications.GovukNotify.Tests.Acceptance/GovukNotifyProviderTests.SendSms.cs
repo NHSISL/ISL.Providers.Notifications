@@ -15,7 +15,7 @@ namespace ISL.NotificationClient.Tests.Acceptance
         public async Task ShouldSendSmsAsync()
         {
             // given
-            string mobileNumber = GetRandomMobileNumber();
+            string mobileNumber = TEST_MOBILE_NUMBER;
             string message = GetRandomString();
             string templateId = configuration.GetValue<string>("notifyConfigurations:smsTemplateId");
             Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>();
