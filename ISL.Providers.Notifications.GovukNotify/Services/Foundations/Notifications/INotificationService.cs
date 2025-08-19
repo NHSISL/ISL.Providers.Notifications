@@ -15,6 +15,12 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
             string body,
             Dictionary<string, dynamic> personalisation);
 
+        ValueTask<string> SendEmailAsync(
+            string templateId,
+            string toEmail,
+            Dictionary<string, dynamic> personalisation = null,
+            string clientReference = null);
+
         ValueTask<string> SendSmsAsync(
             string templateId,
             string mobileNumber,

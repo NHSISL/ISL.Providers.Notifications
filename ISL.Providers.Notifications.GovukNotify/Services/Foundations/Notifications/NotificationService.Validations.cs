@@ -37,6 +37,27 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
                 (Rule: await IsInvalid(templateId, true), Parameter: nameof(templateId)));
         }
 
+        private async ValueTask ValidateOnSendEmailWithTemplateId(
+            string toEmail,
+            string templateId,
+            Dictionary<string, dynamic> personalisation)
+        {
+            Validate(
+                (Rule: await IsInvalid(toEmail), Parameter: nameof(toEmail)),
+                (Rule: await IsInvalid(templateId), Parameter: nameof(templateId)),
+                (Rule: await IsInvalid(personalisation), Parameter: nameof(personalisation)));
+        }
+
+        private async ValueTask ValidateDictionaryOnSendEmailWithTemplateId(Dictionary<string, dynamic> personalisation)
+        {
+            string subject = GetValueOrNull(personalisation, "subject");
+            string message = GetValueOrNull(personalisation, "message");
+
+            Validate(
+                (Rule: await IsInvalid(subject, true), Parameter: nameof(subject)),
+                (Rule: await IsInvalid(message, true), Parameter: nameof(message)));
+        }
+
         private async ValueTask ValidateOnSendSms(
             string templateId,
             string mobileNumber,
