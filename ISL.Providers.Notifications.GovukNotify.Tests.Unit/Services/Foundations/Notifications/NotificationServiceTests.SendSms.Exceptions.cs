@@ -21,11 +21,12 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             string inputTemplateId = GetRandomString();
             string inputClientReference = GetRandomString();
             string inputSmsSenderId = GetRandomString();
+            string inputMessage = GetRandomString();
             string inputMobileNumber = GetRandomMobileNumber();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
             inputPersonalization.Add("clientReference", inputClientReference);
             inputPersonalization.Add("smsSenderId", inputSmsSenderId);
-            inputPersonalization.Add("mobileNumber", inputMobileNumber);
+            inputPersonalization.Add("message", inputMessage);
 
             this.govukNotifyBroker.Setup(broker =>
                 broker.SendSmsAsync(
@@ -49,6 +50,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             // when
             ValueTask<string> sendEmailTask = this.notificationService.SendSmsAsync(
                 templateId: inputTemplateId,
+                mobileNumber: inputMobileNumber,
                 personalisation: inputPersonalization);
 
             NotificationDependencyValidationException actualNotificationDependencyValidationException =
@@ -78,11 +80,12 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             string inputTemplateId = GetRandomString();
             string inputClientReference = GetRandomString();
             string inputSmsSenderId = GetRandomString();
+            string inputMessage = GetRandomString();
             string inputMobileNumber = GetRandomMobileNumber();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
             inputPersonalization.Add("clientReference", inputClientReference);
             inputPersonalization.Add("smsSenderId", inputSmsSenderId);
-            inputPersonalization.Add("mobileNumber", inputMobileNumber);
+            inputPersonalization.Add("message", inputMessage);
 
             this.govukNotifyBroker.Setup(broker =>
                 broker.SendSmsAsync(
@@ -106,6 +109,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             // when
             ValueTask<string> sendEmailTask = this.notificationService.SendSmsAsync(
                 templateId: inputTemplateId,
+                mobileNumber: inputMobileNumber,
                 personalisation: inputPersonalization);
 
             NotificationDependencyException actualNotificationDependencyValidationException =
@@ -134,11 +138,12 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             string inputTemplateId = GetRandomString();
             string inputClientReference = GetRandomString();
             string inputSmsSenderId = GetRandomString();
+            string inputMessage = GetRandomString();
             string inputMobileNumber = GetRandomMobileNumber();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
             inputPersonalization.Add("clientReference", inputClientReference);
             inputPersonalization.Add("smsSenderId", inputSmsSenderId);
-            inputPersonalization.Add("mobileNumber", inputMobileNumber);
+            inputPersonalization.Add("message", inputMessage);
             var serviceException = new Exception();
 
             this.govukNotifyBroker.Setup(broker =>
@@ -162,6 +167,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             // when
             ValueTask<string> sendEmailTask = this.notificationService.SendSmsAsync(
                 templateId: inputTemplateId,
+                mobileNumber: inputMobileNumber,
                 personalisation: inputPersonalization);
 
             NotificationServiceException actualNotificationServiceException =

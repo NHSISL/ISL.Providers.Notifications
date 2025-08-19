@@ -39,19 +39,21 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
 
         private async ValueTask ValidateOnSendSms(
             string templateId,
+            string mobileNumber,
             Dictionary<string, dynamic> personalisation)
         {
             Validate(
                 (Rule: await IsInvalid(templateId), Parameter: nameof(templateId)),
+                (Rule: await IsInvalidMobileNumber(mobileNumber), Parameter: nameof(mobileNumber)),
                 (Rule: await IsInvalid(personalisation), Parameter: nameof(personalisation)));
         }
 
         private async ValueTask ValidateDictionaryOnSendSms(Dictionary<string, dynamic> personalisation)
         {
-            string mobileNumber = GetValueOrNull(personalisation, "mobileNumber");
+            string message = GetValueOrNull(personalisation, "message");
 
             Validate(
-                (Rule: await IsInvalidMobileNumber(mobileNumber), Parameter: nameof(mobileNumber)));
+                (Rule: await IsInvalid(message, true), Parameter: nameof(message)));
         }
 
         private async ValueTask ValidateOnSendLetter(
@@ -69,7 +71,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
 
         private static async ValueTask<dynamic> IsInvalidMobileNumber(string mobileNumber) => new
         {
-            Condition = !Regex.IsMatch(mobileNumber, @"^0\d{10}$"),
+            Condition = !Regex.IsMatch(mobileNumber, @"^07\d{9}$"),
 
             Message = "Mobile number in dictionary item must begin with 0, "
                 + "only contain numbers and be exactly 11 digits long"

@@ -17,14 +17,16 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Acceptance
         {
             // given
             string mobileNumber = GetRandomMobileNumber();
-            string templateId = configuration.GetValue<string>("notifyConfigurations:templateId");
+            string message = GetRandomString();
+            string templateId = configuration.GetValue<string>("notifyConfigurations:smsTemplateId");
             Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>();
-            personalisation.Add("mobileNumber", mobileNumber);
+            personalisation.Add("message", message);
 
             // when
             string identifier = await this.notificationAbstractionProvider.SendSmsAsync(
-                templateId,
-                personalisation);
+                templateId: templateId,
+                mobileNumber: mobileNumber,
+                personalisation: personalisation);
 
             // then
             identifier.Should().NotBeNullOrWhiteSpace();

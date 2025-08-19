@@ -19,12 +19,12 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             string expectedIdentifier = randomIdentifier;
             string inputTemplateId = GetRandomString();
             string inputClientReference = GetRandomString();
+            string inputMessage = GetRandomString();
             string inputMobileNumber = GetRandomMobileNumber();
             string inputSmsSenderId = GetRandomString();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
             inputPersonalization.Add("clientReference", inputClientReference);
-            inputPersonalization.Add("templateId", inputTemplateId);
-            inputPersonalization.Add("mobileNumber", inputMobileNumber);
+            inputPersonalization.Add("message", inputMessage);
             inputPersonalization.Add("smsSenderId", inputSmsSenderId);
 
             this.govukNotifyBroker
@@ -40,6 +40,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             // when
             string actualIdentifier = await this.notificationService.SendSmsAsync(
                 templateId: inputTemplateId,
+                mobileNumber: inputMobileNumber,
                 personalisation: inputPersonalization);
 
             // then

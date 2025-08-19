@@ -43,9 +43,9 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Acceptance
         private static string GetRandomMobileNumber()
         {
             Random random = new Random();
-            var randomNumberEnd = random.Next(1000000000, 2000000000).ToString();
+            var randomNumberEnd = random.Next(100000000, 200000000).ToString();
 
-            string randomNumber = $"0{randomNumberEnd}";
+            string randomNumber = $"07{randomNumberEnd}";
 
             return randomNumber;
         }
