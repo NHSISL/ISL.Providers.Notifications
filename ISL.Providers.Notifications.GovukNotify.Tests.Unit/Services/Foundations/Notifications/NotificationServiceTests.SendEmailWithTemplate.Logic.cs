@@ -18,7 +18,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             string randomIdentifier = GetRandomString();
             string expectedIdentifier = randomIdentifier;
             string inputTemplateId = GetRandomString();
-            string inputToEmail = GetRandomString();
+            string inputToEmail = GetRandomEmailAddress();
             string inputClientReference = GetRandomString();
             string inputSubject = GetRandomString();
             string inputMessage = GetRandomString();

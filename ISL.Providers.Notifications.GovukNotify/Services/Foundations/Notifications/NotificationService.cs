@@ -52,8 +52,10 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
             Dictionary<string, dynamic> personalisation = null,
             string clientReference = null)
         {
+            await ValidateOnSendEmailWithTemplateId(toEmail, templateId, personalisation);
             string emailReplyToId = GetValueOrNull(personalisation, "emailReplyToId");
             string oneClickUnsubscribeURL = GetValueOrNull(personalisation, "oneClickUnsubscribeURL");
+            await ValidateDictionaryOnSendEmailWithTemplateId(personalisation);
 
             return await this.govukNotifyBroker.SendEmailAsync(
                 toEmail,
