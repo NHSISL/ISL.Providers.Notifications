@@ -16,7 +16,7 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Acceptance
         public async Task ShouldSendEmailAsync()
         {
             // given
-            string toEmail = GetRandomEmail();
+            string toEmail = TEST_EMAIL;
             string subject = GetRandomString();
             string body = GetRandomString();
             string templateId = configuration.GetValue<string>("notifyConfigurations:emailTemplateId");

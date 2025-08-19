@@ -13,6 +13,7 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Acceptance
     {
         private readonly INotificationAbstractionProvider notificationAbstractionProvider;
         private readonly IConfiguration configuration;
+        private readonly string TEST_EMAIL = "simulate-delivered@notifications.service.gov.uk";
 
         public NotificationAbstractionProviderTests()
         {
@@ -29,9 +30,6 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Acceptance
             INotificationProvider govukNotifyProvider = new GovukNotifyProvider(notifyConfigurations);
             this.notificationAbstractionProvider = new NotificationAbstractionProvider(govukNotifyProvider);
         }
-
-        private static string GetRandomEmail() =>
-            new EmailAddresses().GetValue();
 
         private static string GetRandomString() =>
             new MnemonicString(wordCount: GetRandomNumber()).GetValue();
