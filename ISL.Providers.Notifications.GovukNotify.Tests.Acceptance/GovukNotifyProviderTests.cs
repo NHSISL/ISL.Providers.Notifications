@@ -5,6 +5,7 @@
 using ISL.Providers.Notifications.GovukNotify.Models;
 using ISL.Providers.Notifications.GovukNotify.Providers.Notifications;
 using Microsoft.Extensions.Configuration;
+using System;
 using Tynamix.ObjectFiller;
 
 namespace ISL.NotificationClient.Tests.Acceptance
@@ -13,6 +14,7 @@ namespace ISL.NotificationClient.Tests.Acceptance
     {
         private readonly IGovukNotifyProvider govukNotifyProvider;
         private readonly IConfiguration configuration;
+        private readonly string TEST_MOBILE_NUMBER = "07700900000";
 
         public GovukNotifyProviderTests()
         {

@@ -26,6 +26,7 @@ namespace ISL.Providers.Notifications.Abstractions
         /// <returns>A string representing the unique identifier of the sent SMS.</returns>
         ValueTask<string> SendSmsAsync(
             string templateId,
+            string mobileNumber,
             Dictionary<string, dynamic> personalisation);
 
         /// <summary>

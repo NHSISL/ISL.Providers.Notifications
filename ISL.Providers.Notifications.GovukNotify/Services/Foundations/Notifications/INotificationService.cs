@@ -23,6 +23,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
 
         ValueTask<string> SendSmsAsync(
             string templateId,
+            string mobileNumber,
             Dictionary<string, dynamic> personalisation);
 
         ValueTask<string> SendLetterAsync(

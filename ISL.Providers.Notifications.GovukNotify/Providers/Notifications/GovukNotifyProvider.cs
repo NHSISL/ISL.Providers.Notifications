@@ -72,11 +72,14 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
         /// <exception cref="GovUkNotifyProviderValidationException" />
         /// <exception cref="GovUkNotifyProviderDependencyException" />
         /// <exception cref="GovUkNotifyProviderServiceException" />
-        public async ValueTask<string> SendSmsAsync(string templateId, Dictionary<string, dynamic> personalisation)
+        public async ValueTask<string> SendSmsAsync(
+            string templateId, 
+            string mobileNumber, 
+            Dictionary<string, dynamic> personalisation)
         {
             try
             {
-                return await this.notificationService.SendSmsAsync(templateId, personalisation);
+                return await this.notificationService.SendSmsAsync(templateId, mobileNumber, personalisation);
             }
             catch (NotificationValidationException notificationValidationException)
             {

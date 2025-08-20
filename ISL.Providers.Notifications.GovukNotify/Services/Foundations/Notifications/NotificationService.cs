@@ -67,8 +67,24 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
                 oneClickUnsubscribeURL: oneClickUnsubscribeURL);
         });
 
-        public async ValueTask<string> SendSmsAsync(string templateId, Dictionary<string, dynamic> personalisation) =>
-            throw new NotImplementedException();
+        public ValueTask<string> SendSmsAsync(
+            string templateId, 
+            string mobileNumber, 
+            Dictionary<string, dynamic> personalisation) =>
+        TryCatch(async () =>
+        {
+            await ValidateOnSendSms(templateId, mobileNumber, personalisation);
+            await ValidateDictionaryOnSendSms(personalisation);
+            string clientReference = GetValueOrNull(personalisation, "clientReference");
+            string smsSenderId = GetValueOrNull(personalisation, "smsSenderId");
+
+            return await this.govukNotifyBroker.SendSmsAsync(
+                mobileNumber: mobileNumber,
+                templateId: templateId,
+                personalisation: personalisation,
+                clientReference: clientReference,
+                smsSenderId: smsSenderId);
+        });
 
         public ValueTask<string> SendLetterAsync(
             string templateId,
