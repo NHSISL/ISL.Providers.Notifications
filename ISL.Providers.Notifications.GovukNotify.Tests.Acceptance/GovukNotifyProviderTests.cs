@@ -15,6 +15,7 @@ namespace ISL.NotificationClient.Tests.Acceptance
         private readonly IGovukNotifyProvider govukNotifyProvider;
         private readonly IConfiguration configuration;
         private readonly string TEST_MOBILE_NUMBER = "07700900000";
+        private readonly string TEST_EMAIL = "simulate-delivered@notifications.service.gov.uk";
 
         public GovukNotifyProviderTests()
         {
@@ -30,9 +31,6 @@ namespace ISL.NotificationClient.Tests.Acceptance
 
             this.govukNotifyProvider = new GovukNotifyProvider(notifyConfigurations);
         }
-
-        private static string GetRandomEmail() =>
-            new EmailAddresses().GetValue();
 
         private static string GetRandomString() =>
             new MnemonicString(wordCount: GetRandomNumber()).GetValue();

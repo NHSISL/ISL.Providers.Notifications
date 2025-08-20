@@ -12,21 +12,21 @@ namespace ISL.NotificationClient.Tests.Acceptance
     public partial class GovukNotifyProviderTests
     {
         [Fact]
-        public async Task ShouldSendEmailAsync()
+        public async Task ShouldSendEmailWithTemplateIdAsync()
         {
             // given
             string toEmail = TEST_EMAIL;
             string subject = GetRandomString();
-            string body = GetRandomString();
+            string message = GetRandomString();
             string templateId = configuration.GetValue<string>("notifyConfigurations:emailTemplateId");
             Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>();
-            personalisation.Add("templateId", templateId);
+            personalisation.Add("subject", subject);
+            personalisation.Add("message", message);
 
             // when
             string identifier = await this.govukNotifyProvider.SendEmailAsync(
+                templateId,
                 toEmail,
-                subject,
-                body,
                 personalisation);
 
             // then
