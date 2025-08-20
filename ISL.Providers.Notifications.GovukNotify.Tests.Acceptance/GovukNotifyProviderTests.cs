@@ -15,6 +15,7 @@ namespace ISL.NotificationClient.Tests.Acceptance
         private readonly IGovukNotifyProvider govukNotifyProvider;
         private readonly IConfiguration configuration;
         private readonly string TEST_MOBILE_NUMBER = "07700900000";
+
         public GovukNotifyProviderTests()
         {
             var configurationBuilder = new ConfigurationBuilder()

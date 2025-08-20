@@ -98,8 +98,8 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
             {
                 Condition = isInvalidLocalNumber && isInvalidInternationalNumber,
 
-                Message = "Mobile number in dictionary item must begin with 07 or +447, "
-                + "only contain numbers and be exactly 11 digits long"
+                Message = "Mobile number must be in UK format: 07XXXXXXXXX (11 digits) " +
+                    "or international format: +447XXXXXXXXX (12 digits)"
             };
         }
 
