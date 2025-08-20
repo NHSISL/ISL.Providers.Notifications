@@ -38,6 +38,24 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
         private static string GetRandomEmailAddress() =>
             new EmailAddresses().GetValue();
 
+        private static string GetRandomLocalMobileNumber()
+        {
+            Random random = new Random();
+            var randomNumberEnd = random.Next(100000000, 200000000).ToString();
+            string randomNumber = $"07{randomNumberEnd}";
+
+            return randomNumber;
+        }
+
+        private static string GetRandomInternationalMobileNumber()
+        {
+            Random random = new Random();
+            var randomNumberEnd = random.Next(100000000, 200000000).ToString();
+            string randomNumber = $"+447{randomNumberEnd}";
+
+            return randomNumber;
+        }
+
         private static NotifyConfigurations GetRandomConfigurations() =>
             CreateNotifyConfigurationsFiller().Create();
 

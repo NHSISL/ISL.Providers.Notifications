@@ -63,10 +63,11 @@ namespace ISL.Providers.Notifications.Abstractions
         /// <exception cref="NotificationServiceProviderException" />
         public ValueTask<string> SendSmsAsync(
             string templateId,
+            string mobileNumber,
             Dictionary<string, dynamic> personalisation) =>
             TryCatch(async () =>
             {
-                return await this.notificationProvider.SendSmsAsync(templateId, personalisation);
+                return await this.notificationProvider.SendSmsAsync(templateId, mobileNumber, personalisation);
             });
 
         /// <summary>

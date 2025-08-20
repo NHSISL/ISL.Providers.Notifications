@@ -2,10 +2,11 @@
 // Copyright (c) North East London ICB. All rights reserved.
 // ---------------------------------------------------------
 
+using ISL.Providers.Notifications.GovukNotify.Models.Foundations.Notifications.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using ISL.Providers.Notifications.GovukNotify.Models.Foundations.Notifications.Exceptions;
 
 namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notifications
 {
@@ -57,6 +58,25 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
                 (Rule: await IsInvalid(message, true), Parameter: nameof(message)));
         }
 
+        private async ValueTask ValidateOnSendSms(
+            string templateId,
+            string mobileNumber,
+            Dictionary<string, dynamic> personalisation)
+        {
+            Validate(
+                (Rule: await IsInvalid(templateId), Parameter: nameof(templateId)),
+                (Rule: await IsInvalidMobileNumber(mobileNumber), Parameter: nameof(mobileNumber)),
+                (Rule: await IsInvalid(personalisation), Parameter: nameof(personalisation)));
+        }
+
+        private async ValueTask ValidateDictionaryOnSendSms(Dictionary<string, dynamic> personalisation)
+        {
+            string message = GetValueOrNull(personalisation, "message");
+
+            Validate(
+                (Rule: await IsInvalid(message, true), Parameter: nameof(message)));
+        }
+
         private async ValueTask ValidateOnSendLetter(
             string templateId)
         {
@@ -69,6 +89,19 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
             Condition = String.IsNullOrWhiteSpace(text),
             Message = isDictionaryValue == false ? "Text is required" : "Text is required for dictionary item"
         };
+
+        private static async ValueTask<dynamic> IsInvalidMobileNumber(string mobileNumber) {
+            bool isInvalidLocalNumber = !Regex.IsMatch(mobileNumber, @"^07\d{9}$");
+            bool isInvalidInternationalNumber = !Regex.IsMatch(mobileNumber, @"^\+447\d{9}$");
+
+            return new
+            {
+                Condition = isInvalidLocalNumber && isInvalidInternationalNumber,
+
+                Message = "Mobile number must be in UK format: 07XXXXXXXXX (11 digits) " +
+                    "or international format: +447XXXXXXXXX (12 digits)"
+            };
+        }
 
         private static async ValueTask<dynamic> IsInvalid(Dictionary<string, dynamic> dictionary) => new
         {
