@@ -32,13 +32,21 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
                     innerException: someNotificationValidationException);
 
             this.notificationProviderMock.Setup(provider =>
-                provider.SendEmailAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>(), It.IsAny<string>()))
-                    .ThrowsAsync(someNotificationValidationException);
+                provider.SendEmailAsync(
+                    It.IsAny<string>(), 
+                    It.IsAny<string>(), 
+                    It.IsAny<Dictionary<string, dynamic>>(),
+                    It.IsAny<string>()))
+                        .ThrowsAsync(someNotificationValidationException);
 
             // when
             ValueTask<string> sendSmsTask =
                 this.notificationAbstractionProvider
-                    .SendEmailAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>(), It.IsAny<string>());
+                    .SendEmailAsync(
+                        It.IsAny<string>(), 
+                        It.IsAny<string>(), 
+                        It.IsAny<Dictionary<string, dynamic>>(), 
+                        It.IsAny<string>());
 
             NotificationProviderValidationException actualNotificationValidationProviderException =
                 await Assert.ThrowsAsync<NotificationProviderValidationException>(testCode: sendSmsTask.AsTask);
@@ -48,8 +56,12 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
                 expectedNotificationValidationProviderException);
 
             this.notificationProviderMock.Verify(provider =>
-                provider.SendEmailAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>(), It.IsAny<string>()),
-                    Times.Once);
+                provider.SendEmailAsync(
+                    It.IsAny<string>(), 
+                    It.IsAny<string>(), 
+                    It.IsAny<Dictionary<string, dynamic>>(), 
+                    It.IsAny<string>()),
+                        Times.Once);
 
             this.notificationProviderMock.VerifyNoOtherCalls();
         }
@@ -71,13 +83,21 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
                     innerException: someNotificationValidationException);
 
             this.notificationProviderMock.Setup(provider =>
-                provider.SendEmailAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>(), It.IsAny<string>()))
-                    .ThrowsAsync(someNotificationValidationException);
+                provider.SendEmailAsync(
+                    It.IsAny<string>(), 
+                    It.IsAny<string>(), 
+                    It.IsAny<Dictionary<string, dynamic>>(), 
+                    It.IsAny<string>()))
+                        .ThrowsAsync(someNotificationValidationException);
 
             // when
             ValueTask<string> sendSmsTask =
                 this.notificationAbstractionProvider
-                    .SendEmailAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>(), It.IsAny<string>());
+                    .SendEmailAsync(
+                        It.IsAny<string>(), 
+                        It.IsAny<string>(), 
+                        It.IsAny<Dictionary<string, dynamic>>(), 
+                        It.IsAny<string>());
 
             NotificationProviderDependencyException actualNotificationDependencyProviderException =
                 await Assert.ThrowsAsync<NotificationProviderDependencyException>(testCode: sendSmsTask.AsTask);
@@ -87,8 +107,12 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
                 expectedNotificationDependencyProviderException);
 
             this.notificationProviderMock.Verify(provider =>
-                provider.SendEmailAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>(), It.IsAny<string>()),
-                    Times.Once);
+                provider.SendEmailAsync(
+                    It.IsAny<string>(), 
+                    It.IsAny<string>(), 
+                    It.IsAny<Dictionary<string, dynamic>>(), 
+                    It.IsAny<string>()),
+                        Times.Once);
 
             this.notificationProviderMock.VerifyNoOtherCalls();
         }
@@ -110,13 +134,21 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
                     innerException: someNotificationValidationException);
 
             this.notificationProviderMock.Setup(provider =>
-                provider.SendEmailAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>(), It.IsAny<string>()))
-                    .ThrowsAsync(someNotificationValidationException);
+                provider.SendEmailAsync(
+                    It.IsAny<string>(), 
+                    It.IsAny<string>(), 
+                    It.IsAny<Dictionary<string, dynamic>>(), 
+                    It.IsAny<string>()))
+                        .ThrowsAsync(someNotificationValidationException);
 
             // when
             ValueTask<string> sendSmsTask =
                 this.notificationAbstractionProvider
-                    .SendEmailAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>(), It.IsAny<string>());
+                    .SendEmailAsync(
+                        It.IsAny<string>(), 
+                        It.IsAny<string>(), 
+                        It.IsAny<Dictionary<string, dynamic>>(), 
+                        It.IsAny<string>());
 
             NotificationProviderServiceException actualNotificationServiceProviderException =
                 await Assert.ThrowsAsync<NotificationProviderServiceException>(testCode: sendSmsTask.AsTask);
@@ -126,8 +158,12 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
                 expectedNotificationServiceProviderException);
 
             this.notificationProviderMock.Verify(provider =>
-                provider.SendEmailAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>(), It.IsAny<string>()),
-                    Times.Once);
+                provider.SendEmailAsync(
+                    It.IsAny<string>(), 
+                    It.IsAny<string>(), 
+                    It.IsAny<Dictionary<string, dynamic>>(), 
+                    It.IsAny<string>()),
+                        Times.Once);
 
             this.notificationProviderMock.VerifyNoOtherCalls();
         }
@@ -151,13 +187,21 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
                     innerException: uncatagorizedNotificationProviderException);
 
             this.notificationProviderMock.Setup(provider =>
-                provider.SendEmailAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>(), It.IsAny<string>()))
-                    .ThrowsAsync(someException);
+                provider.SendEmailAsync(
+                    It.IsAny<string>(), 
+                    It.IsAny<string>(), 
+                    It.IsAny<Dictionary<string, dynamic>>(), 
+                    It.IsAny<string>()))
+                        .ThrowsAsync(someException);
 
             // when
             ValueTask<string> sendSmsTask =
                 this.notificationAbstractionProvider
-                    .SendEmailAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>(), It.IsAny<string>());
+                    .SendEmailAsync(
+                        It.IsAny<string>(), 
+                        It.IsAny<string>(),
+                        It.IsAny<Dictionary<string, dynamic>>(), 
+                        It.IsAny<string>());
 
             NotificationProviderServiceException actualNotificationServiceProviderException =
                 await Assert.ThrowsAsync<NotificationProviderServiceException>(testCode: sendSmsTask.AsTask);
@@ -167,8 +211,12 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
                 expectedNotificationServiceProviderException);
 
             this.notificationProviderMock.Verify(provider =>
-                provider.SendEmailAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>(), It.IsAny<string>()),
-                    Times.Once);
+                provider.SendEmailAsync(
+                    It.IsAny<string>(), 
+                    It.IsAny<string>(), 
+                    It.IsAny<Dictionary<string, dynamic>>(), 
+                    It.IsAny<string>()),
+                        Times.Once);
 
             this.notificationProviderMock.VerifyNoOtherCalls();
         }

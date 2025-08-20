@@ -47,7 +47,11 @@ namespace ISL.Providers.Notifications.Abstractions
             string clientReference = null) =>
             TryCatch(async () =>
             {
-                return await this.notificationProvider.SendEmailAsync(templateId, toEmail, personalisation, clientReference);
+                return await this.notificationProvider.SendEmailAsync(
+                    templateId, 
+                    toEmail, 
+                    personalisation, 
+                    clientReference);
             });
 
         /// <summary>

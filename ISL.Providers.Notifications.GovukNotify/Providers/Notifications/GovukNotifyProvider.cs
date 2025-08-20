@@ -81,7 +81,11 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
         {
             try
             {
-                return await this.notificationService.SendEmailAsync(templateId, toEmail, personalisation, clientReference);
+                return await this.notificationService.SendEmailAsync(
+                    templateId, 
+                    toEmail, 
+                    personalisation, 
+                    clientReference);
             }
             catch (NotificationValidationException notificationValidationException)
             {
