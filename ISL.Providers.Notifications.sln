@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GOV.UK Notify Intercept", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ISL.Providers.Notifications.GovUkNotifyIntercept", "ISL.Providers.Notifications.GovUkNotifyIntercept\ISL.Providers.Notifications.GovUkNotifyIntercept.csproj", "{FBDC2FA1-489E-4A04-8BE7-39EFD1AD831F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit", "ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit\ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.csproj", "{7C011FD0-F854-483E-8394-20FEE86D1CFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{FBDC2FA1-489E-4A04-8BE7-39EFD1AD831F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBDC2FA1-489E-4A04-8BE7-39EFD1AD831F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBDC2FA1-489E-4A04-8BE7-39EFD1AD831F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C011FD0-F854-483E-8394-20FEE86D1CFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C011FD0-F854-483E-8394-20FEE86D1CFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C011FD0-F854-483E-8394-20FEE86D1CFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C011FD0-F854-483E-8394-20FEE86D1CFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,6 +76,7 @@ Global
 		{86BAC5DC-C65D-48D4-BFF5-97468720A918} = {0B3F9412-F7C7-48F7-8A6D-A8F869109ACE}
 		{BDAD4B92-0731-45A3-895B-8462107EAE3C} = {0B3F9412-F7C7-48F7-8A6D-A8F869109ACE}
 		{FBDC2FA1-489E-4A04-8BE7-39EFD1AD831F} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{7C011FD0-F854-483E-8394-20FEE86D1CFC} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {71F274A5-5D15-4661-9D0B-01EBBFF052BA}

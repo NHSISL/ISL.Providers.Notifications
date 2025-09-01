@@ -48,8 +48,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<InternalsVisibleTo Include="ISL.Providers.Notifications.GovukNotify.Tests.Unit" />
-		<InternalsVisibleTo Include="ISL.Providers.Notifications.GovukNotify.Tests.Acceptance" />
+		<InternalsVisibleTo Include="ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit" />
 		<InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
 	</ItemGroup>
 
