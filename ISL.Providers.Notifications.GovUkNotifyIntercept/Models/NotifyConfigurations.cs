@@ -8,5 +8,6 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Models
     {
         public string ApiKey { get; set; }
         public string InterceptingEmail { get; set; }
+        public string InterceptingMobileNumber { get; set; }
     }
 }

@@ -5,6 +5,7 @@
 using ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Foundations.Notifications.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.Notifications
@@ -38,6 +39,32 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
             Validate((Rule: await IsInvalid(interceptingEmail), Parameter: nameof(interceptingEmail)));
         }
 
+        private async ValueTask ValidateOnSendSms(
+            string templateId,
+            string mobileNumber,
+            Dictionary<string, dynamic> personalisation)
+        {
+            Validate(
+                (Rule: await IsInvalid(templateId), Parameter: nameof(templateId)),
+                (Rule: await IsInvalidMobileNumber(mobileNumber), Parameter: nameof(mobileNumber)),
+                (Rule: await IsInvalid(personalisation), Parameter: nameof(personalisation)));
+        }
+
+        private async ValueTask ValidateDictionaryOnSendSms(Dictionary<string, dynamic> personalisation)
+        {
+            string message = GetValueOrNull(personalisation, "message");
+
+            Validate(
+                (Rule: await IsInvalid(message, true), Parameter: nameof(message)));
+        }
+
+        private async ValueTask ValidateInterceptingMobileNumberAsync(string interceptingMobileNumber)
+        {
+            Validate(
+                (Rule: await IsInvalidMobileNumber(interceptingMobileNumber),
+                Parameter: nameof(interceptingMobileNumber)));
+        }
+
         private static async ValueTask<dynamic> IsInvalid(string text, bool isDictionaryValue = false) => new
         {
             Condition = String.IsNullOrWhiteSpace(text),
@@ -49,6 +76,20 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
             Condition = dictionary == null,
             Message = "Dictionary is required"
         };
+
+        private static async ValueTask<dynamic> IsInvalidMobileNumber(string mobileNumber)
+        {
+            bool isInvalidLocalNumber = !Regex.IsMatch(mobileNumber, @"^07\d{9}$");
+            bool isInvalidInternationalNumber = !Regex.IsMatch(mobileNumber, @"^\+447\d{9}$");
+
+            return new
+            {
+                Condition = isInvalidLocalNumber && isInvalidInternationalNumber,
+
+                Message = "Mobile number must be in UK format: 07XXXXXXXXX (11 digits) " +
+                    "or international format: +447XXXXXXXXX (12 digits)"
+            };
+        }
 
         private static void Validate(params (dynamic Rule, string Parameter)[] validations)
         {

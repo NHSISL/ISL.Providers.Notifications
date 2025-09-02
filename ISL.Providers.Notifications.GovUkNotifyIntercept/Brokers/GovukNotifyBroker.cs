@@ -31,5 +31,22 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Brokers
 
             return response.id;
         }
+
+        public async ValueTask<string> SendSmsAsync(
+           string mobileNumber,
+           string templateId,
+           Dictionary<string, dynamic> personalisation = null,
+           string clientReference = null,
+           string smsSenderId = null)
+        {
+            SmsNotificationResponse response = await this.client.SendSmsAsync(
+                mobileNumber,
+                templateId,
+                personalisation,
+                clientReference,
+                smsSenderId);
+
+            return response.id;
+        }
     }
 }

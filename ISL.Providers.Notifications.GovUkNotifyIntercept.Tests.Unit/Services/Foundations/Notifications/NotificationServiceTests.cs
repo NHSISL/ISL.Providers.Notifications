@@ -62,7 +62,8 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
         private static Filler<NotifyConfigurations> CreateNotifyConfigurationsFiller()
         {
             var filler = new Filler<NotifyConfigurations>();
-            filler.Setup();
+            filler.Setup()
+                .OnProperty(nc => nc.InterceptingMobileNumber).Use(GetRandomLocalMobileNumber());
 
             return filler;
         }

@@ -14,5 +14,10 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
             string toEmail,
             Dictionary<string, dynamic> personalisation = null,
             string clientReference = null);
+
+        ValueTask<string> SendSmsAsync(
+            string templateId,
+            string mobileNumber,
+            Dictionary<string, dynamic> personalisation);
     }
 }
