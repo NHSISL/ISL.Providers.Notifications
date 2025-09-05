@@ -35,8 +35,8 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
             await ValidateInterceptingEmailAsync(interceptEmail);
 
             return await this.govukNotifyBroker.SendEmailAsync(
-                interceptEmail,
-                templateId,
+                templateId: templateId,
+                toEmail: interceptEmail,
                 personalisation: personalisation,
                 clientReference: clientReference);
         });
