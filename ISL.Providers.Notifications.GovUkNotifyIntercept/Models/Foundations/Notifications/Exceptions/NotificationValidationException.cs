@@ -2,14 +2,13 @@
 // Copyright (c) North East London ICB. All rights reserved.
 // ---------------------------------------------------------
 
-using System;
 using Xeptions;
 
-namespace ISL.Providers.Notifications.GovukNotify.Models.Foundations.Notifications.Exceptions
+namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Foundations.Notifications.Exceptions
 {
-    internal class FailedNotificationServiceException : Xeption
+    internal class NotificationValidationException : Xeption
     {
-        public FailedNotificationServiceException(string message, Exception innerException)
+        public NotificationValidationException(string message, Xeption innerException)
             : base(message, innerException)
         { }
     }

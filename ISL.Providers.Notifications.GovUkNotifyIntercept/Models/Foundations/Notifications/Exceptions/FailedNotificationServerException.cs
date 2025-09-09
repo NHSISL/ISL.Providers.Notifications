@@ -6,7 +6,7 @@ using System;
 using System.Collections;
 using Xeptions;
 
-namespace ISL.Providers.Notifications.GovukNotify.Models.Foundations.Notifications.Exceptions
+namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Foundations.Notifications.Exceptions
 {
     internal class FailedNotificationServerException : Xeption
     {

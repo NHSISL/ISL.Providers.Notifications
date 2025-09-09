@@ -5,7 +5,7 @@
 using System;
 using Xeptions;
 
-namespace ISL.Providers.Notifications.GovukNotify.Models.Foundations.Notifications.Exceptions
+namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Foundations.Notifications.Exceptions
 {
     internal class FailedNotificationServiceException : Xeption
     {

@@ -4,11 +4,11 @@
 
 using Xeptions;
 
-namespace ISL.Providers.Notifications.GovukNotify.Models.Foundations.Notifications.Exceptions
+namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Foundations.Notifications.Exceptions
 {
-    internal class NotificationDependencyException : Xeption
+    internal class NotificationDependencyValidationException : Xeption
     {
-        public NotificationDependencyException(string message, Xeption innerException)
+        public NotificationDependencyValidationException(string message, Xeption innerException)
          : base(message, innerException)
         { }
     }

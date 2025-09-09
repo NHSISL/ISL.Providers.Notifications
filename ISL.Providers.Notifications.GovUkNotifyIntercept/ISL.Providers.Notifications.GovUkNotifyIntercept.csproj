@@ -1,0 +1,65 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<Title>ISL.Providers.Notifications.GovukNotifyIntercept</Title>
+		<Product>ISL.Providers.Notifications.GovukNotifyIntercept</Product>
+		<PackageId>ISL.Providers.Notifications.GovukNotifyIntercept</PackageId>
+		<Authors>North East London ICB</Authors>
+		<Company>North East London ICB</Company>
+		<Description>ISL.Providers.Notifications.GovukNotifyIntercept provides a notification implementation the popular 
+		GOV.UK Notify client which allows you to intercept the destination of the notification to a chosen address using appsettings.</Description>
+		<Copyright>North East London ICB - 2024 (c)</Copyright>
+		<PackageIcon>notification.png</PackageIcon>
+		<PackageProjectUrl>https://github.com/NHSISL/ISL.Providers.Notifications</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/NHSISL/ISL.Providers.Notifications</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>NHSISL; Notifications; Provider; .NET; The Standard; Standard;</PackageTags>
+		<PackageReleaseNotes>
+			Initial release of ISL.Providers.Notifications.GovukNotifyIntercept.
+		</PackageReleaseNotes>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<Version>1.0.0.0</Version>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<FileVersion>1.0.0.0</FileVersion>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseFile>License.txt</PackageLicenseFile>
+		<IsPackable>true</IsPackable>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<NoWarn>CS1998</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\README.md">
+			<Pack>true</Pack>
+			<PackagePath></PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\License.txt">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+		<None Include="..\Resources\Images\notification.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit" />
+		<InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="GovukNotify" Version="7.2.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+		<PackageReference Include="Xeption" Version="2.8.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\ISL.Providers.Notifications.Abstractions\ISL.Providers.Notifications.Abstractions.csproj" />
+	</ItemGroup>
+
+</Project>
