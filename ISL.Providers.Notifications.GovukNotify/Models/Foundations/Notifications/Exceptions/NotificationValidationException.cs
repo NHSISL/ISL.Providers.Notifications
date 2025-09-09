@@ -6,9 +6,9 @@ using Xeptions;
 
 namespace ISL.Providers.Notifications.GovukNotify.Models.Foundations.Notifications.Exceptions
 {
-    public class NotificationValidationException : Xeption
+    internal class NotificationValidationException : Xeption
     {
-        internal NotificationValidationException(string message, Xeption innerException)
+        public NotificationValidationException(string message, Xeption innerException)
             : base(message, innerException)
         { }
     }

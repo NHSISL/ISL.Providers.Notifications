@@ -16,14 +16,14 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
 {
     public partial class NotificationServiceTests
     {
-        private readonly Mock<IGovukNotifyBroker> govukNotifyBroker;
+        private readonly Mock<IGovUkNotifyBroker> govukNotifyBroker;
         private readonly NotifyConfigurations configurations;
         private readonly NotificationService notificationService;
         private readonly ICompareLogic compareLogic;
 
         public NotificationServiceTests()
         {
-            this.govukNotifyBroker = new Mock<IGovukNotifyBroker>();
+            this.govukNotifyBroker = new Mock<IGovUkNotifyBroker>();
             this.configurations = GetRandomConfigurations();
             this.compareLogic = new CompareLogic();
             this.notificationService = new NotificationService(govukNotifyBroker.Object, configurations);

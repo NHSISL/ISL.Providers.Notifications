@@ -8,13 +8,13 @@ using Xeptions;
 
 namespace ISL.Providers.Notifications.GovukNotify.Models.Foundations.Notifications.Exceptions
 {
-    public class FailedNotificationClientException : Xeption
+    internal class FailedNotificationClientException : Xeption
     {
-        internal FailedNotificationClientException(string message, Exception innerException)
+        public FailedNotificationClientException(string message, Exception innerException)
             : base(message, innerException)
         { }
 
-        internal FailedNotificationClientException(string message, Exception innerException, IDictionary data)
+        public FailedNotificationClientException(string message, Exception innerException, IDictionary data)
             : base(message, innerException, data) { }
     }
 }

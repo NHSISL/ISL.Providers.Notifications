@@ -398,3 +398,4 @@ FodyWeavers.xsd
 *.sln.iml
 /ISL.Providers.Notifications.Abstractions.Tests.Acceptance/appsettings.Development.json
 /ISL.Providers.Notifications.GovukNotify.Tests.Acceptance/appsettings.Development.json
+/ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Acceptance/appsettings.Development.json

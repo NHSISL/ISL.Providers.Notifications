@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Brokers
 {
-    internal class GovukNotifyBroker : IGovukNotifyBroker
+    internal class GovUkNotifyBroker : IGovUkNotifyBroker
     {
         private readonly NotificationClient client;
 
-        public GovukNotifyBroker(NotifyConfigurations configurations) =>
+        public GovUkNotifyBroker(NotifyConfigurations configurations) =>
             this.client = new NotificationClient(configurations.ApiKey);
 
         public async ValueTask<string> SendEmailAsync(
