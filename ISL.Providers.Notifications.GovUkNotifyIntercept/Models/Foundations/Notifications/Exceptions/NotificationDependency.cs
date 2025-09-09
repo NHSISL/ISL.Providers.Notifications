@@ -6,9 +6,9 @@ using Xeptions;
 
 namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Foundations.Notifications.Exceptions
 {
-    public class NotificationDependencyException : Xeption
+    internal class NotificationDependencyException : Xeption
     {
-        internal NotificationDependencyException(string message, Xeption innerException)
+        public NotificationDependencyException(string message, Xeption innerException)
          : base(message, innerException)
         { }
     }
