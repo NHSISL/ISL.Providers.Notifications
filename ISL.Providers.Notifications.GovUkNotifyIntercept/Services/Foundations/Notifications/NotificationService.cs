@@ -27,12 +27,10 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
             string clientReference = null) =>
         TryCatch(async () =>
         {
-            await ValidateOnSendEmailWithTemplateIdAsync(toEmail, templateId, personalisation);
-            await ValidateDictionaryOnSendEmailWithTemplateIdAsync(personalisation);
-
+            ValidateOnSendEmailWithTemplateIdAsync(toEmail, templateId, personalisation);
+            ValidateDictionaryOnSendEmailWithTemplateIdAsync(personalisation);
             string interceptEmail = configurations.InterceptingEmail;
-
-            await ValidateInterceptingEmailAsync(interceptEmail);
+            ValidateInterceptingEmailAsync(interceptEmail);
 
             return await this.govukNotifyBroker.SendEmailAsync(
                 interceptEmail,
@@ -47,14 +45,12 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
             Dictionary<string, dynamic> personalisation) =>
         TryCatch(async () =>
         {
-            await ValidateOnSendSms(templateId, mobileNumber, personalisation);
-            await ValidateDictionaryOnSendSms(personalisation);
+            ValidateOnSendSms(templateId, mobileNumber, personalisation);
+            ValidateDictionaryOnSendSms(personalisation);
             string clientReference = GetValueOrNull(personalisation, "clientReference");
             string smsSenderId = GetValueOrNull(personalisation, "smsSenderId");
-
             string interceptingMobileNumber = configurations.InterceptingMobileNumber;
-
-            await ValidateInterceptingMobileNumberAsync(interceptingMobileNumber);
+            ValidateInterceptingMobileNumberAsync(interceptingMobileNumber);
 
             return await this.govukNotifyBroker.SendSmsAsync(
                 mobileNumber: interceptingMobileNumber,
