@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ISL.Providers.Notifications.GovukNotify.Brokers
 {
-    internal interface IGovukNotifyBroker
+    internal interface IGovUkNotifyBroker
     {
         ValueTask<string> SendEmailAsync(
             string emailAddress,

@@ -12,10 +12,10 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
 {
     internal partial class NotificationService : INotificationService
     {
-        private readonly IGovukNotifyBroker govukNotifyBroker;
+        private readonly IGovUkNotifyBroker govukNotifyBroker;
         private readonly NotifyConfigurations configurations;
 
-        public NotificationService(IGovukNotifyBroker govukNotifyBroker, NotifyConfigurations configurations)
+        public NotificationService(IGovUkNotifyBroker govukNotifyBroker, NotifyConfigurations configurations)
         {
             this.govukNotifyBroker = govukNotifyBroker;
             this.configurations = configurations;
