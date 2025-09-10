@@ -7,9 +7,9 @@ using Xeptions;
 
 namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Foundations.Notifications.Exceptions
 {
-    public class FailedNotificationServiceException : Xeption
+    internal class FailedNotificationServiceException : Xeption
     {
-        internal FailedNotificationServiceException(string message, Exception innerException)
+        public FailedNotificationServiceException(string message, Exception innerException)
             : base(message, innerException)
         { }
     }
