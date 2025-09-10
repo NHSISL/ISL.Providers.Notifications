@@ -29,7 +29,7 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Acceptance
             NotifyConfigurations notifyConfigurations = configuration
                 .GetSection("notifyConfigurations").Get<NotifyConfigurations>();
 
-            INotificationProvider govukNotifyProvider = new GovukNotifyProvider(notifyConfigurations);
+            INotificationProvider govukNotifyProvider = new GovUkNotifyProvider(notifyConfigurations);
             this.notificationAbstractionProvider = new NotificationAbstractionProvider(govukNotifyProvider);
         }
 

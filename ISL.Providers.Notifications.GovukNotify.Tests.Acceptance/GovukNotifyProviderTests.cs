@@ -12,7 +12,7 @@ namespace ISL.NotificationClient.Tests.Acceptance
 {
     public partial class GovukNotifyProviderTests
     {
-        private readonly IGovukNotifyProvider govukNotifyProvider;
+        private readonly IGovUkNotifyProvider govukNotifyProvider;
         private readonly IConfiguration configuration;
         private readonly string TEST_MOBILE_NUMBER = "07700900000";
         private readonly string TEST_EMAIL = "simulate-delivered@notifications.service.gov.uk";
@@ -29,7 +29,7 @@ namespace ISL.NotificationClient.Tests.Acceptance
             NotifyConfigurations notifyConfigurations = configuration
                 .GetSection("notifyConfigurations").Get<NotifyConfigurations>();
 
-            this.govukNotifyProvider = new GovukNotifyProvider(notifyConfigurations);
+            this.govukNotifyProvider = new GovUkNotifyProvider(notifyConfigurations);
         }
 
         private static string GetRandomString() =>

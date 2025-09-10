@@ -6,6 +6,6 @@ using ISL.Providers.Notifications.Abstractions;
 
 namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
 {
-    public interface IGovukNotifyProvider : INotificationProvider
+    public interface IGovUkNotifyProvider : INotificationProvider
     { }
 }

@@ -15,11 +15,11 @@ using Xeptions;
 
 namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
 {
-    public class GovukNotifyProvider : IGovukNotifyProvider
+    public class GovUkNotifyProvider : IGovUkNotifyProvider
     {
         private INotificationService notificationService { get; set; }
 
-        public GovukNotifyProvider(NotifyConfigurations configurations)
+        public GovUkNotifyProvider(NotifyConfigurations configurations)
         {
             IServiceProvider serviceProvider = RegisterServices(configurations);
             InitializeClients(serviceProvider);
