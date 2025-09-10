@@ -5,50 +5,90 @@
 using ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Foundations.Notifications.Exceptions;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.Notifications
 {
     internal partial class NotificationService
     {
-        private async ValueTask ValidateOnSendEmailWithTemplateIdAsync(
+        private static void ValidateOnSendEmailWithTemplateIdAsync(
             string toEmail,
             string templateId,
             Dictionary<string, dynamic> personalisation)
         {
             Validate(
-                (Rule: await IsInvalid(toEmail), Parameter: nameof(toEmail)),
-                (Rule: await IsInvalid(templateId), Parameter: nameof(templateId)),
-                (Rule: await IsInvalid(personalisation), Parameter: nameof(personalisation)));
+                (Rule: IsInvalid(toEmail), Parameter: nameof(toEmail)),
+                (Rule: IsInvalid(templateId), Parameter: nameof(templateId)),
+                (Rule: IsInvalid(personalisation), Parameter: nameof(personalisation)));
         }
 
-        private async ValueTask ValidateDictionaryOnSendEmailWithTemplateIdAsync(
+        private static void ValidateDictionaryOnSendEmailWithTemplateIdAsync(
             Dictionary<string, dynamic> personalisation)
         {
             string subject = GetValueOrNull(personalisation, "subject");
             string message = GetValueOrNull(personalisation, "message");
 
             Validate(
-                (Rule: await IsInvalid(subject, true), Parameter: nameof(subject)),
-                (Rule: await IsInvalid(message, true), Parameter: nameof(message)));
+                (Rule: IsInvalid(subject, true), Parameter: nameof(subject)),
+                (Rule: IsInvalid(message, true), Parameter: nameof(message)));
         }
 
-        private async ValueTask ValidateInterceptingEmailAsync(string interceptingEmail)
+        private static void ValidateInterceptingEmailAsync(string interceptingEmail)
         {
-            Validate((Rule: await IsInvalid(interceptingEmail), Parameter: nameof(interceptingEmail)));
+            Validate((Rule: IsInvalid(interceptingEmail), Parameter: nameof(interceptingEmail)));
         }
 
-        private static async ValueTask<dynamic> IsInvalid(string text, bool isDictionaryValue = false) => new
+        private static void ValidateOnSendSms(
+            string templateId,
+            string mobileNumber,
+            Dictionary<string, dynamic> personalisation)
+        {
+            Validate(
+                (Rule: IsInvalid(templateId), Parameter: nameof(templateId)),
+                (Rule: IsInvalidMobileNumber(mobileNumber), Parameter: nameof(mobileNumber)),
+                (Rule: IsInvalid(personalisation), Parameter: nameof(personalisation)));
+        }
+
+        private static void ValidateDictionaryOnSendSms(Dictionary<string, dynamic> personalisation)
+        {
+            string message = GetValueOrNull(personalisation, "message");
+
+            Validate(
+                (Rule: IsInvalid(message, true), Parameter: nameof(message)));
+        }
+
+        private static void ValidateInterceptingMobileNumberAsync(string interceptingMobileNumber)
+        {
+            Validate(
+                (Rule: IsInvalidMobileNumber(interceptingMobileNumber),
+                Parameter: nameof(interceptingMobileNumber)));
+        }
+
+        private static dynamic IsInvalid(string text, bool isDictionaryValue = false) => new
         {
             Condition = String.IsNullOrWhiteSpace(text),
             Message = isDictionaryValue == false ? "Text is required" : "Text is required for dictionary item"
         };
 
-        private static async ValueTask<dynamic> IsInvalid(Dictionary<string, dynamic> dictionary) => new
+        private static dynamic IsInvalid(Dictionary<string, dynamic> dictionary) => new
         {
             Condition = dictionary == null,
             Message = "Dictionary is required"
         };
+
+        private static dynamic IsInvalidMobileNumber(string mobileNumber)
+        {
+            bool isInvalidLocalNumber = !Regex.IsMatch(mobileNumber, @"^07\d{9}$");
+            bool isInvalidInternationalNumber = !Regex.IsMatch(mobileNumber, @"^\+447\d{9}$");
+
+            return new
+            {
+                Condition = isInvalidLocalNumber && isInvalidInternationalNumber,
+
+                Message = "Mobile number must be in UK format: 07XXXXXXXXX (11 digits) " +
+                    "or international format: +447XXXXXXXXX (12 digits)"
+            };
+        }
 
         private static void Validate(params (dynamic Rule, string Parameter)[] validations)
         {

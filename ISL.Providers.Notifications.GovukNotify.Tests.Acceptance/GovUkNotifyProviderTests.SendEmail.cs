@@ -9,24 +9,24 @@ using Microsoft.Extensions.Configuration;
 
 namespace ISL.NotificationClient.Tests.Acceptance
 {
-    public partial class GovukNotifyProviderTests
+    public partial class GovUkNotifyProviderTests
     {
         [Fact]
-        public async Task ShouldSendEmailWithTemplateIdAsync()
+        public async Task ShouldSendEmailAsync()
         {
             // given
             string toEmail = TEST_EMAIL;
             string subject = GetRandomString();
-            string message = GetRandomString();
+            string body = GetRandomString();
             string templateId = configuration.GetValue<string>("notifyConfigurations:emailTemplateId");
             Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>();
-            personalisation.Add("subject", subject);
-            personalisation.Add("message", message);
+            personalisation.Add("templateId", templateId);
 
             // when
             string identifier = await this.govukNotifyProvider.SendEmailAsync(
-                templateId,
                 toEmail,
+                subject,
+                body,
                 personalisation);
 
             // then

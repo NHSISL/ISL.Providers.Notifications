@@ -2,20 +2,20 @@
 // Copyright (c) North East London ICB. All rights reserved.
 // ---------------------------------------------------------
 
+using ISL.Providers.Notifications.GovukNotify.Brokers;
+using ISL.Providers.Notifications.GovukNotify.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ISL.Providers.Notifications.GovukNotify.Brokers;
-using ISL.Providers.Notifications.GovukNotify.Models;
 
 namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notifications
 {
     internal partial class NotificationService : INotificationService
     {
-        private readonly IGovukNotifyBroker govukNotifyBroker;
+        private readonly IGovUkNotifyBroker govukNotifyBroker;
         private readonly NotifyConfigurations configurations;
 
-        public NotificationService(IGovukNotifyBroker govukNotifyBroker, NotifyConfigurations configurations)
+        public NotificationService(IGovUkNotifyBroker govukNotifyBroker, NotifyConfigurations configurations)
         {
             this.govukNotifyBroker = govukNotifyBroker;
             this.configurations = configurations;
@@ -28,14 +28,14 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
             Dictionary<string, dynamic> personalisation) =>
         TryCatch(async () =>
         {
-            await ValidateOnSendEmail(toEmail, subject, body, personalisation);
+            ValidateOnSendEmail(toEmail, subject, body, personalisation);
             AddOrUpdate(personalisation, "subject", subject);
             AddOrUpdate(personalisation, "body", body);
             string templateId = GetValueOrNull(personalisation, "templateId");
             string clientReference = GetValueOrNull(personalisation, "clientReference");
             string emailReplyToId = GetValueOrNull(personalisation, "emailReplyToId");
             string oneClickUnsubscribeURL = GetValueOrNull(personalisation, "oneClickUnsubscribeURL");
-            await ValidateDictionaryOnSendEmail(personalisation);
+            ValidateDictionaryOnSendEmail(personalisation);
 
             return await this.govukNotifyBroker.SendEmailAsync(
                 toEmail,
@@ -53,10 +53,10 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
             string clientReference = null) =>
         TryCatch(async () =>
         {
-            await ValidateOnSendEmailWithTemplateId(toEmail, templateId, personalisation);
+            ValidateOnSendEmailWithTemplateId(toEmail, templateId, personalisation);
             string emailReplyToId = GetValueOrNull(personalisation, "emailReplyToId");
             string oneClickUnsubscribeURL = GetValueOrNull(personalisation, "oneClickUnsubscribeURL");
-            await ValidateDictionaryOnSendEmailWithTemplateId(personalisation);
+            ValidateDictionaryOnSendEmailWithTemplateId(personalisation);
 
             return await this.govukNotifyBroker.SendEmailAsync(
                 toEmail,
@@ -68,13 +68,13 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
         });
 
         public ValueTask<string> SendSmsAsync(
-            string templateId, 
-            string mobileNumber, 
+            string templateId,
+            string mobileNumber,
             Dictionary<string, dynamic> personalisation) =>
         TryCatch(async () =>
         {
-            await ValidateOnSendSms(templateId, mobileNumber, personalisation);
-            await ValidateDictionaryOnSendSms(personalisation);
+            ValidateOnSendSms(templateId, mobileNumber, personalisation);
+            ValidateDictionaryOnSendSms(personalisation);
             string clientReference = GetValueOrNull(personalisation, "clientReference");
             string smsSenderId = GetValueOrNull(personalisation, "smsSenderId");
 
@@ -92,7 +92,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
             string clientReference = null) =>
             TryCatch(async () =>
             {
-                await ValidateOnSendLetter(templateId);
+                ValidateOnSendLetter(templateId);
 
                 return await this.govukNotifyBroker.SendLetterAsync(
                     templateId,

@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace ISL.NotificationClient.Tests.Acceptance
 {
-    public partial class GovukNotifyProviderTests
+    public partial class GovUkNotifyProviderTests
     {
         [Fact]
         public async Task ShouldSendSmsAsync()
