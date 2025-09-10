@@ -39,6 +39,27 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
                 clientReference: clientReference);
         });
 
+        public ValueTask<string> SendSmsAsync(
+            string templateId,
+            string mobileNumber,
+            Dictionary<string, dynamic> personalisation) =>
+        TryCatch(async () =>
+        {
+            ValidateOnSendSms(templateId, mobileNumber, personalisation);
+            ValidateDictionaryOnSendSms(personalisation);
+            string clientReference = GetValueOrNull(personalisation, "clientReference");
+            string smsSenderId = GetValueOrNull(personalisation, "smsSenderId");
+            string interceptingMobileNumber = configurations.InterceptingMobileNumber;
+            ValidateInterceptingMobileNumberAsync(interceptingMobileNumber);
+
+            return await this.govukNotifyBroker.SendSmsAsync(
+                mobileNumber: interceptingMobileNumber,
+                templateId: templateId,
+                personalisation: personalisation,
+                clientReference: clientReference,
+                smsSenderId: smsSenderId);
+        });
+
         public static dynamic GetValueOrNull(Dictionary<string, dynamic> dictionary, string key) =>
             dictionary.ContainsKey(key) ? dictionary[key] : null;
     }

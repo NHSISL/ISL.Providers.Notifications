@@ -2,19 +2,19 @@
 // Copyright (c) North East London ICB. All rights reserved.
 // ---------------------------------------------------------
 
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using ISL.Providers.Notifications.GovukNotify.Models;
 using Notify.Client;
 using Notify.Models.Responses;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ISL.Providers.Notifications.GovukNotify.Brokers
 {
-    internal class GovukNotifyBroker : IGovukNotifyBroker
+    internal class GovUkNotifyBroker : IGovUkNotifyBroker
     {
         private readonly NotificationClient client;
 
-        public GovukNotifyBroker(NotifyConfigurations configurations) =>
+        public GovUkNotifyBroker(NotifyConfigurations configurations) =>
             this.client = new NotificationClient(configurations.ApiKey);
 
         public async ValueTask<string> SendEmailAsync(

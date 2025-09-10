@@ -33,6 +33,37 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
                 (Rule: IsInvalid(message, true), Parameter: nameof(message)));
         }
 
+        private static void ValidateInterceptingEmailAsync(string interceptingEmail)
+        {
+            Validate((Rule: IsInvalid(interceptingEmail), Parameter: nameof(interceptingEmail)));
+        }
+
+        private static void ValidateOnSendSms(
+            string templateId,
+            string mobileNumber,
+            Dictionary<string, dynamic> personalisation)
+        {
+            Validate(
+                (Rule: IsInvalid(templateId), Parameter: nameof(templateId)),
+                (Rule: IsInvalidMobileNumber(mobileNumber), Parameter: nameof(mobileNumber)),
+                (Rule: IsInvalid(personalisation), Parameter: nameof(personalisation)));
+        }
+
+        private static void ValidateDictionaryOnSendSms(Dictionary<string, dynamic> personalisation)
+        {
+            string message = GetValueOrNull(personalisation, "message");
+
+            Validate(
+                (Rule: IsInvalid(message, true), Parameter: nameof(message)));
+        }
+
+        private static void ValidateInterceptingMobileNumberAsync(string interceptingMobileNumber)
+        {
+            Validate(
+                (Rule: IsInvalidMobileNumber(interceptingMobileNumber),
+                Parameter: nameof(interceptingMobileNumber)));
+        }
+
         private static void ValidateInterceptingEmail(string interceptingEmail)
         {
             Validate(
@@ -50,6 +81,20 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
             Condition = dictionary == null,
             Message = "Dictionary is required"
         };
+
+        private static dynamic IsInvalidMobileNumber(string mobileNumber)
+        {
+            bool isInvalidLocalNumber = !Regex.IsMatch(mobileNumber, @"^07\d{9}$");
+            bool isInvalidInternationalNumber = !Regex.IsMatch(mobileNumber, @"^\+447\d{9}$");
+
+            return new
+            {
+                Condition = isInvalidLocalNumber && isInvalidInternationalNumber,
+
+                Message = "Mobile number must be in UK format: 07XXXXXXXXX (11 digits) " +
+                    "or international format: +447XXXXXXXXX (12 digits)"
+            };
+        }
 
         private static dynamic IsInvalidEmailAddress(string emailAddress)
         {
