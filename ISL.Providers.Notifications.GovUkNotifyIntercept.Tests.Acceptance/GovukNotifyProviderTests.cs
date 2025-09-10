@@ -20,6 +20,7 @@ namespace ISL.NotificationClient.Tests.Acceptance
             var configurationBuilder = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("appsettings.ContinuousIntegration.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables();
 
             configuration = configurationBuilder.Build();
