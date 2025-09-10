@@ -11,18 +11,18 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
 {
     internal partial class NotificationService
     {
-        private static void ValidateOnSendEmailWithTemplateIdAsync(
+        private static void ValidateOnSendEmailWithTemplateId(
             string toEmail,
             string templateId,
             Dictionary<string, dynamic> personalisation)
         {
             Validate(
-                (Rule: IsInvalid(toEmail), Parameter: nameof(toEmail)),
+                (Rule: IsInvalidEmailAddress(toEmail), Parameter: nameof(toEmail)),
                 (Rule: IsInvalid(templateId), Parameter: nameof(templateId)),
                 (Rule: IsInvalid(personalisation), Parameter: nameof(personalisation)));
         }
 
-        private static void ValidateDictionaryOnSendEmailWithTemplateIdAsync(
+        private static void ValidateDictionaryOnSendEmailWithTemplateId(
             Dictionary<string, dynamic> personalisation)
         {
             string subject = GetValueOrNull(personalisation, "subject");
@@ -64,6 +64,12 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
                 Parameter: nameof(interceptingMobileNumber)));
         }
 
+        private static void ValidateInterceptingEmail(string interceptingEmail)
+        {
+            Validate(
+                (Rule: IsInvalidEmailAddress(interceptingEmail), Parameter: nameof(interceptingEmail)));
+        }
+
         private static dynamic IsInvalid(string text, bool isDictionaryValue = false) => new
         {
             Condition = String.IsNullOrWhiteSpace(text),
@@ -87,6 +93,26 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
 
                 Message = "Mobile number must be in UK format: 07XXXXXXXXX (11 digits) " +
                     "or international format: +447XXXXXXXXX (12 digits)"
+            };
+        }
+
+        private static dynamic IsInvalidEmailAddress(string emailAddress)
+        {
+            bool isInvalidEmail;
+
+            if (String.IsNullOrWhiteSpace(emailAddress))
+            {
+                isInvalidEmail = true;
+            }
+            else
+            {
+                isInvalidEmail = !Regex.IsMatch(emailAddress, @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
+            }
+
+            return new
+            {
+                Condition = isInvalidEmail,
+                Message = "Email must be in format: XXX@XXX.XXX"
             };
         }
 

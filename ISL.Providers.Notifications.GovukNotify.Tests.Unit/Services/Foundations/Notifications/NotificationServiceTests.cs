@@ -2,14 +2,14 @@
 // Copyright (c) North East London ICB. All rights reserved.
 // ---------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
 using ISL.Providers.Notifications.GovukNotify.Brokers;
 using ISL.Providers.Notifications.GovukNotify.Models;
 using ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notifications;
 using KellermanSoftware.CompareNetObjects;
 using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using Tynamix.ObjectFiller;
 
 namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundations.Notifications

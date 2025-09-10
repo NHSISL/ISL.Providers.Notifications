@@ -18,7 +18,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
             Dictionary<string, dynamic> personalisation)
         {
             Validate(
-                (Rule: IsInvalid(toEmail), Parameter: nameof(toEmail)),
+                (Rule: IsInvalidEmailAddress(toEmail), Parameter: nameof(toEmail)),
                 (Rule: IsInvalid(subject), Parameter: nameof(subject)),
                 (Rule: IsInvalid(body), Parameter: nameof(body)),
                 (Rule: IsInvalid(personalisation), Parameter: nameof(personalisation)));
@@ -42,7 +42,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
             Dictionary<string, dynamic> personalisation)
         {
             Validate(
-                (Rule: IsInvalid(toEmail), Parameter: nameof(toEmail)),
+                (Rule: IsInvalidEmailAddress(toEmail), Parameter: nameof(toEmail)),
                 (Rule: IsInvalid(templateId), Parameter: nameof(templateId)),
                 (Rule: IsInvalid(personalisation), Parameter: nameof(personalisation)));
         }
@@ -108,6 +108,26 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
             Condition = dictionary == null,
             Message = "Dictionary is required"
         };
+
+        private static dynamic IsInvalidEmailAddress(string emailAddress)
+        {
+            bool isInvalidEmail;
+
+            if (String.IsNullOrWhiteSpace(emailAddress))
+            {
+                isInvalidEmail = true;
+            }
+            else
+            {
+                isInvalidEmail = !Regex.IsMatch(emailAddress, @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
+            }
+
+            return new
+            {
+                Condition = isInvalidEmail,
+                Message = "Email must be in format: XXX@XXX.XXX"
+            };
+        }
 
         private static void Validate(params (dynamic Rule, string Parameter)[] validations)
         {

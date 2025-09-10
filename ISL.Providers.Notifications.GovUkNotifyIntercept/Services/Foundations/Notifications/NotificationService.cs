@@ -27,14 +27,14 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
             string clientReference = null) =>
         TryCatch(async () =>
         {
-            ValidateOnSendEmailWithTemplateIdAsync(toEmail, templateId, personalisation);
-            ValidateDictionaryOnSendEmailWithTemplateIdAsync(personalisation);
+            ValidateOnSendEmailWithTemplateId(toEmail, templateId, personalisation);
+            ValidateDictionaryOnSendEmailWithTemplateId(personalisation);
             string interceptEmail = configurations.InterceptingEmail;
-            ValidateInterceptingEmailAsync(interceptEmail);
+            ValidateInterceptingEmail(interceptEmail);
 
             return await this.govukNotifyBroker.SendEmailAsync(
-                interceptEmail,
-                templateId,
+                templateId: templateId,
+                toEmail: interceptEmail,
                 personalisation: personalisation,
                 clientReference: clientReference);
         });

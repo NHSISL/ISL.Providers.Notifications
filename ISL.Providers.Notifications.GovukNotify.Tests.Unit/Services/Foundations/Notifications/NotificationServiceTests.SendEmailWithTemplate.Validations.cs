@@ -30,7 +30,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
 
             invalidArgumentNotificationException.AddData(
                 key: "toEmail",
-                values: "Text is required");
+                values: "Email must be in format: XXX@XXX.XXX");
 
             invalidArgumentNotificationException.AddData(
                 key: "templateId",
