@@ -34,8 +34,8 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
             this.govukNotifyBroker
                 .Setup(broker =>
                     broker.SendEmailAsync(
-                        interceptingEmail,
                         inputTemplateId,
+                        interceptingEmail,
                         It.Is(SameDictionaryAs(inputPersonalization)),
                         inputClientReference))
                 .ReturnsAsync(expectedIdentifier);
@@ -53,8 +53,8 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
             this.govukNotifyBroker
                 .Verify(broker =>
                     broker.SendEmailAsync(
-                        interceptingEmail,
                         inputTemplateId,
+                        interceptingEmail,
                         It.Is(SameDictionaryAs(inputPersonalization)),
                         inputClientReference),
                 Times.Once);

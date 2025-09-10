@@ -129,7 +129,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Providers.Notificatio
         private static IServiceProvider RegisterServices(NotifyConfigurations configurations)
         {
             var serviceCollection = new ServiceCollection()
-                .AddTransient<IGovukNotifyBroker, GovukNotifyBroker>()
+                .AddTransient<IGovUkNotifyBroker, GovUkNotifyBroker>()
                 .AddTransient<INotificationService, NotificationService>()
                 .AddSingleton(configurations);
 
