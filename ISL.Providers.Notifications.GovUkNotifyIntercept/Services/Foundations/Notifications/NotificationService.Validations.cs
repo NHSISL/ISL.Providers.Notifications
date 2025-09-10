@@ -5,50 +5,71 @@
 using ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Foundations.Notifications.Exceptions;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.Notifications
 {
     internal partial class NotificationService
     {
-        private async ValueTask ValidateOnSendEmailWithTemplateIdAsync(
+        private static void ValidateOnSendEmailWithTemplateId(
             string toEmail,
             string templateId,
             Dictionary<string, dynamic> personalisation)
         {
             Validate(
-                (Rule: await IsInvalid(toEmail), Parameter: nameof(toEmail)),
-                (Rule: await IsInvalid(templateId), Parameter: nameof(templateId)),
-                (Rule: await IsInvalid(personalisation), Parameter: nameof(personalisation)));
+                (Rule: IsInvalidEmailAddress(toEmail), Parameter: nameof(toEmail)),
+                (Rule: IsInvalid(templateId), Parameter: nameof(templateId)),
+                (Rule: IsInvalid(personalisation), Parameter: nameof(personalisation)));
         }
 
-        private async ValueTask ValidateDictionaryOnSendEmailWithTemplateIdAsync(
+        private static void ValidateDictionaryOnSendEmailWithTemplateId(
             Dictionary<string, dynamic> personalisation)
         {
             string subject = GetValueOrNull(personalisation, "subject");
             string message = GetValueOrNull(personalisation, "message");
 
             Validate(
-                (Rule: await IsInvalid(subject, true), Parameter: nameof(subject)),
-                (Rule: await IsInvalid(message, true), Parameter: nameof(message)));
+                (Rule: IsInvalid(subject, true), Parameter: nameof(subject)),
+                (Rule: IsInvalid(message, true), Parameter: nameof(message)));
         }
 
-        private async ValueTask ValidateInterceptingEmailAsync(string interceptingEmail)
+        private static void ValidateInterceptingEmail(string interceptingEmail)
         {
-            Validate((Rule: await IsInvalid(interceptingEmail), Parameter: nameof(interceptingEmail)));
+            Validate(
+                (Rule: IsInvalidEmailAddress(interceptingEmail), Parameter: nameof(interceptingEmail)));
         }
 
-        private static async ValueTask<dynamic> IsInvalid(string text, bool isDictionaryValue = false) => new
+        private static dynamic IsInvalid(string text, bool isDictionaryValue = false) => new
         {
             Condition = String.IsNullOrWhiteSpace(text),
             Message = isDictionaryValue == false ? "Text is required" : "Text is required for dictionary item"
         };
 
-        private static async ValueTask<dynamic> IsInvalid(Dictionary<string, dynamic> dictionary) => new
+        private static dynamic IsInvalid(Dictionary<string, dynamic> dictionary) => new
         {
             Condition = dictionary == null,
             Message = "Dictionary is required"
         };
+
+        private static dynamic IsInvalidEmailAddress(string emailAddress)
+        {
+            bool isInvalidEmail;
+
+            if (String.IsNullOrWhiteSpace(emailAddress))
+            {
+                isInvalidEmail = true;
+            }
+            else
+            {
+                isInvalidEmail = !Regex.IsMatch(emailAddress, @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
+            }
+
+            return new
+            {
+                Condition = isInvalidEmail,
+                Message = "Email must be in format: XXX@XXX.XXX"
+            };
+        }
 
         private static void Validate(params (dynamic Rule, string Parameter)[] validations)
         {

@@ -30,7 +30,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
 
             invalidArgumentNotificationException.AddData(
                 key: "toEmail",
-                values: "Text is required");
+                values: "Email must be in format: XXX@XXX.XXX");
 
             invalidArgumentNotificationException.AddData(
                 key: "templateId",
@@ -127,6 +127,11 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
         [InlineData(null)]
         [InlineData("")]
         [InlineData(" ")]
+        [InlineData("test")]
+        [InlineData("test@")]
+        [InlineData("test@domain")]
+        [InlineData("@domain.com")]
+        [InlineData("test.com")]
         public async Task ShouldValidateInterceptingEmailOnSendEmailAsync(string invalidText)
         {
             // given
@@ -151,7 +156,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
 
             invalidArgumentNotificationException.AddData(
                 key: "interceptingEmail",
-                values: "Text is required");
+                values: "Email must be in format: XXX@XXX.XXX");
 
             var expectedNotificationValidationException =
                 new NotificationValidationException(
