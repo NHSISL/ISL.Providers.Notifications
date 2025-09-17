@@ -35,7 +35,6 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
             string clientReference = GetValueOrNull(personalisation, "clientReference");
             string emailReplyToId = GetValueOrNull(personalisation, "emailReplyToId");
             string oneClickUnsubscribeURL = GetValueOrNull(personalisation, "oneClickUnsubscribeURL");
-            ValidateDictionaryOnSendEmail(personalisation);
 
             return await this.govukNotifyBroker.SendEmailAsync(
                 toEmail,
@@ -56,7 +55,6 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
             ValidateOnSendEmailWithTemplateId(toEmail, templateId, personalisation);
             string emailReplyToId = GetValueOrNull(personalisation, "emailReplyToId");
             string oneClickUnsubscribeURL = GetValueOrNull(personalisation, "oneClickUnsubscribeURL");
-            ValidateDictionaryOnSendEmailWithTemplateId(personalisation);
 
             return await this.govukNotifyBroker.SendEmailAsync(
                 toEmail,
@@ -74,7 +72,6 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
         TryCatch(async () =>
         {
             ValidateOnSendSms(templateId, mobileNumber, personalisation);
-            ValidateDictionaryOnSendSms(personalisation);
             string clientReference = GetValueOrNull(personalisation, "clientReference");
             string smsSenderId = GetValueOrNull(personalisation, "smsSenderId");
 
