@@ -49,14 +49,6 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
                 (Rule: IsInvalid(personalisation), Parameter: nameof(personalisation)));
         }
 
-        private static void ValidateDictionaryOnSendSms(Dictionary<string, dynamic> personalisation)
-        {
-            string message = GetValueOrNull(personalisation, "message");
-
-            Validate(
-                (Rule: IsInvalid(message, true), Parameter: nameof(message)));
-        }
-
         private static void ValidateInterceptingMobileNumberAsync(string interceptingMobileNumber)
         {
             Validate(

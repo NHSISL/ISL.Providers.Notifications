@@ -46,7 +46,6 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
         TryCatch(async () =>
         {
             ValidateOnSendSms(templateId, mobileNumber, personalisation);
-            ValidateDictionaryOnSendSms(personalisation);
             string clientReference = GetValueOrNull(personalisation, "clientReference");
             string smsSenderId = GetValueOrNull(personalisation, "smsSenderId");
             string interceptingMobileNumber = configurations.InterceptingMobileNumber;
