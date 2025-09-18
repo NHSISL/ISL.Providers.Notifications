@@ -21,5 +21,10 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Brokers
             Dictionary<string, dynamic> personalisation = null,
             string clientReference = null,
             string smsSenderId = null);
+
+        ValueTask<string> SendLetterAsync(
+            string templateId,
+            Dictionary<string, dynamic> personalisation = null,
+            string clientReference = null);
     }
 }

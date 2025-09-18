@@ -56,6 +56,18 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
             return randomNumber;
         }
 
+        private static List<string> GetRandomAddressLines()
+        {
+            var addressLines = new List<string>();
+
+            for (int i = 0; i < 7; i++)
+            {
+                addressLines.Add(GetRandomString());
+            }
+
+            return addressLines;
+        }
+
         private static NotifyConfigurations GetRandomConfigurations() =>
             CreateNotifyConfigurationsFiller().Create();
 
@@ -65,7 +77,8 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
 
             filler.Setup()
                 .OnProperty(config => config.InterceptingMobileNumber).Use(GetRandomLocalMobileNumber())
-                .OnProperty(config => config.InterceptingEmail).Use(GetRandomEmailAddress());
+                .OnProperty(config => config.InterceptingEmail).Use(GetRandomEmailAddress())
+                .OnProperty(config => config.InterceptingAddressLines).Use(GetRandomAddressLines());
 
             return filler;
         }
@@ -117,6 +130,15 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
             {
                 new Notify.Exceptions.NotifyClientException(
                     message: "Internal server error"),
+            };
+        }
+
+        public static TheoryData<List<string>> InvalidLists()
+        {
+            return new TheoryData<List<string>>
+            {
+                null,
+                new List<string>()
             };
         }
     }

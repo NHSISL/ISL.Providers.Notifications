@@ -49,15 +49,16 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
                 (Rule: IsInvalid(personalisation), Parameter: nameof(personalisation)));
         }
 
-        private static void ValidateDictionaryOnSendSms(Dictionary<string, dynamic> personalisation)
+        private static void ValidateOnSendLetter(
+            string templateId,
+            Dictionary<string, dynamic> personalisation)
         {
-            string message = GetValueOrNull(personalisation, "message");
-
             Validate(
-                (Rule: IsInvalid(message, true), Parameter: nameof(message)));
+                (Rule: IsInvalid(templateId), Parameter: nameof(templateId)),
+                (Rule: IsInvalid(personalisation), Parameter: nameof(personalisation)));
         }
 
-        private static void ValidateInterceptingMobileNumberAsync(string interceptingMobileNumber)
+        private static void ValidateInterceptingMobileNumber(string interceptingMobileNumber)
         {
             Validate(
                 (Rule: IsInvalidMobileNumber(interceptingMobileNumber),
@@ -70,6 +71,13 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
                 (Rule: IsInvalidEmailAddress(interceptingEmail), Parameter: nameof(interceptingEmail)));
         }
 
+        private static void ValidateInterceptingAddressLines(List<string> interceptingAddressLines)
+        {
+            Validate(
+                (Rule: IsInvalid(interceptingAddressLines),
+                Parameter: nameof(interceptingAddressLines)));
+        }
+
         private static dynamic IsInvalid(string text, bool isDictionaryValue = false) => new
         {
             Condition = String.IsNullOrWhiteSpace(text),
@@ -80,6 +88,12 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
         {
             Condition = dictionary == null,
             Message = "Dictionary is required"
+        };
+
+        private static dynamic IsInvalid(List<string> list) => new
+        {
+            Condition = list == null || list.Count == 0,
+            Message = "List is required and cannot be empty"
         };
 
         private static dynamic IsInvalidMobileNumber(string mobileNumber)

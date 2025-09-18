@@ -46,11 +46,10 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
         TryCatch(async () =>
         {
             ValidateOnSendSms(templateId, mobileNumber, personalisation);
-            ValidateDictionaryOnSendSms(personalisation);
             string clientReference = GetValueOrNull(personalisation, "clientReference");
             string smsSenderId = GetValueOrNull(personalisation, "smsSenderId");
             string interceptingMobileNumber = configurations.InterceptingMobileNumber;
-            ValidateInterceptingMobileNumberAsync(interceptingMobileNumber);
+            ValidateInterceptingMobileNumber(interceptingMobileNumber);
 
             return await this.govukNotifyBroker.SendSmsAsync(
                 mobileNumber: interceptingMobileNumber,
@@ -59,6 +58,29 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
                 clientReference: clientReference,
                 smsSenderId: smsSenderId);
         });
+
+        public ValueTask<string> SendLetterAsync(
+            string templateId,
+            Dictionary<string, dynamic> personalisation = null,
+            string clientReference = null) =>
+            TryCatch(async () =>
+            {
+                ValidateOnSendLetter(templateId, personalisation);
+                List<string> interceptingAddressLines = configurations.InterceptingAddressLines;
+                ValidateInterceptingAddressLines(interceptingAddressLines);
+
+                for (int i = 0; i < 7; i++)
+                {
+                    string key = $"addressLine{i + 1}";
+                    string? value = i < interceptingAddressLines.Count ? interceptingAddressLines[i] : null;
+                    personalisation[key] = value;
+                }
+
+                return await this.govukNotifyBroker.SendLetterAsync(
+                    templateId: templateId,
+                    personalisation: personalisation,
+                    clientReference: clientReference);
+            });
 
         public static dynamic GetValueOrNull(Dictionary<string, dynamic> dictionary, string key) =>
             dictionary.ContainsKey(key) ? dictionary[key] : null;
