@@ -13,6 +13,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
     {
         private readonly IGovUkNotifyBroker govukNotifyBroker;
         private readonly NotifyConfigurations configurations;
+        private readonly int maxAddressLines = 7;
 
         public NotificationService(IGovUkNotifyBroker govukNotifyBroker, NotifyConfigurations configurations)
         {
@@ -69,7 +70,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
                 List<string> interceptingAddressLines = configurations.InterceptingAddressLines;
                 ValidateInterceptingAddressLines(interceptingAddressLines);
 
-                for (int i = 0; i < 7; i++)
+                for (int i = 0; i < maxAddressLines; i++)
                 {
                     string key = $"addressLine{i + 1}";
                     string? value = i < interceptingAddressLines.Count ? interceptingAddressLines[i] : null;

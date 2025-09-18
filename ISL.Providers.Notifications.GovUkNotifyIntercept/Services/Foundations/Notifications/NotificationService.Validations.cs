@@ -74,8 +74,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
         private static void ValidateInterceptingAddressLines(List<string> interceptingAddressLines)
         {
             Validate(
-                (Rule: IsInvalid(interceptingAddressLines),
-                Parameter: nameof(interceptingAddressLines)));
+                (Rule: IsInvalid(interceptingAddressLines), Parameter: nameof(interceptingAddressLines)));
         }
 
         private static dynamic IsInvalid(string text, bool isDictionaryValue = false) => new

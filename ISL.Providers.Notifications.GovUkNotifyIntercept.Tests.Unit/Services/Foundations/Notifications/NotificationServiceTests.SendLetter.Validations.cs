@@ -68,8 +68,6 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
         {
             // given
             string inputTemplateId = GetRandomString();
-            string inputMessage = GetRandomString();
-            string inputMobileNumber = GetRandomLocalMobileNumber();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
             this.configurations.InterceptingAddressLines = invalidInterceptingAddress;
 
