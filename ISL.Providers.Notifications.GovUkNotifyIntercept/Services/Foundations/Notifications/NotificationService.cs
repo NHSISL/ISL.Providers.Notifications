@@ -4,7 +4,9 @@
 
 using ISL.Providers.Notifications.GovUkNotifyIntercept.Brokers;
 using ISL.Providers.Notifications.GovUkNotifyIntercept.Models;
+using ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Foundations.Notifications;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.Notifications
@@ -62,5 +64,43 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
 
         public static dynamic GetValueOrNull(Dictionary<string, dynamic> dictionary, string key) =>
             dictionary.ContainsKey(key) ? dictionary[key] : null;
+
+        virtual internal async ValueTask<SubstituteInfo> SubstituteInfoAsync(
+            Dictionary<string, dynamic> personalisation)
+        {
+            var identifier = GetValueOrNull(personalisation, configurations.IdentifierKey);
+            var patientOverride = configurations.NotificationOverrides.FirstOrDefault(p => p.Identifier == identifier);
+            string mobileNumber = configurations.DefaultOverride.Phone;
+            string email = configurations.DefaultOverride.Email;
+            List<string> addressLines = configurations.DefaultOverride.AddressLines;
+
+            if (patientOverride is not null)
+            {
+                mobileNumber = patientOverride.Phone ?? mobileNumber;
+                email = patientOverride.Email ?? email;
+                addressLines = patientOverride.AddressLines ?? addressLines;
+            }
+
+            if (configurations.SubstituteDictionaryValues)
+            {
+                personalisation[configurations.PhoneKey] = mobileNumber;
+                personalisation[configurations.EmailKey] = email;
+                personalisation[configurations.AddressLine1Key] = addressLines.ElementAtOrDefault(0) ?? string.Empty;
+                personalisation[configurations.AddressLine2Key] = addressLines.ElementAtOrDefault(1) ?? string.Empty;
+                personalisation[configurations.AddressLine3Key] = addressLines.ElementAtOrDefault(2) ?? string.Empty;
+                personalisation[configurations.AddressLine4Key] = addressLines.ElementAtOrDefault(3) ?? string.Empty;
+                personalisation[configurations.AddressLine5Key] = addressLines.ElementAtOrDefault(4) ?? string.Empty;
+                personalisation[configurations.AddressLine6Key] = addressLines.ElementAtOrDefault(5) ?? string.Empty;
+                personalisation[configurations.AddressLine7Key] = addressLines.ElementAtOrDefault(6) ?? string.Empty;
+            }
+
+            return new SubstituteInfo
+            {
+                MobileNumber = mobileNumber,
+                Email = email,
+                AddressLines = addressLines,
+                Overrides = personalisation
+            };
+        }
     }
 }

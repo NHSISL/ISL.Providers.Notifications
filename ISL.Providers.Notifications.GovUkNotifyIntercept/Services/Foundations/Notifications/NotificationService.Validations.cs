@@ -2,9 +2,11 @@
 // Copyright (c) North East London ICB. All rights reserved.
 // ---------------------------------------------------------
 
+using ISL.Providers.Notifications.GovUkNotifyIntercept.Models;
 using ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Foundations.Notifications.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.Notifications
@@ -57,6 +59,30 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
                 (Rule: IsInvalid(message, true), Parameter: nameof(message)));
         }
 
+        private static void ValidateNotificationConfiguration(NotifyConfigurations configurations)
+        {
+            Validate(
+                (Rule: IsInvalid(configurations), Parameter: nameof(configurations)),
+
+                (Rule: IsInvalid(configurations.DefaultOverride.Identifier),
+                    Parameter: nameof(NotifyConfigurations.DefaultOverride.Identifier)),
+
+                (Rule: IsInvalid(configurations.DefaultOverride.Phone),
+                    Parameter: nameof(NotifyConfigurations.DefaultOverride.Phone)),
+
+                (Rule: IsInvalid(configurations.DefaultOverride.Email),
+                    Parameter: nameof(NotifyConfigurations.DefaultOverride.Email)),
+
+                (Rule: IsInvalid(configurations.DefaultOverride.AddressLines),
+                    Parameter: nameof(NotifyConfigurations.DefaultOverride.AddressLines)),
+
+                (Rule: IsInvalidNotificationOverrides(configurations.NotificationOverrides),
+                    Parameter: nameof(NotifyConfigurations.NotificationOverrides)),
+
+                (Rule: IsInvalid(configurations.IdentifierKey),
+                    Parameter: nameof(NotifyConfigurations.IdentifierKey)));
+        }
+
         private static void ValidateInterceptingMobileNumberAsync(string interceptingMobileNumber)
         {
             Validate(
@@ -81,6 +107,34 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
             Condition = dictionary == null,
             Message = "Dictionary is required"
         };
+
+        private static dynamic IsInvalid(NotifyConfigurations configurations) => new
+        {
+            Condition = configurations == null,
+            Message = "Notification configurations are required"
+        };
+
+        private static dynamic IsInvalid(List<string> stringList) => new
+        {
+            Condition = stringList == null || stringList.Count == 0,
+            Message = "List is required and cannot be empty"
+        };
+
+        private static dynamic IsInvalidNotificationOverrides(List<NotificationOverride> notificationOverrides)
+        {
+            bool isInvalidNotificationOverrides = false;
+
+            if (notificationOverrides != null && notificationOverrides.Count > 0)
+            {
+                isInvalidNotificationOverrides = notificationOverrides
+                    .Any(notificationOverride => String.IsNullOrEmpty(notificationOverride.Identifier));
+            }
+            return new
+            {
+                Condition = isInvalidNotificationOverrides,
+                Message = "Notification overrides must have an identifier"
+            };
+        }
 
         private static dynamic IsInvalidMobileNumber(string mobileNumber)
         {
