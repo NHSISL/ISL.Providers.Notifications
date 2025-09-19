@@ -29,8 +29,8 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
         {
             ValidateOnSendEmailWithTemplateId(toEmail, templateId, personalisation);
             ValidateDictionaryOnSendEmailWithTemplateId(personalisation);
-            string interceptEmail = configurations.InterceptingEmail;
-            ValidateInterceptingEmail(interceptEmail);
+            // virtual internal to replace returns NotificationOverride object
+            // vritual internal to check whether to replace dictionary and return updated dictionary
 
             return await this.govukNotifyBroker.SendEmailAsync(
                 templateId: templateId,
