@@ -14,7 +14,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
     public partial class NotificationServiceTests
     {
         [Fact]
-        public async Task ShouldSubstituteInfoAsyncWithSubstituetDictionaryTrueAndMatchingIdentifier()
+        public async Task ShouldSubstituteInfoAsyncWithSubstituteDictionaryTrueAndMatchingIdentifier()
         {
             // given
             string randomIdentifier = GetRandomString();
@@ -47,7 +47,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
         }
 
         [Fact]
-        public async Task ShouldSubstituteInfoAsyncWithSubstituetDictionaryFalseAndMatchingIdentifier()
+        public async Task ShouldSubstituteInfoAsyncWithSubstituteDictionaryFalseAndMatchingIdentifier()
         {
             // given
             string randomIdentifier = GetRandomString();
@@ -80,7 +80,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
         }
 
         [Fact]
-        public async Task ShouldSubstituteInfoAsyncWithSubstituetDictionaryTrueAndNoMatchingIdentifier()
+        public async Task ShouldSubstituteInfoAsyncWithSubstituteDictionaryTrueAndNoMatchingIdentifier()
         {
             // given
             string randomIdentifier = GetRandomString();
@@ -113,7 +113,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
         }
 
         [Fact]
-        public async Task ShouldSubstituteInfoAsyncWithSubstituetDictionaryFalseAndNoMatchingIdentifier()
+        public async Task ShouldSubstituteInfoAsyncWithSubstituteDictionaryFalseAndNoMatchingIdentifier()
         {
             // given
             string randomIdentifier = GetRandomString();
