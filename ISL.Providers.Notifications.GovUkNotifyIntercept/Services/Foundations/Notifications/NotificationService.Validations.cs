@@ -2,12 +2,12 @@
 // Copyright (c) North East London ICB. All rights reserved.
 // ---------------------------------------------------------
 
-using ISL.Providers.Notifications.GovUkNotifyIntercept.Models;
-using ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Foundations.Notifications.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ISL.Providers.Notifications.GovUkNotifyIntercept.Models;
+using ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Foundations.Notifications.Exceptions;
 
 namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.Notifications
 {
@@ -68,10 +68,10 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
                 (Rule: IsInvalid(configurations.DefaultOverride.Identifier),
                     Parameter: nameof(NotifyConfigurations.DefaultOverride.Identifier)),
 
-                (Rule: IsInvalid(configurations.DefaultOverride.Phone),
+                (Rule: IsInvalidMobileNumber(configurations.DefaultOverride.Phone),
                     Parameter: nameof(NotifyConfigurations.DefaultOverride.Phone)),
 
-                (Rule: IsInvalid(configurations.DefaultOverride.Email),
+                (Rule: IsInvalidEmailAddress(configurations.DefaultOverride.Email),
                     Parameter: nameof(NotifyConfigurations.DefaultOverride.Email)),
 
                 (Rule: IsInvalid(configurations.DefaultOverride.AddressLines),
@@ -94,13 +94,6 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
 
             var allValidations = baseValidations.Concat(overrideValidations).ToArray();
             Validate(allValidations);
-        }
-
-        private static void ValidateInterceptingMobileNumberAsync(string interceptingMobileNumber)
-        {
-            Validate(
-                (Rule: IsInvalidMobileNumber(interceptingMobileNumber),
-                Parameter: nameof(interceptingMobileNumber)));
         }
 
         private static void ValidateInterceptingEmail(string interceptingEmail)

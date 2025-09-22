@@ -11,7 +11,6 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Models
         public string ApiKey { get; set; }
         public string EmailTemplateId { get; set; }
         public string InterceptingEmail { get; set; }
-        public string InterceptingMobileNumber { get; set; }
         public NotificationOverride DefaultOverride { get; set; }
         public List<NotificationOverride> NotificationOverrides { get; set; } = new List<NotificationOverride>();
         public bool SubstituteDictionaryValues { get; set; }

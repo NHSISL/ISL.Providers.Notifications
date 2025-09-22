@@ -2,16 +2,16 @@
 // Copyright (c) North East London ICB. All rights reserved.
 // ---------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using ISL.Providers.Notifications.GovUkNotifyIntercept.Brokers;
 using ISL.Providers.Notifications.GovUkNotifyIntercept.Models;
 using ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Foundations.Notifications;
 using ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.Notifications;
 using KellermanSoftware.CompareNetObjects;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 using Tynamix.ObjectFiller;
 
 namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.Foundations.Notifications
@@ -71,8 +71,9 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
             var filler = new Filler<NotificationOverride>();
 
             filler.Setup()
-                .OnProperty(overrideConfig => overrideConfig.Identifier).Use(identifier)
-                .OnProperty(overrideConfig => overrideConfig.AddressLines).Use(GetRandomAddressLines());
+                .OnProperty(overrideConfig => overrideConfig.AddressLines).Use(GetRandomAddressLines())
+                .OnProperty(overrideConfig => overrideConfig.Email).Use(GetRandomEmailAddress())
+                .OnProperty(overrideConfig => overrideConfig.Phone).Use(GetRandomLocalMobileNumber());
 
             return filler;
         }
@@ -97,8 +98,20 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
             var filler = new Filler<NotifyConfigurations>();
 
             filler.Setup()
-                .OnProperty(config => config.InterceptingMobileNumber).Use(GetRandomLocalMobileNumber())
-                .OnProperty(config => config.InterceptingEmail).Use(GetRandomEmailAddress());
+                .OnProperty(config => config.InterceptingEmail).Use(GetRandomEmailAddress())
+                .OnProperty(config => config.DefaultOverride).Use(GetRandomNotificationOverride());
+
+            return filler;
+        }
+
+        private static SubstituteInfo GetRandomSubstituteInfo(Dictionary<string, dynamic> dictionary) =>
+            CreateSubstituteInfoFiller(dictionary).Create();
+
+        private static Filler<SubstituteInfo> CreateSubstituteInfoFiller(Dictionary<string, dynamic> dictionary)
+        {
+            var filler = new Filler<SubstituteInfo>();
+            filler.Setup()
+                .OnProperty(substituteInfo => substituteInfo.Personalisation).Use(dictionary);
 
             return filler;
         }

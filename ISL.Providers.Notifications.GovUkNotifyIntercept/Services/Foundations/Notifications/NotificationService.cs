@@ -2,12 +2,12 @@
 // Copyright (c) North East London ICB. All rights reserved.
 // ---------------------------------------------------------
 
-using ISL.Providers.Notifications.GovUkNotifyIntercept.Brokers;
-using ISL.Providers.Notifications.GovUkNotifyIntercept.Models;
-using ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Foundations.Notifications;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ISL.Providers.Notifications.GovUkNotifyIntercept.Brokers;
+using ISL.Providers.Notifications.GovUkNotifyIntercept.Models;
+using ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Foundations.Notifications;
 
 namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.Notifications
 {
@@ -51,13 +51,13 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
             ValidateDictionaryOnSendSms(personalisation);
             string clientReference = GetValueOrNull(personalisation, "clientReference");
             string smsSenderId = GetValueOrNull(personalisation, "smsSenderId");
-            string interceptingMobileNumber = notifyConfigurations.InterceptingMobileNumber;
-            ValidateInterceptingMobileNumberAsync(interceptingMobileNumber);
+            ValidateNotificationConfiguration(notifyConfigurations);
+            SubstituteInfo substituteInfo = await SubstituteInfoAsync(personalisation);
 
             return await this.govukNotifyBroker.SendSmsAsync(
-                mobileNumber: interceptingMobileNumber,
+                mobileNumber: substituteInfo.MobileNumber,
                 templateId: templateId,
-                personalisation: personalisation,
+                personalisation: substituteInfo.Personalisation,
                 clientReference: clientReference,
                 smsSenderId: smsSenderId);
         });
