@@ -141,7 +141,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
             if (notificationOverrides != null && notificationOverrides.Count > 0)
             {
                 isInvalidNotificationOverrides = notificationOverrides
-                    .Any(notificationOverride => String.IsNullOrEmpty(notificationOverride.Identifier));
+                    .Any(notificationOverride => string.IsNullOrEmpty(notificationOverride.Identifier));
             }
 
             return new
