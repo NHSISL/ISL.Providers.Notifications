@@ -2,12 +2,12 @@
 // Copyright (c) North East London ICB. All rights reserved.
 // ---------------------------------------------------------
 
-using FluentAssertions;
-using ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Foundations.Notifications.Exceptions;
-using Moq;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FluentAssertions;
+using ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Foundations.Notifications.Exceptions;
+using Moq;
 
 namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.Foundations.Notifications
 {
@@ -20,15 +20,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
             // given
             string inputTemplateId = GetRandomString();
             string inputClientReference = GetRandomString();
-            List<string> interceptingAddressLines = this.configurations.InterceptingAddressLines;
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
-            inputPersonalization.Add("addressLine1", interceptingAddressLines[0]);
-            inputPersonalization.Add("addressLine2", interceptingAddressLines[1]);
-            inputPersonalization.Add("addressLine3", interceptingAddressLines[2]);
-            inputPersonalization.Add("addressLine4", interceptingAddressLines[3]);
-            inputPersonalization.Add("addressLine5", interceptingAddressLines[4]);
-            inputPersonalization.Add("addressLine6", interceptingAddressLines[5]);
-            inputPersonalization.Add("addressLine7", interceptingAddressLines[6]);
 
             this.govukNotifyBroker.Setup(broker =>
                 broker.SendLetterAsync(
@@ -76,15 +68,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
             // given
             string inputTemplateId = GetRandomString();
             string inputClientReference = GetRandomString();
-            List<string> interceptingAddressLines = this.configurations.InterceptingAddressLines;
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
-            inputPersonalization.Add("addressLine1", interceptingAddressLines[0]);
-            inputPersonalization.Add("addressLine2", interceptingAddressLines[1]);
-            inputPersonalization.Add("addressLine3", interceptingAddressLines[2]);
-            inputPersonalization.Add("addressLine4", interceptingAddressLines[3]);
-            inputPersonalization.Add("addressLine5", interceptingAddressLines[4]);
-            inputPersonalization.Add("addressLine6", interceptingAddressLines[5]);
-            inputPersonalization.Add("addressLine7", interceptingAddressLines[6]);
 
             this.govukNotifyBroker.Setup(broker =>
                 broker.SendLetterAsync(
@@ -132,15 +116,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
             // given
             string inputTemplateId = GetRandomString();
             string inputClientReference = GetRandomString();
-            List<string> interceptingAddressLines = this.configurations.InterceptingAddressLines;
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
-            inputPersonalization.Add("addressLine1", interceptingAddressLines[0]);
-            inputPersonalization.Add("addressLine2", interceptingAddressLines[1]);
-            inputPersonalization.Add("addressLine3", interceptingAddressLines[2]);
-            inputPersonalization.Add("addressLine4", interceptingAddressLines[3]);
-            inputPersonalization.Add("addressLine5", interceptingAddressLines[4]);
-            inputPersonalization.Add("addressLine6", interceptingAddressLines[5]);
-            inputPersonalization.Add("addressLine7", interceptingAddressLines[6]);
             var serviceException = new Exception();
 
             this.govukNotifyBroker.Setup(broker =>

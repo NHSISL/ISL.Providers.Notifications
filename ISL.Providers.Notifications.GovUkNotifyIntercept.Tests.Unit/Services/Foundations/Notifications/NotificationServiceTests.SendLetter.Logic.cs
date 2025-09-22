@@ -2,10 +2,13 @@
 // Copyright (c) North East London ICB. All rights reserved.
 // ---------------------------------------------------------
 
-using FluentAssertions;
-using Moq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FluentAssertions;
+using Force.DeepCloner;
+using ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Foundations.Notifications;
+using ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.Notifications;
+using Moq;
 
 namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.Foundations.Notifications
 {
@@ -19,26 +22,42 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
             string expectedIdentifier = randomIdentifier;
             string inputTemplateId = GetRandomString();
             string inputClientReference = GetRandomString();
-            List<string> interceptingAddressLines = this.configurations.InterceptingAddressLines;
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
-            inputPersonalization.Add("addressLine1", interceptingAddressLines[0]);
-            inputPersonalization.Add("addressLine2", interceptingAddressLines[1]);
-            inputPersonalization.Add("addressLine3", interceptingAddressLines[2]);
-            inputPersonalization.Add("addressLine4", interceptingAddressLines[3]);
-            inputPersonalization.Add("addressLine5", interceptingAddressLines[4]);
-            inputPersonalization.Add("addressLine6", interceptingAddressLines[5]);
-            inputPersonalization.Add("addressLine7", interceptingAddressLines[6]);
+            Dictionary<string, dynamic> updatedPersonalisation = inputPersonalization.DeepClone();
+            SubstituteInfo randomSubstituteInfo = GetRandomSubstituteInfo(inputPersonalization);
+
+            for (int i = 0; i < MaxAddressLines; i++)
+            {
+                string key = $"addressLine{i + 1}";
+
+                string? value =
+                    i < randomSubstituteInfo.AddressLines.Count ? randomSubstituteInfo.AddressLines[i] : null;
+
+                updatedPersonalisation[key] = value;
+            }
+
+            randomSubstituteInfo.Personalisation = updatedPersonalisation;
+            SubstituteInfo outputSubstituteInfo = randomSubstituteInfo.DeepClone();
+
+            var notificationServiceMock = new Mock<NotificationService>(
+                this.govukNotifyBroker.Object,
+                this.configurations)
+            { CallBase = true };
+
+            notificationServiceMock.Setup(service =>
+                service.SubstituteInfoAsync(inputPersonalization))
+                    .ReturnsAsync(outputSubstituteInfo);
 
             this.govukNotifyBroker
                 .Setup(broker =>
                     broker.SendLetterAsync(
                         inputTemplateId,
-                        It.Is(SameDictionaryAs(inputPersonalization)),
+                        It.Is(SameDictionaryAs(outputSubstituteInfo.Personalisation)),
                         inputClientReference))
                 .ReturnsAsync(expectedIdentifier);
 
             // when
-            string actualIdentifier = await this.notificationService.SendLetterAsync(
+            string actualIdentifier = await notificationServiceMock.Object.SendLetterAsync(
                 templateId: inputTemplateId,
                 personalisation: inputPersonalization,
                 clientReference: inputClientReference);
@@ -46,11 +65,15 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
             // then
             actualIdentifier.Should().BeEquivalentTo(expectedIdentifier);
 
+            notificationServiceMock.Verify(service =>
+                service.SubstituteInfoAsync(inputPersonalization),
+                    Times.Once);
+
             this.govukNotifyBroker
                 .Verify(broker =>
                     broker.SendLetterAsync(
                         inputTemplateId,
-                        It.Is(SameDictionaryAs(inputPersonalization)),
+                        It.Is(SameDictionaryAs(outputSubstituteInfo.Personalisation)),
                         inputClientReference),
                 Times.Once);
 

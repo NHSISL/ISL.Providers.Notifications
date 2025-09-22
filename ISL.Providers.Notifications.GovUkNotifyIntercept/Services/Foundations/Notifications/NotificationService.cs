@@ -69,13 +69,13 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
             TryCatch(async () =>
             {
                 ValidateOnSendLetter(templateId, personalisation);
-                List<string> interceptingAddressLines = configurations.InterceptingAddressLines;
-                ValidateInterceptingAddressLines(interceptingAddressLines);
+                ValidateNotificationConfiguration(notifyConfigurations);
+                SubstituteInfo substituteInfo = await SubstituteInfoAsync(personalisation);
 
                 for (int i = 0; i < maxAddressLines; i++)
                 {
                     string key = $"addressLine{i + 1}";
-                    string? value = i < interceptingAddressLines.Count ? interceptingAddressLines[i] : null;
+                    string? value = i < substituteInfo.AddressLines.Count ? substituteInfo.AddressLines[i] : null;
                     personalisation[key] = value;
                 }
 
