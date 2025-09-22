@@ -93,7 +93,6 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
                     .ToArray();
 
             var allValidations = baseValidations.Concat(overrideValidations).ToArray();
-
             Validate(allValidations);
         }
 
