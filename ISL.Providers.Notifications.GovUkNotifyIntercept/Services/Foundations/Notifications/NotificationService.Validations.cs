@@ -70,7 +70,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
                 (Rule: IsInvalid(configurations.DefaultOverride.Phone),
                     Parameter: nameof(NotifyConfigurations.DefaultOverride.Phone)),
 
-                (Rule: IsInvalid(configurations.DefaultOverride.Email),
+                (Rule: IsInvalidEmailAddress(configurations.DefaultOverride.Email),
                     Parameter: nameof(NotifyConfigurations.DefaultOverride.Email)),
 
                 (Rule: IsInvalid(configurations.DefaultOverride.AddressLines),
@@ -88,12 +88,6 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
             Validate(
                 (Rule: IsInvalidMobileNumber(interceptingMobileNumber),
                 Parameter: nameof(interceptingMobileNumber)));
-        }
-
-        private static void ValidateInterceptingEmail(string interceptingEmail)
-        {
-            Validate(
-                (Rule: IsInvalidEmailAddress(interceptingEmail), Parameter: nameof(interceptingEmail)));
         }
 
         private static dynamic IsInvalid(string text, bool isDictionaryValue = false) => new

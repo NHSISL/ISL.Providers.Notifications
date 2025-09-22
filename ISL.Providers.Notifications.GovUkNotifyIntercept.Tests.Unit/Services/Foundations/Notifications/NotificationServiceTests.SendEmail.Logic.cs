@@ -3,6 +3,9 @@
 // ---------------------------------------------------------
 
 using FluentAssertions;
+using Force.DeepCloner;
+using ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Foundations.Notifications;
+using ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.Notifications;
 using Moq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -24,24 +27,34 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
             string inputMessage = GetRandomString();
             string inputEmailReplyToId = GetRandomString();
             string inputOneClickUnsubscribeURL = GetRandomString();
-            string interceptingEmail = this.configurations.InterceptingEmail;
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
             inputPersonalization.Add("subject", inputSubject);
             inputPersonalization.Add("message", inputMessage);
             inputPersonalization.Add("emailReplyToId", inputEmailReplyToId);
             inputPersonalization.Add("oneClickUnsubscribeURL", inputOneClickUnsubscribeURL);
+            SubstituteInfo randomSubstituteInfo = GetRandomSubstituteInfo(inputPersonalization);
+            SubstituteInfo outputSubstituteInfo = randomSubstituteInfo.DeepClone();
+
+            var notificationServiceMock = new Mock<NotificationService>(
+                this.govukNotifyBroker.Object,
+                this.configurations)
+            { CallBase = true };
+
+            notificationServiceMock.Setup(service =>
+                service.SubstituteInfoAsync(inputPersonalization))
+                    .ReturnsAsync(outputSubstituteInfo);
 
             this.govukNotifyBroker
                 .Setup(broker =>
                     broker.SendEmailAsync(
                         inputTemplateId,
-                        interceptingEmail,
-                        It.Is(SameDictionaryAs(inputPersonalization)),
+                        outputSubstituteInfo.Email,
+                        It.Is(SameDictionaryAs(outputSubstituteInfo.Overrides)),
                         inputClientReference))
                 .ReturnsAsync(expectedIdentifier);
 
             // when
-            string actualIdentifier = await this.notificationService.SendEmailAsync(
+            string actualIdentifier = await notificationServiceMock.Object.SendEmailAsync(
                 templateId: inputTemplateId,
                 toEmail: inputToEmail,
                 personalisation: inputPersonalization,
@@ -50,12 +63,16 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
             // then
             actualIdentifier.Should().BeEquivalentTo(expectedIdentifier);
 
+            notificationServiceMock.Verify(service =>
+                service.SubstituteInfoAsync(inputPersonalization),
+                    Times.Once);
+
             this.govukNotifyBroker
                 .Verify(broker =>
                     broker.SendEmailAsync(
                         inputTemplateId,
-                        interceptingEmail,
-                        It.Is(SameDictionaryAs(inputPersonalization)),
+                        outputSubstituteInfo.Email,
+                        It.Is(SameDictionaryAs(outputSubstituteInfo.Overrides)),
                         inputClientReference),
                 Times.Once);
 

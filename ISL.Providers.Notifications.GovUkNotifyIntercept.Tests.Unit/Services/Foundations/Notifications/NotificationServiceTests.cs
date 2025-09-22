@@ -72,7 +72,9 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
 
             filler.Setup()
                 .OnProperty(overrideConfig => overrideConfig.Identifier).Use(identifier)
-                .OnProperty(overrideConfig => overrideConfig.AddressLines).Use(GetRandomAddressLines());
+                .OnProperty(overrideConfig => overrideConfig.AddressLines).Use(GetRandomAddressLines())
+                .OnProperty(overrideConfig => overrideConfig.Email).Use(GetRandomEmailAddress())
+                .OnProperty(overrideConfig => overrideConfig.Phone).Use(GetRandomLocalMobileNumber());
 
             return filler;
         }
@@ -98,7 +100,19 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
 
             filler.Setup()
                 .OnProperty(config => config.InterceptingMobileNumber).Use(GetRandomLocalMobileNumber())
-                .OnProperty(config => config.InterceptingEmail).Use(GetRandomEmailAddress());
+                .OnProperty(config => config.DefaultOverride).Use(GetRandomNotificationOverride());
+
+            return filler;
+        }
+
+        private static SubstituteInfo GetRandomSubstituteInfo(Dictionary<string, dynamic> dictionary) =>
+            CreateSubstituteInfoFiller(dictionary).Create();
+
+        private static Filler<SubstituteInfo> CreateSubstituteInfoFiller(Dictionary<string, dynamic> dictionary)
+        {
+            var filler = new Filler<SubstituteInfo>();
+            filler.Setup()
+                .OnProperty(substituteInfo => substituteInfo.Overrides).Use(dictionary);
 
             return filler;
         }

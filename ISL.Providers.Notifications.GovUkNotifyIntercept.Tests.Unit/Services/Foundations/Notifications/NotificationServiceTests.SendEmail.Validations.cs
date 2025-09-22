@@ -132,7 +132,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
         [InlineData("test@domain")]
         [InlineData("@domain.com")]
         [InlineData("test.com")]
-        public async Task ShouldValidateInterceptingEmailOnSendEmailAsync(string invalidText)
+        public async Task ShouldValidateConfigurationsOnSendEmailAsync(string invalidText)
         {
             // given
             string inputToEmail = GetRandomEmailAddress();
@@ -147,15 +147,14 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
             inputPersonalization.Add("message", inputMessage);
             inputPersonalization.Add("emailReplyToId", inputEmailReplyToId);
             inputPersonalization.Add("oneClickUnsubscribeURL", inputOneClickUnsubscribeURL);
-
-            this.configurations.InterceptingEmail = invalidText;
+            this.configurations.DefaultOverride.Email = invalidText;
 
             var invalidArgumentNotificationException =
                 new InvalidArgumentNotificationException(
                     message: "Invalid notification argument exception. Please correct the errors and try again.");
 
             invalidArgumentNotificationException.AddData(
-                key: "interceptingEmail",
+                key: "Email",
                 values: "Email must be in format: XXX@XXX.XXX");
 
             var expectedNotificationValidationException =
