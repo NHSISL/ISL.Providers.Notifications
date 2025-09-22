@@ -134,23 +134,6 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
             Message = "List is required and cannot be empty"
         };
 
-        private static dynamic IsInvalidNotificationOverrides(List<NotificationOverride> notificationOverrides)
-        {
-            bool isInvalidNotificationOverrides = false;
-
-            if (notificationOverrides != null && notificationOverrides.Count > 0)
-            {
-                isInvalidNotificationOverrides = notificationOverrides
-                    .Any(notificationOverride => String.IsNullOrEmpty(notificationOverride.Identifier));
-            }
-
-            return new
-            {
-                Condition = isInvalidNotificationOverrides,
-                Message = "Notification overrides must have an identifier"
-            };
-        }
-
         private static dynamic IsInvalidMobileNumber(string mobileNumber)
         {
             bool isInvalidLocalNumber = !Regex.IsMatch(mobileNumber, @"^07\d{9}$");
