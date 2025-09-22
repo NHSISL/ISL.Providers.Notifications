@@ -49,7 +49,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
                     broker.SendEmailAsync(
                         inputTemplateId,
                         outputSubstituteInfo.Email,
-                        It.Is(SameDictionaryAs(outputSubstituteInfo.Overrides)),
+                        It.Is(SameDictionaryAs(outputSubstituteInfo.Personalisation)),
                         inputClientReference))
                 .ReturnsAsync(expectedIdentifier);
 
@@ -72,7 +72,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
                     broker.SendEmailAsync(
                         inputTemplateId,
                         outputSubstituteInfo.Email,
-                        It.Is(SameDictionaryAs(outputSubstituteInfo.Overrides)),
+                        It.Is(SameDictionaryAs(outputSubstituteInfo.Personalisation)),
                         inputClientReference),
                 Times.Once);
 

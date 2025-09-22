@@ -112,7 +112,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
         {
             var filler = new Filler<SubstituteInfo>();
             filler.Setup()
-                .OnProperty(substituteInfo => substituteInfo.Overrides).Use(dictionary);
+                .OnProperty(substituteInfo => substituteInfo.Personalisation).Use(dictionary);
 
             return filler;
         }

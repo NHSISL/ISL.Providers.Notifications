@@ -78,7 +78,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
                     Parameter: nameof(NotifyConfigurations.DefaultOverride.AddressLines)),
 
                 (Rule: IsInvalid(configurations.IdentifierKey),
-                Parameter: nameof(NotifyConfigurations.IdentifierKey))
+                    Parameter: nameof(NotifyConfigurations.IdentifierKey))
             };
 
             var overrides = configurations.NotificationOverrides ?? new List<NotificationOverride>();

@@ -31,13 +31,13 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
         {
             ValidateOnSendEmailWithTemplateId(toEmail, templateId, personalisation);
             ValidateDictionaryOnSendEmailWithTemplateId(personalisation);
-            ValidateNotificationConfiguration(configurations);
+            ValidateNotificationConfiguration(notifyConfigurations);
             SubstituteInfo substituteInfo = await SubstituteInfoAsync(personalisation);
 
             return await this.govukNotifyBroker.SendEmailAsync(
                 templateId: templateId,
                 toEmail: substituteInfo.Email,
-                personalisation: substituteInfo.Overrides,
+                personalisation: substituteInfo.Personalisation,
                 clientReference: clientReference);
         });
 
