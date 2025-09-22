@@ -93,7 +93,6 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
                     .ToArray();
 
             var allValidations = baseValidations.Concat(overrideValidations).ToArray();
-
             Validate(allValidations);
         }
 
@@ -127,23 +126,6 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
             Condition = stringList == null || stringList.Count == 0,
             Message = "List is required and cannot be empty"
         };
-
-        private static dynamic IsInvalidNotificationOverrides(List<NotificationOverride> notificationOverrides)
-        {
-            bool isInvalidNotificationOverrides = false;
-
-            if (notificationOverrides != null && notificationOverrides.Count > 0)
-            {
-                isInvalidNotificationOverrides = notificationOverrides
-                    .Any(notificationOverride => String.IsNullOrEmpty(notificationOverride.Identifier));
-            }
-
-            return new
-            {
-                Condition = isInvalidNotificationOverrides,
-                Message = "Notification overrides must have an identifier"
-            };
-        }
 
         private static dynamic IsInvalidMobileNumber(string mobileNumber)
         {
