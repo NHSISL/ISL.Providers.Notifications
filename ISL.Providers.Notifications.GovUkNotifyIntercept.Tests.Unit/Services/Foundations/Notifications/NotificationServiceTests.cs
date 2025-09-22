@@ -161,7 +161,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
                 MobileNumber = mobileNumber,
                 Email = email,
                 AddressLines = addressLines,
-                Overrides = personalisation
+                Personalisation = personalisation
             };
 
             return substituteInfo;

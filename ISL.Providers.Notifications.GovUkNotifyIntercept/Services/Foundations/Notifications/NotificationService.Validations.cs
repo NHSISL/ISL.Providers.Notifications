@@ -61,7 +61,8 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
 
         private static void ValidateNotificationConfiguration(NotifyConfigurations configurations)
         {
-            Validate(
+            var baseValidations = new (dynamic Rule, string Parameter)[]
+            {
                 (Rule: IsInvalid(configurations), Parameter: nameof(configurations)),
 
                 (Rule: IsInvalid(configurations.DefaultOverride.Identifier),
@@ -76,11 +77,24 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
                 (Rule: IsInvalid(configurations.DefaultOverride.AddressLines),
                     Parameter: nameof(NotifyConfigurations.DefaultOverride.AddressLines)),
 
-                (Rule: IsInvalidNotificationOverrides(configurations.NotificationOverrides),
-                    Parameter: nameof(NotifyConfigurations.NotificationOverrides)),
-
                 (Rule: IsInvalid(configurations.IdentifierKey),
-                    Parameter: nameof(NotifyConfigurations.IdentifierKey)));
+                Parameter: nameof(NotifyConfigurations.IdentifierKey))
+            };
+
+            var overrides = configurations.NotificationOverrides ?? new List<NotificationOverride>();
+
+            var overrideValidations = overrides
+                .SelectMany((o, i) => new (dynamic Rule, string Parameter)[]
+                {
+                    (Rule: IsInvalid(o.Identifier),
+                        Parameter: $"{nameof(NotifyConfigurations.NotificationOverrides)}[{i}]." +
+                            $"{nameof(configurations.DefaultOverride.Identifier)}")
+                })
+                    .ToArray();
+
+            var allValidations = baseValidations.Concat(overrideValidations).ToArray();
+
+            Validate(allValidations);
         }
 
         private static void ValidateInterceptingMobileNumberAsync(string interceptingMobileNumber)

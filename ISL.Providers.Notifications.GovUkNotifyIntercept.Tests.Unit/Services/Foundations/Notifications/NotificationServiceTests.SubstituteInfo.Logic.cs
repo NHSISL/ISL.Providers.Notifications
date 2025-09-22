@@ -14,7 +14,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
     public partial class NotificationServiceTests
     {
         [Fact]
-        public async Task ShouldSubstituteInfoAsyncWithSubstituteDictionaryTrueAndMatchingIdentifier()
+        public async Task ShouldReplaceValuesWithOverrideValuesOnMatchingIdentifier()
         {
             // given
             string randomIdentifier = GetRandomString();
@@ -47,7 +47,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
         }
 
         [Fact]
-        public async Task ShouldSubstituteInfoAsyncWithSubstituteDictionaryFalseAndMatchingIdentifier()
+        public async Task ShouldOnlyReplaceMethodValuesWithOverrideValuesOnMatchingIdentifier()
         {
             // given
             string randomIdentifier = GetRandomString();
@@ -80,7 +80,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
         }
 
         [Fact]
-        public async Task ShouldSubstituteInfoAsyncWithSubstituteDictionaryTrueAndNoMatchingIdentifier()
+        public async Task ShouldReplaceValuesWithDefaultOverrideValuesOnNoMatchingIdentifier()
         {
             // given
             string randomIdentifier = GetRandomString();
@@ -113,7 +113,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
         }
 
         [Fact]
-        public async Task ShouldSubstituteInfoAsyncWithSubstituteDictionaryFalseAndNoMatchingIdentifier()
+        public async Task ShouldOnlyReplaceMethodValuesWithDefaultOverrideValuesOnNoMatchingIdentifier()
         {
             // given
             string randomIdentifier = GetRandomString();
