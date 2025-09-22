@@ -14,12 +14,12 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
     internal partial class NotificationService : INotificationService
     {
         private readonly IGovUkNotifyBroker govukNotifyBroker;
-        private readonly NotifyConfigurations configurations;
+        private readonly NotifyConfigurations notifyConfigurations;
 
-        public NotificationService(IGovUkNotifyBroker govukNotifyBroker, NotifyConfigurations configurations)
+        public NotificationService(IGovUkNotifyBroker govukNotifyBroker, NotifyConfigurations notifyConfigurations)
         {
             this.govukNotifyBroker = govukNotifyBroker;
-            this.configurations = configurations;
+            this.notifyConfigurations = notifyConfigurations;
         }
 
         public ValueTask<string> SendEmailAsync(
@@ -51,7 +51,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
             ValidateDictionaryOnSendSms(personalisation);
             string clientReference = GetValueOrNull(personalisation, "clientReference");
             string smsSenderId = GetValueOrNull(personalisation, "smsSenderId");
-            string interceptingMobileNumber = configurations.InterceptingMobileNumber;
+            string interceptingMobileNumber = notifyConfigurations.InterceptingMobileNumber;
             ValidateInterceptingMobileNumberAsync(interceptingMobileNumber);
 
             return await this.govukNotifyBroker.SendSmsAsync(
@@ -68,11 +68,14 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
         virtual internal async ValueTask<SubstituteInfo> SubstituteInfoAsync(
             Dictionary<string, dynamic> personalisation)
         {
-            var identifier = GetValueOrNull(personalisation, configurations.IdentifierKey);
-            var patientOverride = configurations.NotificationOverrides.FirstOrDefault(p => p.Identifier == identifier);
-            string mobileNumber = configurations.DefaultOverride.Phone;
-            string email = configurations.DefaultOverride.Email;
-            List<string> addressLines = configurations.DefaultOverride.AddressLines;
+            var identifier = GetValueOrNull(personalisation, notifyConfigurations.IdentifierKey);
+
+            var patientOverride = notifyConfigurations.NotificationOverrides
+                .FirstOrDefault(p => p.Identifier == identifier);
+
+            string mobileNumber = notifyConfigurations.DefaultOverride.Phone;
+            string email = notifyConfigurations.DefaultOverride.Email;
+            List<string> addressLines = notifyConfigurations.DefaultOverride.AddressLines;
 
             if (patientOverride is not null)
             {
@@ -81,17 +84,31 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
                 addressLines = patientOverride.AddressLines ?? addressLines;
             }
 
-            if (configurations.SubstituteDictionaryValues)
+            if (notifyConfigurations.SubstituteDictionaryValues)
             {
-                personalisation[configurations.PhoneKey] = mobileNumber;
-                personalisation[configurations.EmailKey] = email;
-                personalisation[configurations.AddressLine1Key] = addressLines.ElementAtOrDefault(0) ?? string.Empty;
-                personalisation[configurations.AddressLine2Key] = addressLines.ElementAtOrDefault(1) ?? string.Empty;
-                personalisation[configurations.AddressLine3Key] = addressLines.ElementAtOrDefault(2) ?? string.Empty;
-                personalisation[configurations.AddressLine4Key] = addressLines.ElementAtOrDefault(3) ?? string.Empty;
-                personalisation[configurations.AddressLine5Key] = addressLines.ElementAtOrDefault(4) ?? string.Empty;
-                personalisation[configurations.AddressLine6Key] = addressLines.ElementAtOrDefault(5) ?? string.Empty;
-                personalisation[configurations.AddressLine7Key] = addressLines.ElementAtOrDefault(6) ?? string.Empty;
+                personalisation[notifyConfigurations.PhoneKey] = mobileNumber;
+                personalisation[notifyConfigurations.EmailKey] = email;
+
+                personalisation[notifyConfigurations.AddressLine1Key] =
+                    addressLines.ElementAtOrDefault(0) ?? string.Empty;
+
+                personalisation[notifyConfigurations.AddressLine2Key] =
+                    addressLines.ElementAtOrDefault(1) ?? string.Empty;
+
+                personalisation[notifyConfigurations.AddressLine3Key] =
+                    addressLines.ElementAtOrDefault(2) ?? string.Empty;
+
+                personalisation[notifyConfigurations.AddressLine4Key] =
+                    addressLines.ElementAtOrDefault(3) ?? string.Empty;
+
+                personalisation[notifyConfigurations.AddressLine5Key] =
+                    addressLines.ElementAtOrDefault(4) ?? string.Empty;
+
+                personalisation[notifyConfigurations.AddressLine6Key] =
+                    addressLines.ElementAtOrDefault(5) ?? string.Empty;
+
+                personalisation[notifyConfigurations.AddressLine7Key] =
+                    addressLines.ElementAtOrDefault(6) ?? string.Empty;
             }
 
             return new SubstituteInfo
@@ -99,7 +116,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
                 MobileNumber = mobileNumber,
                 Email = email,
                 AddressLines = addressLines,
-                Overrides = personalisation
+                Personalisation = personalisation
             };
         }
     }
