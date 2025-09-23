@@ -2,16 +2,16 @@
 // Copyright (c) North East London ICB. All rights reserved.
 // ---------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using ISL.Providers.Notifications.GovUkNotifyIntercept.Brokers;
 using ISL.Providers.Notifications.GovUkNotifyIntercept.Models;
 using ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Foundations.Notifications;
 using ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.Notifications;
 using KellermanSoftware.CompareNetObjects;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 using Tynamix.ObjectFiller;
 
 namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.Foundations.Notifications
@@ -22,7 +22,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
         private readonly NotifyConfigurations configurations;
         private readonly NotificationService notificationService;
         private readonly ICompareLogic compareLogic;
-
+        private readonly int MaxAddressLines = 7;
         public NotificationServiceTests()
         {
             this.govukNotifyBroker = new Mock<IGovUkNotifyBroker>();
@@ -119,11 +119,23 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
 
         private static Dictionary<string, dynamic> GetPersonalisationDictionaryForSubstitute(
             NotifyConfigurations notifyConfigurations,
-            string identifier)
+            string identifier,
+            string addressLine = null)
         {
+            if (addressLine is null)
+            {
+                addressLine = GetRandomString();
+            }
             Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>
             {
-                { notifyConfigurations.IdentifierKey, identifier }
+                { notifyConfigurations.IdentifierKey, identifier },
+                { notifyConfigurations.AddressLine1Key, addressLine },
+                { notifyConfigurations.AddressLine2Key, addressLine },
+                { notifyConfigurations.AddressLine3Key, addressLine },
+                { notifyConfigurations.AddressLine4Key, addressLine },
+                { notifyConfigurations.AddressLine5Key, addressLine },
+                { notifyConfigurations.AddressLine6Key, addressLine },
+                { notifyConfigurations.AddressLine7Key, addressLine }
             };
 
             return personalisation;
@@ -147,28 +159,28 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
             {
                 personalisation[notifyConfigurations.PhoneKey] = mobileNumber;
                 personalisation[notifyConfigurations.EmailKey] = email;
+            }
 
-                personalisation[notifyConfigurations.AddressLine1Key] =
+            personalisation[notifyConfigurations.AddressLine1Key] =
                     addressLines.ElementAtOrDefault(0) ?? string.Empty;
 
-                personalisation[notifyConfigurations.AddressLine2Key] =
-                    addressLines.ElementAtOrDefault(1) ?? string.Empty;
+            personalisation[notifyConfigurations.AddressLine2Key] =
+                addressLines.ElementAtOrDefault(1) ?? string.Empty;
 
-                personalisation[notifyConfigurations.AddressLine3Key] =
-                    addressLines.ElementAtOrDefault(2) ?? string.Empty;
+            personalisation[notifyConfigurations.AddressLine3Key] =
+                addressLines.ElementAtOrDefault(2) ?? string.Empty;
 
-                personalisation[notifyConfigurations.AddressLine4Key] =
-                    addressLines.ElementAtOrDefault(3) ?? string.Empty;
+            personalisation[notifyConfigurations.AddressLine4Key] =
+                addressLines.ElementAtOrDefault(3) ?? string.Empty;
 
-                personalisation[notifyConfigurations.AddressLine5Key] =
-                    addressLines.ElementAtOrDefault(4) ?? string.Empty;
+            personalisation[notifyConfigurations.AddressLine5Key] =
+                addressLines.ElementAtOrDefault(4) ?? string.Empty;
 
-                personalisation[notifyConfigurations.AddressLine6Key] =
-                    addressLines.ElementAtOrDefault(5) ?? string.Empty;
+            personalisation[notifyConfigurations.AddressLine6Key] =
+                addressLines.ElementAtOrDefault(5) ?? string.Empty;
 
-                personalisation[notifyConfigurations.AddressLine7Key] =
-                    addressLines.ElementAtOrDefault(6) ?? string.Empty;
-            }
+            personalisation[notifyConfigurations.AddressLine7Key] =
+                addressLines.ElementAtOrDefault(6) ?? string.Empty;
 
             SubstituteInfo substituteInfo = new SubstituteInfo
             {
@@ -228,6 +240,15 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
             {
                 new Notify.Exceptions.NotifyClientException(
                     message: "Internal server error"),
+            };
+        }
+
+        public static TheoryData<List<string>> InvalidLists()
+        {
+            return new TheoryData<List<string>>
+            {
+                null,
+                new List<string>()
             };
         }
     }

@@ -48,5 +48,18 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Brokers
 
             return response.id;
         }
+
+        public async ValueTask<string> SendLetterAsync(
+            string templateId,
+            Dictionary<string, dynamic> personalisation = null,
+            string clientReference = null)
+        {
+            LetterNotificationResponse response = await this.client.SendLetterAsync(
+                templateId,
+                personalisation,
+                clientReference);
+
+            return response.id;
+        }
     }
 }

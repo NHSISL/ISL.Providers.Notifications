@@ -35,6 +35,15 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
                 (Rule: IsInvalid(personalisation), Parameter: nameof(personalisation)));
         }
 
+        private static void ValidateOnSendLetter(
+            string templateId,
+            Dictionary<string, dynamic> personalisation)
+        {
+            Validate(
+                (Rule: IsInvalid(templateId), Parameter: nameof(templateId)),
+                (Rule: IsInvalid(personalisation), Parameter: nameof(personalisation)));
+        }
+
         private static void ValidateNotificationConfiguration(NotifyConfigurations configurations)
         {
             var baseValidations = new (dynamic Rule, string Parameter)[]
@@ -44,7 +53,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
                 (Rule: IsInvalid(configurations.DefaultOverride.Identifier),
                     Parameter: nameof(NotifyConfigurations.DefaultOverride.Identifier)),
 
-                (Rule: IsInvalid(configurations.DefaultOverride.Phone),
+                (Rule: IsInvalidMobileNumber(configurations.DefaultOverride.Phone),
                     Parameter: nameof(NotifyConfigurations.DefaultOverride.Phone)),
 
                 (Rule: IsInvalidEmailAddress(configurations.DefaultOverride.Email),
