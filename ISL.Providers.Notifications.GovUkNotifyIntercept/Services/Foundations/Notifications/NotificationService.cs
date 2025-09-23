@@ -72,16 +72,9 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
                 ValidateNotificationConfiguration(notifyConfigurations);
                 SubstituteInfo substituteInfo = await SubstituteInfoAsync(personalisation);
 
-                for (int i = 0; i < maxAddressLines; i++)
-                {
-                    string key = $"addressLine{i + 1}";
-                    string? value = i < substituteInfo.AddressLines.Count ? substituteInfo.AddressLines[i] : null;
-                    personalisation[key] = value;
-                }
-
                 return await this.govukNotifyBroker.SendLetterAsync(
                     templateId: templateId,
-                    personalisation: personalisation,
+                    personalisation: substituteInfo.Personalisation,
                     clientReference: clientReference);
             });
 
@@ -111,28 +104,28 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
             {
                 personalisation[notifyConfigurations.PhoneKey] = mobileNumber;
                 personalisation[notifyConfigurations.EmailKey] = email;
-
-                personalisation[notifyConfigurations.AddressLine1Key] =
-                    addressLines.ElementAtOrDefault(0) ?? string.Empty;
-
-                personalisation[notifyConfigurations.AddressLine2Key] =
-                    addressLines.ElementAtOrDefault(1) ?? string.Empty;
-
-                personalisation[notifyConfigurations.AddressLine3Key] =
-                    addressLines.ElementAtOrDefault(2) ?? string.Empty;
-
-                personalisation[notifyConfigurations.AddressLine4Key] =
-                    addressLines.ElementAtOrDefault(3) ?? string.Empty;
-
-                personalisation[notifyConfigurations.AddressLine5Key] =
-                    addressLines.ElementAtOrDefault(4) ?? string.Empty;
-
-                personalisation[notifyConfigurations.AddressLine6Key] =
-                    addressLines.ElementAtOrDefault(5) ?? string.Empty;
-
-                personalisation[notifyConfigurations.AddressLine7Key] =
-                    addressLines.ElementAtOrDefault(6) ?? string.Empty;
             }
+
+            personalisation[notifyConfigurations.AddressLine1Key] =
+                   addressLines.ElementAtOrDefault(0) ?? string.Empty;
+
+            personalisation[notifyConfigurations.AddressLine2Key] =
+                addressLines.ElementAtOrDefault(1) ?? string.Empty;
+
+            personalisation[notifyConfigurations.AddressLine3Key] =
+                addressLines.ElementAtOrDefault(2) ?? string.Empty;
+
+            personalisation[notifyConfigurations.AddressLine4Key] =
+                addressLines.ElementAtOrDefault(3) ?? string.Empty;
+
+            personalisation[notifyConfigurations.AddressLine5Key] =
+                addressLines.ElementAtOrDefault(4) ?? string.Empty;
+
+            personalisation[notifyConfigurations.AddressLine6Key] =
+                addressLines.ElementAtOrDefault(5) ?? string.Empty;
+
+            personalisation[notifyConfigurations.AddressLine7Key] =
+                addressLines.ElementAtOrDefault(6) ?? string.Empty;
 
             return new SubstituteInfo
             {
