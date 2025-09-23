@@ -2,12 +2,12 @@
 // Copyright (c) North East London ICB. All rights reserved.
 // ---------------------------------------------------------
 
-using ISL.Providers.Notifications.GovUkNotifyIntercept.Brokers;
-using ISL.Providers.Notifications.GovUkNotifyIntercept.Models;
-using ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Foundations.Notifications;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ISL.Providers.Notifications.GovUkNotifyIntercept.Brokers;
+using ISL.Providers.Notifications.GovUkNotifyIntercept.Models;
+using ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Foundations.Notifications;
 
 namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.Notifications
 {
@@ -30,7 +30,6 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
         TryCatch(async () =>
         {
             ValidateOnSendEmailWithTemplateId(toEmail, templateId, personalisation);
-            ValidateDictionaryOnSendEmailWithTemplateId(personalisation);
             ValidateNotificationConfiguration(notifyConfigurations);
             SubstituteInfo substituteInfo = await SubstituteInfoAsync(personalisation);
 

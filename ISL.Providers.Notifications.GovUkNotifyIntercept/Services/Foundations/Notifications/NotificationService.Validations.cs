@@ -2,12 +2,12 @@
 // Copyright (c) North East London ICB. All rights reserved.
 // ---------------------------------------------------------
 
-using ISL.Providers.Notifications.GovUkNotifyIntercept.Models;
-using ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Foundations.Notifications.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ISL.Providers.Notifications.GovUkNotifyIntercept.Models;
+using ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Foundations.Notifications.Exceptions;
 
 namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.Notifications
 {
@@ -22,11 +22,6 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
                 (Rule: IsInvalidEmailAddress(toEmail), Parameter: nameof(toEmail)),
                 (Rule: IsInvalid(templateId), Parameter: nameof(templateId)),
                 (Rule: IsInvalid(personalisation), Parameter: nameof(personalisation)));
-        }
-
-        private static void ValidateInterceptingEmailAsync(string interceptingEmail)
-        {
-            Validate((Rule: IsInvalid(interceptingEmail), Parameter: nameof(interceptingEmail)));
         }
 
         private static void ValidateOnSendSms(
