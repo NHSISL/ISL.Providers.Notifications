@@ -24,18 +24,6 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
                 (Rule: IsInvalid(personalisation), Parameter: nameof(personalisation)));
         }
 
-        private static void ValidateDictionaryOnSendEmail(Dictionary<string, dynamic> personalisation)
-        {
-            string subject = GetValueOrNull(personalisation, "subject");
-            string body = GetValueOrNull(personalisation, "body");
-            string templateId = GetValueOrNull(personalisation, "templateId");
-
-            Validate(
-                (Rule: IsInvalid(subject, true), Parameter: nameof(subject)),
-                (Rule: IsInvalid(body, true), Parameter: nameof(body)),
-                (Rule: IsInvalid(templateId, true), Parameter: nameof(templateId)));
-        }
-
         private static void ValidateOnSendEmailWithTemplateId(
             string toEmail,
             string templateId,
@@ -47,16 +35,6 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
                 (Rule: IsInvalid(personalisation), Parameter: nameof(personalisation)));
         }
 
-        private static void ValidateDictionaryOnSendEmailWithTemplateId(Dictionary<string, dynamic> personalisation)
-        {
-            string subject = GetValueOrNull(personalisation, "subject");
-            string message = GetValueOrNull(personalisation, "message");
-
-            Validate(
-                (Rule: IsInvalid(subject, true), Parameter: nameof(subject)),
-                (Rule: IsInvalid(message, true), Parameter: nameof(message)));
-        }
-
         private static void ValidateOnSendSms(
             string templateId,
             string mobileNumber,
@@ -66,14 +44,6 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
                 (Rule: IsInvalid(templateId), Parameter: nameof(templateId)),
                 (Rule: IsInvalidMobileNumber(mobileNumber), Parameter: nameof(mobileNumber)),
                 (Rule: IsInvalid(personalisation), Parameter: nameof(personalisation)));
-        }
-
-        private static void ValidateDictionaryOnSendSms(Dictionary<string, dynamic> personalisation)
-        {
-            string message = GetValueOrNull(personalisation, "message");
-
-            Validate(
-                (Rule: IsInvalid(message, true), Parameter: nameof(message)));
         }
 
         private static void ValidateOnSendLetter(

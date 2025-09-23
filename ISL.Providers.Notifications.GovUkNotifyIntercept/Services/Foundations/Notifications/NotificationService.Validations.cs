@@ -24,17 +24,6 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
                 (Rule: IsInvalid(personalisation), Parameter: nameof(personalisation)));
         }
 
-        private static void ValidateDictionaryOnSendEmailWithTemplateId(
-            Dictionary<string, dynamic> personalisation)
-        {
-            string subject = GetValueOrNull(personalisation, "subject");
-            string message = GetValueOrNull(personalisation, "message");
-
-            Validate(
-                (Rule: IsInvalid(subject, true), Parameter: nameof(subject)),
-                (Rule: IsInvalid(message, true), Parameter: nameof(message)));
-        }
-
         private static void ValidateInterceptingEmailAsync(string interceptingEmail)
         {
             Validate((Rule: IsInvalid(interceptingEmail), Parameter: nameof(interceptingEmail)));
@@ -49,14 +38,6 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
                 (Rule: IsInvalid(templateId), Parameter: nameof(templateId)),
                 (Rule: IsInvalidMobileNumber(mobileNumber), Parameter: nameof(mobileNumber)),
                 (Rule: IsInvalid(personalisation), Parameter: nameof(personalisation)));
-        }
-
-        private static void ValidateDictionaryOnSendSms(Dictionary<string, dynamic> personalisation)
-        {
-            string message = GetValueOrNull(personalisation, "message");
-
-            Validate(
-                (Rule: IsInvalid(message, true), Parameter: nameof(message)));
         }
 
         private static void ValidateNotificationConfiguration(NotifyConfigurations configurations)
