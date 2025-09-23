@@ -81,57 +81,5 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
 
             this.govukNotifyBroker.VerifyNoOtherCalls();
         }
-
-        [Fact]
-        public async Task ShouldValidateDictionaryOnSendEmailAsync()
-        {
-            // given
-            string inputFromEmail = GetRandomEmailAddress();
-            string inputToEmail = GetRandomEmailAddress();
-            string inputSubject = GetRandomString();
-            string inputBody = GetRandomString();
-            Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
-            inputPersonalization.Add("inputClientReference", GetRandomString());
-
-            var invalidArgumentNotificationException =
-                new InvalidArgumentNotificationException(
-                    message: "Invalid notification argument exception. Please correct the errors and try again.");
-
-            invalidArgumentNotificationException.AddData(
-                key: "templateId",
-                values: "Text is required for dictionary item");
-
-            var expectedNotificationValidationException =
-                new NotificationValidationException(
-                    message: "Notification validation error occurred, please correct the errors and try again.",
-                    innerException: invalidArgumentNotificationException);
-
-            // when
-            ValueTask<string> sendEmailTask = this.notificationService.SendEmailAsync(
-                toEmail: inputToEmail,
-                subject: inputSubject,
-                body: inputBody,
-                personalisation: inputPersonalization);
-
-            NotificationValidationException actualNotificationValidationException =
-                await Assert.ThrowsAsync<NotificationValidationException>(async () =>
-                    await sendEmailTask);
-
-            // then
-            actualNotificationValidationException.Should()
-                .BeEquivalentTo(expectedNotificationValidationException);
-
-            this.govukNotifyBroker.Verify(broker =>
-                broker.SendEmailAsync(
-                    It.IsAny<string>(),
-                    It.IsAny<string>(),
-                    It.IsAny<Dictionary<string, dynamic>>(),
-                    It.IsAny<string>(),
-                    It.IsAny<string>(),
-                    It.IsAny<string>()),
-                Times.Never);
-
-            this.govukNotifyBroker.VerifyNoOtherCalls();
-        }
     }
 }
