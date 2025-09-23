@@ -74,12 +74,45 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Providers.Notificatio
             throw new NotImplementedException();
         }
 
-        public ValueTask<string> SendSmsAsync(
+        /// <summary>
+        /// Sends a SMS using the specified template ID and personalisation items.
+        /// </summary>
+        /// <returns>A string representing the unique identifier of the sent SMS.</returns>
+        /// <exception cref="GovUkNotifyProviderValidationException" />
+        /// <exception cref="GovUkNotifyProviderDependencyException" />
+        /// <exception cref="GovUkNotifyProviderServiceException" />
+        public async ValueTask<string> SendSmsAsync(
             string templateId,
             string mobileNumber,
             Dictionary<string, dynamic> personalisation)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await this.notificationService.SendSmsAsync(
+                    templateId,
+                    mobileNumber,
+                    personalisation);
+            }
+            catch (NotificationValidationException notificationValidationException)
+            {
+                throw CreateProviderValidationException(
+                    notificationValidationException.InnerException as Xeption);
+            }
+            catch (NotificationDependencyValidationException notificationDependencyValidationException)
+            {
+                throw CreateProviderValidationException(
+                    notificationDependencyValidationException.InnerException as Xeption);
+            }
+            catch (NotificationDependencyException notificationDependencyException)
+            {
+                throw CreateProviderDependencyException(
+                    notificationDependencyException.InnerException as Xeption);
+            }
+            catch (NotificationServiceException notificationServiceException)
+            {
+                throw CreateProviderServiceException(
+                    notificationServiceException.InnerException as Xeption);
+            }
         }
 
         public ValueTask<string> SendLetterAsync(
