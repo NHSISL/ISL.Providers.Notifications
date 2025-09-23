@@ -14,6 +14,7 @@ namespace ISL.NotificationClient.Tests.Acceptance
         private readonly IGovUkNotifyInterceptProvider govUkNotifyInterceptProvider;
         private readonly IConfiguration configuration;
         private readonly string TEST_EMAIL = "simulate-delivered@notifications.service.gov.uk";
+        private readonly string TEST_MOBILE_NUMBER = "07700900000";
 
         public GovukNotifyProviderTests()
         {
