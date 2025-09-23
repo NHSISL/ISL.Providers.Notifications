@@ -31,7 +31,6 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
         TryCatch(async () =>
         {
             ValidateOnSendEmailWithTemplateId(toEmail, templateId, personalisation);
-            ValidateDictionaryOnSendEmailWithTemplateId(personalisation);
             string interceptEmail = notifyConfigurations.InterceptingEmail;
             ValidateInterceptingEmail(interceptEmail);
 
