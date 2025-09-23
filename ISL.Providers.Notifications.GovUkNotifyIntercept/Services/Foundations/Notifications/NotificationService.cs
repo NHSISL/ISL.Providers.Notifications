@@ -15,7 +15,6 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
     {
         private readonly IGovUkNotifyBroker govukNotifyBroker;
         private readonly NotifyConfigurations notifyConfigurations;
-        private readonly int maxAddressLines = 7;
 
         public NotificationService(IGovUkNotifyBroker govukNotifyBroker, NotifyConfigurations notifyConfigurations)
         {
