@@ -1,12 +1,16 @@
-﻿using ISL.Providers.Notifications.GovUkNotifyIntercept.Brokers;
+﻿// ---------------------------------------------------------
+// Copyright (c) North East London ICB. All rights reserved.
+// ---------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using ISL.Providers.Notifications.GovUkNotifyIntercept.Brokers;
 using ISL.Providers.Notifications.GovUkNotifyIntercept.Models;
 using ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Foundations.Notifications.Exceptions;
 using ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Providers.Exceptions;
 using ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.Notifications;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Xeptions;
 
 namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Providers.Notifications
@@ -115,12 +119,38 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Providers.Notificatio
             }
         }
 
-        public ValueTask<string> SendLetterAsync(
+        public async ValueTask<string> SendLetterAsync(
             string templateId,
             Dictionary<string, dynamic> personalisation = null,
             string clientReference = null)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await this.notificationService.SendLetterAsync(
+                    templateId,
+                    personalisation,
+                    clientReference);
+            }
+            catch (NotificationValidationException notificationValidationException)
+            {
+                throw CreateProviderValidationException(
+                    notificationValidationException.InnerException as Xeption);
+            }
+            catch (NotificationDependencyValidationException notificationDependencyValidationException)
+            {
+                throw CreateProviderValidationException(
+                    notificationDependencyValidationException.InnerException as Xeption);
+            }
+            catch (NotificationDependencyException notificationDependencyException)
+            {
+                throw CreateProviderDependencyException(
+                    notificationDependencyException.InnerException as Xeption);
+            }
+            catch (NotificationServiceException notificationServiceException)
+            {
+                throw CreateProviderServiceException(
+                    notificationServiceException.InnerException as Xeption);
+            }
         }
 
         public ValueTask<string> SendPrecompiledLetterAsync(
