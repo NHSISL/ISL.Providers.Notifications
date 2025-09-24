@@ -24,11 +24,6 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
                 (Rule: IsInvalid(personalisation), Parameter: nameof(personalisation)));
         }
 
-        private static void ValidateInterceptingEmailAsync(string interceptingEmail)
-        {
-            Validate((Rule: IsInvalid(interceptingEmail), Parameter: nameof(interceptingEmail)));
-        }
-
         private static void ValidateOnSendSms(
             string templateId,
             string mobileNumber,
@@ -68,7 +63,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
                     Parameter: nameof(NotifyConfigurations.DefaultOverride.AddressLines)),
 
                 (Rule: IsInvalid(configurations.IdentifierKey),
-                Parameter: nameof(NotifyConfigurations.IdentifierKey))
+                    Parameter: nameof(NotifyConfigurations.IdentifierKey))
             };
 
             var overrides = configurations.NotificationOverrides ?? new List<NotificationOverride>();
@@ -91,12 +86,6 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
             Validate(
                 (Rule: IsInvalidMobileNumber(interceptingMobileNumber),
                 Parameter: nameof(interceptingMobileNumber)));
-        }
-
-        private static void ValidateInterceptingEmail(string interceptingEmail)
-        {
-            Validate(
-                (Rule: IsInvalidEmailAddress(interceptingEmail), Parameter: nameof(interceptingEmail)));
         }
 
         private static dynamic IsInvalid(string text, bool isDictionaryValue = false) => new
