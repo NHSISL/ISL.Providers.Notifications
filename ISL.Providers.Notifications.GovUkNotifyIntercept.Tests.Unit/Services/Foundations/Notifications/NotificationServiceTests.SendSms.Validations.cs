@@ -5,6 +5,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentAssertions;
+using ISL.Providers.Notifications.GovUkNotifyIntercept.Models;
 using ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Foundations.Notifications.Exceptions;
 using Moq;
 
@@ -128,22 +129,26 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
         [InlineData("0723456789")]
         [InlineData("07234abc890")]
         [InlineData("+447234abc890")]
-        public async Task ShouldValidateInterceptingMobileNumberOnSendSmsAsync(string invalidInterceptingMobileNumber)
+        public async Task ShouldValidateConfigurationsOnSendSmsAsyncWithInvalidNotificationOverrides(
+            string invalidText)
         {
             // given
             string inputTemplateId = GetRandomString();
-            string inputMessage = GetRandomString();
             string inputMobileNumber = GetRandomLocalMobileNumber();
+            string inputMessage = GetRandomString();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
+            inputPersonalization.Add("inputClientReference", GetRandomString());
             inputPersonalization.Add("message", inputMessage);
-            this.configurations.InterceptingMobileNumber = invalidInterceptingMobileNumber;
+            NotificationOverride randomInvalidNotificationOverride = GetRandomNotificationOverride();
+            randomInvalidNotificationOverride.Phone = invalidText;
+            this.configurations.DefaultOverride = randomInvalidNotificationOverride;
 
             var invalidArgumentNotificationException =
                 new InvalidArgumentNotificationException(
                     message: "Invalid notification argument exception. Please correct the errors and try again.");
 
             invalidArgumentNotificationException.AddData(
-                key: "interceptingMobileNumber",
+                key: "Phone",
                 values: "Mobile number must be in UK format: 07XXXXXXXXX (11 digits) " +
                     "or international format: +447XXXXXXXXX (12 digits)");
 

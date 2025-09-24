@@ -81,13 +81,6 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
             Validate(allValidations);
         }
 
-        private static void ValidateInterceptingMobileNumberAsync(string interceptingMobileNumber)
-        {
-            Validate(
-                (Rule: IsInvalidMobileNumber(interceptingMobileNumber),
-                Parameter: nameof(interceptingMobileNumber)));
-        }
-
         private static dynamic IsInvalid(string text, bool isDictionaryValue = false) => new
         {
             Condition = String.IsNullOrWhiteSpace(text),

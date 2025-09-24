@@ -49,13 +49,13 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
             ValidateOnSendSms(templateId, mobileNumber, personalisation);
             string clientReference = GetValueOrNull(personalisation, "clientReference");
             string smsSenderId = GetValueOrNull(personalisation, "smsSenderId");
-            string interceptingMobileNumber = notifyConfigurations.InterceptingMobileNumber;
-            ValidateInterceptingMobileNumberAsync(interceptingMobileNumber);
+            ValidateNotificationConfiguration(notifyConfigurations);
+            SubstituteInfo substituteInfo = await SubstituteInfoAsync(personalisation);
 
             return await this.govukNotifyBroker.SendSmsAsync(
-                mobileNumber: interceptingMobileNumber,
+                mobileNumber: substituteInfo.MobileNumber,
                 templateId: templateId,
-                personalisation: personalisation,
+                personalisation: substituteInfo.Personalisation,
                 clientReference: clientReference,
                 smsSenderId: smsSenderId);
         });

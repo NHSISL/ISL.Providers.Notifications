@@ -2,10 +2,13 @@
 // Copyright (c) North East London ICB. All rights reserved.
 // ---------------------------------------------------------
 
-using FluentAssertions;
-using Moq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FluentAssertions;
+using Force.DeepCloner;
+using ISL.Providers.Notifications.GovUkNotifyIntercept.Models.Foundations.Notifications;
+using ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.Notifications;
+using Moq;
 
 namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.Foundations.Notifications
 {
@@ -22,24 +25,34 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
             string inputMessage = GetRandomString();
             string inputMobileNumber = GetRandomLocalMobileNumber();
             string inputSmsSenderId = GetRandomString();
-            string interceptingMobileNumber = this.configurations.InterceptingMobileNumber;
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
             inputPersonalization.Add("clientReference", inputClientReference);
             inputPersonalization.Add("message", inputMessage);
             inputPersonalization.Add("smsSenderId", inputSmsSenderId);
+            SubstituteInfo randomSubstituteInfo = GetRandomSubstituteInfo(inputPersonalization);
+            SubstituteInfo outputSubstituteInfo = randomSubstituteInfo.DeepClone();
+
+            var notificationServiceMock = new Mock<NotificationService>(
+                this.govukNotifyBroker.Object,
+                this.configurations)
+            { CallBase = true };
+
+            notificationServiceMock.Setup(service =>
+                service.SubstituteInfoAsync(inputPersonalization))
+                    .ReturnsAsync(outputSubstituteInfo);
 
             this.govukNotifyBroker
                 .Setup(broker =>
                     broker.SendSmsAsync(
-                        interceptingMobileNumber,
+                        outputSubstituteInfo.MobileNumber,
                         inputTemplateId,
-                        It.Is(SameDictionaryAs(inputPersonalization)),
+                        It.Is(SameDictionaryAs(outputSubstituteInfo.Personalisation)),
                         inputClientReference,
                         inputSmsSenderId))
                 .ReturnsAsync(expectedIdentifier);
 
             // when
-            string actualIdentifier = await this.notificationService.SendSmsAsync(
+            string actualIdentifier = await notificationServiceMock.Object.SendSmsAsync(
                 templateId: inputTemplateId,
                 mobileNumber: inputMobileNumber,
                 personalisation: inputPersonalization);
@@ -47,12 +60,16 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
             // then
             actualIdentifier.Should().BeEquivalentTo(expectedIdentifier);
 
+            notificationServiceMock.Verify(service =>
+                service.SubstituteInfoAsync(inputPersonalization),
+                    Times.Once);
+
             this.govukNotifyBroker
                 .Verify(broker =>
                     broker.SendSmsAsync(
-                        interceptingMobileNumber,
+                        outputSubstituteInfo.MobileNumber,
                         inputTemplateId,
-                        It.Is(SameDictionaryAs(inputPersonalization)),
+                        It.Is(SameDictionaryAs(outputSubstituteInfo.Personalisation)),
                         inputClientReference,
                         inputSmsSenderId),
                 Times.Once);

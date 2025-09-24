@@ -99,7 +99,6 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
             var filler = new Filler<NotifyConfigurations>();
 
             filler.Setup()
-                .OnProperty(config => config.InterceptingMobileNumber).Use(GetRandomLocalMobileNumber())
                 .OnProperty(config => config.DefaultOverride).Use(GetRandomNotificationOverride());
 
             return filler;
