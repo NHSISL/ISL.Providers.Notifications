@@ -30,13 +30,13 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
         TryCatch(async () =>
         {
             ValidateOnSendEmailWithTemplateId(toEmail, templateId, personalisation);
-            string interceptEmail = notifyConfigurations.InterceptingEmail;
-            ValidateInterceptingEmail(interceptEmail);
+            ValidateNotificationConfiguration(notifyConfigurations);
+            SubstituteInfo substituteInfo = await SubstituteInfoAsync(personalisation);
 
             return await this.govukNotifyBroker.SendEmailAsync(
                 templateId: templateId,
-                toEmail: interceptEmail,
-                personalisation: personalisation,
+                toEmail: substituteInfo.Email,
+                personalisation: substituteInfo.Personalisation,
                 clientReference: clientReference);
         });
 
