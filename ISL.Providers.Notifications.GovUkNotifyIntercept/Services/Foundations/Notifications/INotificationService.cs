@@ -19,5 +19,10 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Services.Foundations.
             string templateId,
             string mobileNumber,
             Dictionary<string, dynamic> personalisation);
+
+        ValueTask<string> SendLetterAsync(
+            string templateId,
+            Dictionary<string, dynamic> personalisation = null,
+            string clientReference = null);
     }
 }
