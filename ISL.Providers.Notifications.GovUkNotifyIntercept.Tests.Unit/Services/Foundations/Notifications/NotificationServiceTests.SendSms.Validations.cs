@@ -129,7 +129,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
         [InlineData("0723456789")]
         [InlineData("07234abc890")]
         [InlineData("+447234abc890")]
-        public async Task ShouldValidateConfigurationsOnSendEmailAsyncWithInvalidNotificationOverrides(
+        public async Task ShouldValidateConfigurationsOnSendSmsAsyncWithInvalidNotificationOverrides(
             string invalidText)
         {
             // given
@@ -140,7 +140,7 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
             inputPersonalization.Add("inputClientReference", GetRandomString());
             inputPersonalization.Add("message", inputMessage);
             NotificationOverride randomInvalidNotificationOverride = GetRandomNotificationOverride();
-            randomInvalidNotificationOverride.Email = invalidText;
+            randomInvalidNotificationOverride.Phone = invalidText;
             this.configurations.DefaultOverride = randomInvalidNotificationOverride;
 
             var invalidArgumentNotificationException =
@@ -148,8 +148,9 @@ namespace ISL.Providers.Notifications.GovUkNotifyIntercept.Tests.Unit.Services.F
                     message: "Invalid notification argument exception. Please correct the errors and try again.");
 
             invalidArgumentNotificationException.AddData(
-                key: "Email",
-                values: "Email must be in format: XXX@XXX.XXX");
+                key: "Phone",
+                values: "Mobile number must be in UK format: 07XXXXXXXXX (11 digits) " +
+                    "or international format: +447XXXXXXXXX (12 digits)");
 
             var expectedNotificationValidationException =
                 new NotificationValidationException(
