@@ -9,7 +9,7 @@
 		<PackageId>ISL.Providers.Notifications.NotifyIntercept</PackageId>
 		<Authors>North East London ICB</Authors>
 		<Company>North East London ICB</Company>
-		<Description>ISL.Providers.Notifications.GovukNotifyIntercept provides a notification implementation the popular 
+		<Description>ISL.Providers.Notifications.NotifyIntercept provides a notification implementation for the popular 
 		GOV.UK Notify client which allows you to intercept the destination of the notification to a chosen address using appsettings.</Description>
 		<Copyright>North East London ICB - 2024 (c)</Copyright>
 		<PackageIcon>notification.png</PackageIcon>
