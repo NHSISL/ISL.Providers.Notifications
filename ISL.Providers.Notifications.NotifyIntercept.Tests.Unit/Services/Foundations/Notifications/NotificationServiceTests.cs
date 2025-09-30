@@ -18,17 +18,17 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
 {
     public partial class NotificationServiceTests
     {
-        private readonly Mock<IInterceptBroker> govukNotifyBroker;
+        private readonly Mock<IInterceptBroker> interceptBroker;
         private readonly NotifyConfigurations configurations;
         private readonly NotificationService notificationService;
         private readonly ICompareLogic compareLogic;
         private readonly int MaxAddressLines = 7;
         public NotificationServiceTests()
         {
-            this.govukNotifyBroker = new Mock<IInterceptBroker>();
+            this.interceptBroker = new Mock<IInterceptBroker>();
             this.configurations = GetRandomConfigurations();
             this.compareLogic = new CompareLogic();
-            this.notificationService = new NotificationService(govukNotifyBroker.Object, configurations);
+            this.notificationService = new NotificationService(interceptBroker.Object, configurations);
         }
 
         private static int GetRandomNumber() =>
@@ -45,15 +45,6 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             Random random = new Random();
             var randomNumberEnd = random.Next(100000000, 200000000).ToString();
             string randomNumber = $"07{randomNumberEnd}";
-
-            return randomNumber;
-        }
-
-        private static string GetRandomInternationalMobileNumber()
-        {
-            Random random = new Random();
-            var randomNumberEnd = random.Next(100000000, 200000000).ToString();
-            string randomNumber = $"+447{randomNumberEnd}";
 
             return randomNumber;
         }

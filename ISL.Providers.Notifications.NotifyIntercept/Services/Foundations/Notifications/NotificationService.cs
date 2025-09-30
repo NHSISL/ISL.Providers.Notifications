@@ -13,12 +13,12 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Services.Foundations.Notif
 {
     internal partial class NotificationService : INotificationService
     {
-        private readonly IInterceptBroker govukNotifyBroker;
+        private readonly IInterceptBroker interceptBroker;
         private readonly NotifyConfigurations notifyConfigurations;
 
-        public NotificationService(IInterceptBroker govukNotifyBroker, NotifyConfigurations notifyConfigurations)
+        public NotificationService(IInterceptBroker interceptBroker, NotifyConfigurations notifyConfigurations)
         {
-            this.govukNotifyBroker = govukNotifyBroker;
+            this.interceptBroker = interceptBroker;
             this.notifyConfigurations = notifyConfigurations;
         }
 
@@ -33,7 +33,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Services.Foundations.Notif
             ValidateNotificationConfiguration(notifyConfigurations);
             SubstituteInfo substituteInfo = await SubstituteInfoAsync(personalisation);
 
-            return await this.govukNotifyBroker.SendEmailAsync(
+            return await this.interceptBroker.SendEmailAsync(
                 templateId: templateId,
                 toEmail: substituteInfo.Email,
                 personalisation: substituteInfo.Personalisation,
@@ -52,7 +52,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Services.Foundations.Notif
             ValidateNotificationConfiguration(notifyConfigurations);
             SubstituteInfo substituteInfo = await SubstituteInfoAsync(personalisation);
 
-            return await this.govukNotifyBroker.SendSmsAsync(
+            return await this.interceptBroker.SendSmsAsync(
                 mobileNumber: substituteInfo.MobileNumber,
                 templateId: templateId,
                 personalisation: substituteInfo.Personalisation,
@@ -70,7 +70,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Services.Foundations.Notif
                 ValidateNotificationConfiguration(notifyConfigurations);
                 SubstituteInfo substituteInfo = await SubstituteInfoAsync(personalisation);
 
-                return await this.govukNotifyBroker.SendLetterAsync(
+                return await this.interceptBroker.SendLetterAsync(
                     templateId: templateId,
                     personalisation: substituteInfo.Personalisation,
                     clientReference: clientReference);

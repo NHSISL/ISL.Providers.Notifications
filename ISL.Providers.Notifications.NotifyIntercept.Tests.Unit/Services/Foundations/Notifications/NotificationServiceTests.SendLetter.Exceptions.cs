@@ -22,7 +22,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             string inputClientReference = GetRandomString();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
 
-            this.govukNotifyBroker.Setup(broker =>
+            this.interceptBroker.Setup(broker =>
                 broker.SendLetterAsync(
                     It.IsAny<string>(),
                     It.IsAny<Dictionary<string, dynamic>>(),
@@ -51,14 +51,14 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             actualNotificationDependencyValidationException.Should()
                  .BeEquivalentTo(expectedNotificationDependencyValidationException);
 
-            this.govukNotifyBroker.Verify(broker =>
+            this.interceptBroker.Verify(broker =>
                 broker.SendLetterAsync(
                     It.IsAny<string>(),
                     It.IsAny<Dictionary<string, dynamic>>(),
                     It.IsAny<string>()),
                 Times.Once);
 
-            this.govukNotifyBroker.VerifyNoOtherCalls();
+            this.interceptBroker.VerifyNoOtherCalls();
         }
 
         [Theory]
@@ -70,7 +70,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             string inputClientReference = GetRandomString();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
 
-            this.govukNotifyBroker.Setup(broker =>
+            this.interceptBroker.Setup(broker =>
                 broker.SendLetterAsync(
                     It.IsAny<string>(),
                     It.IsAny<Dictionary<string, dynamic>>(),
@@ -100,14 +100,14 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             actualNotificationDependencyValidationException.Should()
                  .BeEquivalentTo(expectedNotificationDependencyException);
 
-            this.govukNotifyBroker.Verify(broker =>
+            this.interceptBroker.Verify(broker =>
                 broker.SendLetterAsync(
                     It.IsAny<string>(),
                     It.IsAny<Dictionary<string, dynamic>>(),
                     It.IsAny<string>()),
                 Times.Once);
 
-            this.govukNotifyBroker.VerifyNoOtherCalls();
+            this.interceptBroker.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -119,7 +119,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
             var serviceException = new Exception();
 
-            this.govukNotifyBroker.Setup(broker =>
+            this.interceptBroker.Setup(broker =>
                 broker.SendLetterAsync(
                     It.IsAny<string>(),
                     It.IsAny<Dictionary<string, dynamic>>(),
@@ -148,14 +148,14 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             actualNotificationServiceException.Should()
                  .BeEquivalentTo(expectedNotificationServiceException);
 
-            this.govukNotifyBroker.Verify(broker =>
+            this.interceptBroker.Verify(broker =>
                 broker.SendLetterAsync(
                     It.IsAny<string>(),
                     It.IsAny<Dictionary<string, dynamic>>(),
                     It.IsAny<string>()),
                 Times.Once);
 
-            this.govukNotifyBroker.VerifyNoOtherCalls();
+            this.interceptBroker.VerifyNoOtherCalls();
         }
     }
 }

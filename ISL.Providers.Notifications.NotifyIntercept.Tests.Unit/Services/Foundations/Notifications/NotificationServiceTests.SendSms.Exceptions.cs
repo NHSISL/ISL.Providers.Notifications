@@ -28,7 +28,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             inputPersonalization.Add("smsSenderId", inputSmsSenderId);
             inputPersonalization.Add("message", inputMessage);
 
-            this.govukNotifyBroker.Setup(broker =>
+            this.interceptBroker.Setup(broker =>
                 broker.SendSmsAsync(
                     It.IsAny<string>(),
                     It.IsAny<string>(),
@@ -60,7 +60,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             actualNotificationDependencyValidationException.Should()
                  .BeEquivalentTo(expectedNotificationDependencyValidationException);
 
-            this.govukNotifyBroker.Verify(broker =>
+            this.interceptBroker.Verify(broker =>
                 broker.SendSmsAsync(
                     It.IsAny<string>(),
                     It.IsAny<string>(),
@@ -69,7 +69,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
                     It.IsAny<string>()),
                 Times.Once);
 
-            this.govukNotifyBroker.VerifyNoOtherCalls();
+            this.interceptBroker.VerifyNoOtherCalls();
         }
 
         [Theory]
@@ -87,7 +87,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             inputPersonalization.Add("smsSenderId", inputSmsSenderId);
             inputPersonalization.Add("message", inputMessage);
 
-            this.govukNotifyBroker.Setup(broker =>
+            this.interceptBroker.Setup(broker =>
                 broker.SendSmsAsync(
                     It.IsAny<string>(),
                     It.IsAny<string>(),
@@ -119,7 +119,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             actualNotificationDependencyValidationException.Should()
                  .BeEquivalentTo(expectedNotificationDependencyException);
 
-            this.govukNotifyBroker.Verify(broker =>
+            this.interceptBroker.Verify(broker =>
                 broker.SendSmsAsync(
                     It.IsAny<string>(),
                     It.IsAny<string>(),
@@ -128,7 +128,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
                     It.IsAny<string>()),
                 Times.Once);
 
-            this.govukNotifyBroker.VerifyNoOtherCalls();
+            this.interceptBroker.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -146,7 +146,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             inputPersonalization.Add("message", inputMessage);
             var serviceException = new Exception();
 
-            this.govukNotifyBroker.Setup(broker =>
+            this.interceptBroker.Setup(broker =>
                 broker.SendSmsAsync(
                     It.IsAny<string>(),
                     It.IsAny<string>(),
@@ -177,7 +177,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             actualNotificationServiceException.Should()
                  .BeEquivalentTo(expectedNotificationServiceException);
 
-            this.govukNotifyBroker.Verify(broker =>
+            this.interceptBroker.Verify(broker =>
                 broker.SendSmsAsync(
                     It.IsAny<string>(),
                     It.IsAny<string>(),
@@ -186,7 +186,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
                     It.IsAny<string>()),
                 Times.Once);
 
-            this.govukNotifyBroker.VerifyNoOtherCalls();
+            this.interceptBroker.VerifyNoOtherCalls();
         }
     }
 }

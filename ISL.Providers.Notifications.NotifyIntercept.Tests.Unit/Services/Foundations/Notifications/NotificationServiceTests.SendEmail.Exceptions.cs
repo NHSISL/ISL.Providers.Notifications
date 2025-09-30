@@ -33,7 +33,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             inputPersonalization.Add("emailReplyToId", inputEmailReplyToId);
             inputPersonalization.Add("oneClickUnsubscribeURL", inputOneClickUnsubscribeURL);
 
-            this.govukNotifyBroker.Setup(broker =>
+            this.interceptBroker.Setup(broker =>
                 broker.SendEmailAsync(
                     It.IsAny<string>(),
                     It.IsAny<string>(),
@@ -65,7 +65,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             actualNotificationDependencyValidationException.Should()
                  .BeEquivalentTo(expectedNotificationDependencyValidationException);
 
-            this.govukNotifyBroker.Verify(broker =>
+            this.interceptBroker.Verify(broker =>
                 broker.SendEmailAsync(
                     It.IsAny<string>(),
                     It.IsAny<string>(),
@@ -73,7 +73,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
                     It.IsAny<string>()),
                 Times.Once);
 
-            this.govukNotifyBroker.VerifyNoOtherCalls();
+            this.interceptBroker.VerifyNoOtherCalls();
         }
 
         [Theory]
@@ -95,7 +95,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             inputPersonalization.Add("emailReplyToId", inputEmailReplyToId);
             inputPersonalization.Add("oneClickUnsubscribeURL", inputOneClickUnsubscribeURL);
 
-            this.govukNotifyBroker.Setup(broker =>
+            this.interceptBroker.Setup(broker =>
                 broker.SendEmailAsync(
                     It.IsAny<string>(),
                     It.IsAny<string>(),
@@ -127,7 +127,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             actualNotificationDependencyValidationException.Should()
                  .BeEquivalentTo(expectedNotificationDependencyException);
 
-            this.govukNotifyBroker.Verify(broker =>
+            this.interceptBroker.Verify(broker =>
                 broker.SendEmailAsync(
                     It.IsAny<string>(),
                     It.IsAny<string>(),
@@ -135,7 +135,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
                     It.IsAny<string>()),
                 Times.Once);
 
-            this.govukNotifyBroker.VerifyNoOtherCalls();
+            this.interceptBroker.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -157,7 +157,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             inputPersonalization.Add("oneClickUnsubscribeURL", inputOneClickUnsubscribeURL);
             var serviceException = new Exception();
 
-            this.govukNotifyBroker.Setup(broker =>
+            this.interceptBroker.Setup(broker =>
                 broker.SendEmailAsync(
                     It.IsAny<string>(),
                     It.IsAny<string>(),
@@ -188,7 +188,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             actualNotificationServiceException.Should()
                  .BeEquivalentTo(expectedNotificationServiceException);
 
-            this.govukNotifyBroker.Verify(broker =>
+            this.interceptBroker.Verify(broker =>
                 broker.SendEmailAsync(
                     It.IsAny<string>(),
                     It.IsAny<string>(),
@@ -196,7 +196,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
                     It.IsAny<string>()),
                 Times.Once);
 
-            this.govukNotifyBroker.VerifyNoOtherCalls();
+            this.interceptBroker.VerifyNoOtherCalls();
         }
     }
 }

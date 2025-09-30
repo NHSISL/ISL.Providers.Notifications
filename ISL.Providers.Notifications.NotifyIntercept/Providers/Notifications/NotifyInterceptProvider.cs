@@ -162,28 +162,28 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Providers.Notifications
             throw new NotImplementedException();
         }
 
-        private static GovUkNotifyInterceptProviderValidationException CreateProviderValidationException(
+        private static NotifyInterceptProviderValidationException CreateProviderValidationException(
             Xeption innerException)
         {
-            return new GovUkNotifyInterceptProviderValidationException(
-                message: "Gov.UK Notify Intercept provider validation error occurred, fix errors and try again.",
+            return new NotifyInterceptProviderValidationException(
+                message: "Notify Intercept provider validation error occurred, fix errors and try again.",
                 innerException,
                 data: innerException.Data);
         }
 
-        private static GovUkNotifyInterceptProviderDependencyException CreateProviderDependencyException(
+        private static NotifyInterceptProviderDependencyException CreateProviderDependencyException(
             Xeption innerException)
         {
-            return new GovUkNotifyInterceptProviderDependencyException(
-                message: "Gov.UK Notify Intercept provider dependency error occurred, contact support.",
+            return new NotifyInterceptProviderDependencyException(
+                message: "Notify Intercept provider dependency error occurred, contact support.",
                 innerException);
         }
 
-        private static GovUkNotifyInterceptProviderServiceException CreateProviderServiceException(
+        private static NotifyInterceptProviderServiceException CreateProviderServiceException(
             Xeption innerException)
         {
-            return new GovUkNotifyInterceptProviderServiceException(
-                message: "Gov.UK Notify Intercept provider service error occurred, contact support.",
+            return new NotifyInterceptProviderServiceException(
+                message: "Notify Intercept provider service error occurred, contact support.",
                 innerException);
         }
 

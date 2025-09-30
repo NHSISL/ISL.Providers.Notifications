@@ -33,7 +33,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             SubstituteInfo outputSubstituteInfo = randomSubstituteInfo.DeepClone();
 
             var notificationServiceMock = new Mock<NotificationService>(
-                this.govukNotifyBroker.Object,
+                this.interceptBroker.Object,
                 this.configurations)
             { CallBase = true };
 
@@ -41,7 +41,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
                 service.SubstituteInfoAsync(inputPersonalization))
                     .ReturnsAsync(outputSubstituteInfo);
 
-            this.govukNotifyBroker
+            this.interceptBroker
                 .Setup(broker =>
                     broker.SendSmsAsync(
                         outputSubstituteInfo.MobileNumber,
@@ -64,7 +64,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
                 service.SubstituteInfoAsync(inputPersonalization),
                     Times.Once);
 
-            this.govukNotifyBroker
+            this.interceptBroker
                 .Verify(broker =>
                     broker.SendSmsAsync(
                         outputSubstituteInfo.MobileNumber,
@@ -74,7 +74,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
                         inputSmsSenderId),
                 Times.Once);
 
-            this.govukNotifyBroker.VerifyNoOtherCalls();
+            this.interceptBroker.VerifyNoOtherCalls();
         }
     }
 }

@@ -53,14 +53,14 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             actualNotificationValidationException.Should()
                 .BeEquivalentTo(expectedNotificationValidationException);
 
-            this.govukNotifyBroker.Verify(broker =>
+            this.interceptBroker.Verify(broker =>
                 broker.SendLetterAsync(
                     It.IsAny<string>(),
                     It.IsAny<Dictionary<string, dynamic>>(),
                     It.IsAny<string>()),
                 Times.Never);
 
-            this.govukNotifyBroker.VerifyNoOtherCalls();
+            this.interceptBroker.VerifyNoOtherCalls();
         }
 
         [Theory]
@@ -108,14 +108,14 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             actualNotificationValidationException.Should()
                 .BeEquivalentTo(expectedNotificationValidationException);
 
-            this.govukNotifyBroker.Verify(broker =>
+            this.interceptBroker.Verify(broker =>
                 broker.SendLetterAsync(
                     It.IsAny<string>(),
                     It.IsAny<Dictionary<string, dynamic>>(),
                     It.IsAny<string>()),
                 Times.Never);
 
-            this.govukNotifyBroker.VerifyNoOtherCalls();
+            this.interceptBroker.VerifyNoOtherCalls();
         }
 
         [Theory]
@@ -162,14 +162,14 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             actualNotificationValidationException.Should()
                 .BeEquivalentTo(expectedNotificationValidationException);
 
-            this.govukNotifyBroker.Verify(broker =>
+            this.interceptBroker.Verify(broker =>
                 broker.SendLetterAsync(
                     It.IsAny<string>(),
                     It.IsAny<Dictionary<string, dynamic>>(),
                     It.IsAny<string>()),
                 Times.Never);
 
-            this.govukNotifyBroker.VerifyNoOtherCalls();
+            this.interceptBroker.VerifyNoOtherCalls();
         }
     }
 }

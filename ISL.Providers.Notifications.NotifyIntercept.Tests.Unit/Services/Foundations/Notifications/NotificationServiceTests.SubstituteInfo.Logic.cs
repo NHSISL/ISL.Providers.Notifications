@@ -43,7 +43,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             // then
             actualSubstituteInfo.Should().BeEquivalentTo(expectedSubstituteInfo);
 
-            this.govukNotifyBroker.VerifyNoOtherCalls();
+            this.interceptBroker.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -76,7 +76,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             // then
             actualSubstituteInfo.Should().BeEquivalentTo(expectedSubstituteInfo);
 
-            this.govukNotifyBroker.VerifyNoOtherCalls();
+            this.interceptBroker.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -109,7 +109,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             // then
             actualSubstituteInfo.Should().BeEquivalentTo(expectedSubstituteInfo);
 
-            this.govukNotifyBroker.VerifyNoOtherCalls();
+            this.interceptBroker.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -143,7 +143,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             // then
             actualSubstituteInfo.Should().BeEquivalentTo(expectedSubstituteInfo);
 
-            this.govukNotifyBroker.VerifyNoOtherCalls();
+            this.interceptBroker.VerifyNoOtherCalls();
         }
     }
 }
