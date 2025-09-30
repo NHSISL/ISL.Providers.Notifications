@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ISL.Providers.Notifications.NotifyIntercept.Brokers
 {
-    internal interface IGovUkNotifyBroker
+    internal interface IInterceptBroker
     {
         ValueTask<string> SendEmailAsync(
             string templateId,

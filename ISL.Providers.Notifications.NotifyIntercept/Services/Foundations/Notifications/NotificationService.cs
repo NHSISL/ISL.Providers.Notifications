@@ -13,10 +13,10 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Services.Foundations.Notif
 {
     internal partial class NotificationService : INotificationService
     {
-        private readonly IGovUkNotifyBroker govukNotifyBroker;
+        private readonly IInterceptBroker govukNotifyBroker;
         private readonly NotifyConfigurations notifyConfigurations;
 
-        public NotificationService(IGovUkNotifyBroker govukNotifyBroker, NotifyConfigurations notifyConfigurations)
+        public NotificationService(IInterceptBroker govukNotifyBroker, NotifyConfigurations notifyConfigurations)
         {
             this.govukNotifyBroker = govukNotifyBroker;
             this.notifyConfigurations = notifyConfigurations;

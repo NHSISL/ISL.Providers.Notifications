@@ -18,14 +18,14 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
 {
     public partial class NotificationServiceTests
     {
-        private readonly Mock<IGovUkNotifyBroker> govukNotifyBroker;
+        private readonly Mock<IInterceptBroker> govukNotifyBroker;
         private readonly NotifyConfigurations configurations;
         private readonly NotificationService notificationService;
         private readonly ICompareLogic compareLogic;
         private readonly int MaxAddressLines = 7;
         public NotificationServiceTests()
         {
-            this.govukNotifyBroker = new Mock<IGovUkNotifyBroker>();
+            this.govukNotifyBroker = new Mock<IInterceptBroker>();
             this.configurations = GetRandomConfigurations();
             this.compareLogic = new CompareLogic();
             this.notificationService = new NotificationService(govukNotifyBroker.Object, configurations);

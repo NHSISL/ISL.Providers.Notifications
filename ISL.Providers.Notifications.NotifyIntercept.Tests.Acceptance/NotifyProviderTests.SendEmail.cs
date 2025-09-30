@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
+using Moq;
 
 namespace ISL.NotificationClient.Tests.Acceptance
 {
@@ -15,22 +16,32 @@ namespace ISL.NotificationClient.Tests.Acceptance
         public async Task ShouldSendEmailAsync()
         {
             // given
+            string templateId = configuration.GetValue<string>("notifyConfigurations:emailTemplateId");
             string toEmail = TEST_EMAIL;
             string subject = GetRandomString();
             string message = GetRandomString();
-            string templateId = configuration.GetValue<string>("notifyConfigurations:emailTemplateId");
+            string outputIdentifier = GetRandomString();
+            string expectedIdentifier = outputIdentifier;
             Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>();
             personalisation.Add("subject", subject);
             personalisation.Add("message", message);
 
+            notificationProvider.Setup(provider =>
+                provider.SendEmailAsync(
+                    templateId,
+                    toEmail,
+                    personalisation,
+                    null))
+                        .ReturnsAsync(outputIdentifier);
+
             // when
-            string identifier = await this.notifyInterceptProvider.SendEmailAsync(
+            string actualIdentifier = await this.notifyInterceptProvider.SendEmailAsync(
                 templateId,
                 toEmail,
                 personalisation);
 
             // then
-            identifier.Should().NotBeNullOrWhiteSpace();
+            actualIdentifier.Should().BeEquivalentTo(expectedIdentifier);
         }
     }
 }

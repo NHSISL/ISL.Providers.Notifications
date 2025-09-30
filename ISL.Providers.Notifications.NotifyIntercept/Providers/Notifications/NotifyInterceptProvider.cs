@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ISL.Providers.Notifications.Abstractions;
 using ISL.Providers.Notifications.NotifyIntercept.Brokers;
 using ISL.Providers.Notifications.NotifyIntercept.Models;
 using ISL.Providers.Notifications.NotifyIntercept.Models.Foundations.Notifications.Exceptions;
@@ -19,9 +20,9 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Providers.Notifications
     {
         private INotificationService notificationService;
 
-        public NotifyInterceptProvider(NotifyConfigurations configurations)
+        public NotifyInterceptProvider(NotifyConfigurations configurations, INotificationProvider notificationProvider)
         {
-            IServiceProvider serviceProvider = RegisterServices(configurations);
+            IServiceProvider serviceProvider = RegisterServices(configurations, notificationProvider);
             InitializeClients(serviceProvider);
         }
 
@@ -189,11 +190,14 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Providers.Notifications
         private void InitializeClients(IServiceProvider serviceProvider) =>
             notificationService = serviceProvider.GetRequiredService<INotificationService>();
 
-        private static IServiceProvider RegisterServices(NotifyConfigurations configurations)
+        private static IServiceProvider RegisterServices(
+            NotifyConfigurations configurations,
+            INotificationProvider notificationProvider)
         {
             var serviceCollection = new ServiceCollection()
-                .AddTransient<IGovUkNotifyBroker, GovUkNotifyBroker>()
+                .AddTransient<IInterceptBroker, InterceptBroker>()
                 .AddTransient<INotificationService, NotificationService>()
+                .AddTransient<INotificationProvider>(_ => notificationProvider)
                 .AddSingleton(configurations);
 
             IServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();

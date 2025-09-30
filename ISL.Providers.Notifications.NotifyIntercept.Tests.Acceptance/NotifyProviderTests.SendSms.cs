@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
+using Moq;
 
 namespace ISL.NotificationClient.Tests.Acceptance
 {
@@ -18,17 +19,26 @@ namespace ISL.NotificationClient.Tests.Acceptance
             string toMobileNumber = TEST_MOBILE_NUMBER;
             string message = GetRandomString();
             string templateId = configuration.GetValue<string>("notifyConfigurations:smsTemplateId");
+            string outputIdentifier = GetRandomString();
+            string expectedIdentifier = outputIdentifier;
             Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>();
             personalisation.Add("message", message);
 
+            notificationProvider.Setup(provider =>
+                provider.SendSmsAsync(
+                    templateId,
+                    toMobileNumber,
+                    personalisation))
+                        .ReturnsAsync(outputIdentifier);
+
             // when
-            string identifier = await this.notifyInterceptProvider.SendSmsAsync(
+            string actualIdentifier = await this.notifyInterceptProvider.SendSmsAsync(
                 templateId,
                 toMobileNumber,
                 personalisation);
 
             // then
-            identifier.Should().NotBeNullOrWhiteSpace();
+            actualIdentifier.Should().BeEquivalentTo(expectedIdentifier);
         }
     }
 }

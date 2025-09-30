@@ -4,18 +4,18 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ISL.Providers.Notifications.NotifyIntercept.Models;
-using Notify.Client;
-using Notify.Models.Responses;
+using ISL.Providers.Notifications.Abstractions;
 
 namespace ISL.Providers.Notifications.NotifyIntercept.Brokers
 {
-    internal class GovUkNotifyBroker : IGovUkNotifyBroker
+    internal class InterceptBroker : IInterceptBroker
     {
-        private readonly NotificationClient client;
+        private readonly INotificationProvider provider;
 
-        public GovUkNotifyBroker(NotifyConfigurations configurations) =>
-            this.client = new NotificationClient(configurations.ApiKey);
+        public InterceptBroker(INotificationProvider provider)
+        {
+            this.provider = provider;
+        }
 
         public async ValueTask<string> SendEmailAsync(
             string templateId,
@@ -23,13 +23,11 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Brokers
             Dictionary<string, dynamic> personalisation = null,
             string clientReference = null)
         {
-            EmailNotificationResponse response = await this.client.SendEmailAsync(
-                toEmail,
+            return await this.provider.SendEmailAsync(
                 templateId,
+                toEmail,
                 personalisation,
                 clientReference);
-
-            return response.id;
         }
 
         public async ValueTask<string> SendSmsAsync(
@@ -39,14 +37,10 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Brokers
            string clientReference = null,
            string smsSenderId = null)
         {
-            SmsNotificationResponse response = await this.client.SendSmsAsync(
-                mobileNumber,
+            return await this.provider.SendSmsAsync(
                 templateId,
-                personalisation,
-                clientReference,
-                smsSenderId);
-
-            return response.id;
+                mobileNumber,
+                personalisation);
         }
 
         public async ValueTask<string> SendLetterAsync(
@@ -54,12 +48,10 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Brokers
             Dictionary<string, dynamic> personalisation = null,
             string clientReference = null)
         {
-            LetterNotificationResponse response = await this.client.SendLetterAsync(
+            return await this.provider.SendLetterAsync(
                 templateId,
                 personalisation,
                 clientReference);
-
-            return response.id;
         }
     }
 }
