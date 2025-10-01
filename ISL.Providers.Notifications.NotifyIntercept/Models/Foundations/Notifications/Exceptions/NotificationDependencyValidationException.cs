@@ -9,7 +9,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Models.Foundations.Notific
     internal class NotificationDependencyValidationException : Xeption
     {
         public NotificationDependencyValidationException(string message, Xeption innerException)
-         : base(message, innerException)
+            : base(message, innerException)
         { }
     }
 }
