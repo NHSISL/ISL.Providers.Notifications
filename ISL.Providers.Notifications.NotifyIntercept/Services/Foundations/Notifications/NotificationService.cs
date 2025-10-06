@@ -29,7 +29,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Services.Foundations.Notif
             string clientReference = null) =>
         TryCatch(async () =>
         {
-            ValidateOnSendEmailWithTemplateId(toEmail, templateId, personalisation);
+            ValidateOnSendEmailWithTemplateId(templateId, personalisation);
             ValidateNotificationConfiguration(notifyConfigurations);
             SubstituteInfo substituteInfo = await SubstituteInfoAsync(personalisation);
 
@@ -46,7 +46,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Services.Foundations.Notif
             Dictionary<string, dynamic> personalisation) =>
         TryCatch(async () =>
         {
-            ValidateOnSendSms(templateId, mobileNumber, personalisation);
+            ValidateOnSendSms(templateId, personalisation);
             string clientReference = GetValueOrNull(personalisation, "clientReference");
             string smsSenderId = GetValueOrNull(personalisation, "smsSenderId");
             ValidateNotificationConfiguration(notifyConfigurations);

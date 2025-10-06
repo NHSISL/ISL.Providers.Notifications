@@ -74,61 +74,6 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
         [InlineData("0723456789")]
         [InlineData("07234abc890")]
         [InlineData("+447234abc890")]
-        public async Task ShouldValidateMobileNumberOnSendSmsAsync(string invalidMobileNumber)
-        {
-            // given
-            string inputTemplateId = GetRandomString();
-            string inputMessage = GetRandomString();
-            Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
-            inputPersonalization.Add("message", inputMessage);
-
-            var invalidArgumentNotificationException =
-                new InvalidArgumentNotificationException(
-                    message: "Invalid notification argument exception. Please correct the errors and try again.");
-
-            invalidArgumentNotificationException.AddData(
-                key: "mobileNumber",
-                values: "Mobile number must be in UK format: 07XXXXXXXXX (11 digits) " +
-                    "or international format: +447XXXXXXXXX (12 digits)");
-
-            var expectedNotificationValidationException =
-                new NotificationValidationException(
-                    message: "Notification validation error occurred, please correct the errors and try again.",
-                    innerException: invalidArgumentNotificationException);
-
-            // when
-            ValueTask<string> sendSmsTask = this.notificationService.SendSmsAsync(
-                templateId: inputTemplateId,
-                mobileNumber: invalidMobileNumber,
-                personalisation: inputPersonalization);
-
-            NotificationValidationException actualNotificationValidationException =
-                await Assert.ThrowsAsync<NotificationValidationException>(async () =>
-                    await sendSmsTask);
-
-            // then
-            actualNotificationValidationException.Should()
-                .BeEquivalentTo(expectedNotificationValidationException);
-
-            this.interceptBroker.Verify(broker =>
-                broker.SendSmsAsync(
-                    It.IsAny<string>(),
-                    It.IsAny<string>(),
-                    It.IsAny<Dictionary<string, dynamic>>(),
-                    It.IsAny<string>(),
-                    It.IsAny<string>()),
-                Times.Never);
-
-            this.interceptBroker.VerifyNoOtherCalls();
-        }
-
-        [Theory]
-        [InlineData("")]
-        [InlineData(" ")]
-        [InlineData("12345678901")]
-        [InlineData("0723456789")]
-        [InlineData("07234abc890")]
-        [InlineData("+447234abc890")]
         public async Task ShouldValidateConfigurationsOnSendSmsAsyncWithInvalidNotificationOverrides(
             string invalidText)
         {
