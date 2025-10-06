@@ -21,7 +21,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
         {
             // given
             string inputTemplateId = invalidText;
-            string inputMobileNumber = GetRandomLocalMobileNumber();
+            string inputMobileNumber = invalidText;
             Dictionary<string, dynamic> inputPersonalization = null;
 
             var invalidArgumentNotificationException =
@@ -30,6 +30,10 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
 
             invalidArgumentNotificationException.AddData(
                 key: "templateId",
+                values: "Text is required");
+
+            invalidArgumentNotificationException.AddData(
+                key: "mobileNumber",
                 values: "Text is required");
 
             invalidArgumentNotificationException.AddData(

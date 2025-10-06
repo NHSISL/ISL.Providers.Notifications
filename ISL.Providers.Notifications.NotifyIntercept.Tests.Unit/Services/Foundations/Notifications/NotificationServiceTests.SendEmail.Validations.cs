@@ -30,6 +30,10 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
                     message: "Invalid notification argument exception. Please correct the errors and try again.");
 
             invalidArgumentNotificationException.AddData(
+                key: "toEmail",
+                values: "Text is required");
+
+            invalidArgumentNotificationException.AddData(
                 key: "templateId",
                 values: "Text is required");
 

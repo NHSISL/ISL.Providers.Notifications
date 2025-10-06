@@ -14,20 +14,24 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Services.Foundations.Notif
     internal partial class NotificationService
     {
         private static void ValidateOnSendEmailWithTemplateId(
+            string toEmail,
             string templateId,
             Dictionary<string, dynamic> personalisation)
         {
             Validate(
+                (Rule: IsInvalid(toEmail), Parameter: nameof(toEmail)),
                 (Rule: IsInvalid(templateId), Parameter: nameof(templateId)),
                 (Rule: IsInvalid(personalisation), Parameter: nameof(personalisation)));
         }
 
         private static void ValidateOnSendSms(
             string templateId,
+            string mobileNumber,
             Dictionary<string, dynamic> personalisation)
         {
             Validate(
                 (Rule: IsInvalid(templateId), Parameter: nameof(templateId)),
+                (Rule: IsInvalid(mobileNumber), Parameter: nameof(mobileNumber)),
                 (Rule: IsInvalid(personalisation), Parameter: nameof(personalisation)));
         }
 
