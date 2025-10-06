@@ -2,12 +2,12 @@
 // Copyright (c) North East London ICB. All rights reserved.
 // ---------------------------------------------------------
 
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using FluentAssertions;
 using ISL.Providers.Notifications.NotifyIntercept.Models;
 using ISL.Providers.Notifications.NotifyIntercept.Models.Foundations.Notifications.Exceptions;
 using Moq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Foundations.Notifications
 {
@@ -31,7 +31,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
 
             invalidArgumentNotificationException.AddData(
                 key: "toEmail",
-                values: "Email must be in format: XXX@XXX.XXX");
+                values: "Text is required");
 
             invalidArgumentNotificationException.AddData(
                 key: "templateId",

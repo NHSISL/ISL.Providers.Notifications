@@ -19,7 +19,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Services.Foundations.Notif
             Dictionary<string, dynamic> personalisation)
         {
             Validate(
-                (Rule: IsInvalidEmailAddress(toEmail), Parameter: nameof(toEmail)),
+                (Rule: IsInvalid(toEmail), Parameter: nameof(toEmail)),
                 (Rule: IsInvalid(templateId), Parameter: nameof(templateId)),
                 (Rule: IsInvalid(personalisation), Parameter: nameof(personalisation)));
         }
@@ -31,7 +31,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Services.Foundations.Notif
         {
             Validate(
                 (Rule: IsInvalid(templateId), Parameter: nameof(templateId)),
-                (Rule: IsInvalidMobileNumber(mobileNumber), Parameter: nameof(mobileNumber)),
+                (Rule: IsInvalid(mobileNumber), Parameter: nameof(mobileNumber)),
                 (Rule: IsInvalid(personalisation), Parameter: nameof(personalisation)));
         }
 
