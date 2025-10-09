@@ -20,6 +20,10 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
             // given
             var someException = new Xeption();
 
+            someException.AddData(
+                key: "someKey",
+                values: "someValues");
+
             var someNotificationValidationException =
                 new SomeNotificationValidationException(
                     message: "Some notification validation exception occurred",
@@ -29,7 +33,8 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
             NotificationProviderValidationException expectedNotificationValidationProviderException =
                 new NotificationProviderValidationException(
                     message: someNotificationValidationException.Message,
-                    innerException: someNotificationValidationException);
+                    innerException: someNotificationValidationException,
+                    data: someNotificationValidationException.Data);
 
             this.notificationProviderMock.Setup(provider =>
                 provider.SendSmsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>()))
@@ -65,10 +70,15 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
                     message: "Some notification dependency exception occurred",
                     innerException: someException);
 
+            someNotificationValidationException.AddData(
+                key: "someKey",
+                values: "someValues");
+
             NotificationProviderDependencyException expectedNotificationDependencyProviderException =
                 new NotificationProviderDependencyException(
                     message: someNotificationValidationException.Message,
-                    innerException: someNotificationValidationException);
+                    innerException: someNotificationValidationException,
+                    data: someNotificationValidationException.Data);
 
             this.notificationProviderMock.Setup(provider =>
                 provider.SendSmsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>()))
@@ -104,10 +114,15 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
                     message: "Some notification service exception occurred",
                     innerException: someException);
 
+            someNotificationValidationException.AddData(
+                key: "someKey",
+                values: "someValues");
+
             NotificationProviderServiceException expectedNotificationServiceProviderException =
                 new NotificationProviderServiceException(
                     message: someNotificationValidationException.Message,
-                    innerException: someNotificationValidationException);
+                    innerException: someNotificationValidationException,
+                    data: someNotificationValidationException.Data);
 
             this.notificationProviderMock.Setup(provider =>
                 provider.SendSmsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>()))
@@ -138,12 +153,17 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
             // given
             var someException = new Xeption();
 
+            someException.AddData(
+                key: "someKey",
+                values: "someValues");
+
             NotificationProviderServiceException expectedNotificationServiceProviderException =
                 new NotificationProviderServiceException(
                     message: "Notificaton provider not properly implemented. Uncatagorized errors found, " +
                         "contact the notification provider owner for support.",
 
-                    innerException: someException);
+                    innerException: someException,
+                    data: someException.Data);
 
             this.notificationProviderMock.Setup(provider =>
                 provider.SendSmsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>()))
