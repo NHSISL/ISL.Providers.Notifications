@@ -166,7 +166,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Providers.Notifications
             Xeption innerException)
         {
             return new NotifyInterceptProviderValidationException(
-                message: "Notify Intercept provider validation error occurred, fix errors and try again.",
+                message: innerException.Message,
                 innerException,
                 data: innerException.Data);
         }
@@ -175,16 +175,18 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Providers.Notifications
             Xeption innerException)
         {
             return new NotifyInterceptProviderDependencyException(
-                message: "Notify Intercept provider dependency error occurred, contact support.",
-                innerException);
+                message: innerException.Message,
+                innerException,
+                data: innerException.Data);
         }
 
         private static NotifyInterceptProviderServiceException CreateProviderServiceException(
             Xeption innerException)
         {
             return new NotifyInterceptProviderServiceException(
-                message: "Notify Intercept provider service error occurred, contact support.",
-                innerException);
+                message: innerException.Message,
+                innerException,
+                data: innerException.Data);
         }
 
         private void InitializeClients(IServiceProvider serviceProvider) =>

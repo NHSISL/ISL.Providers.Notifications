@@ -82,9 +82,9 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
             try
             {
                 return await this.notificationService.SendEmailAsync(
-                    templateId, 
-                    toEmail, 
-                    personalisation, 
+                    templateId,
+                    toEmail,
+                    personalisation,
                     clientReference);
             }
             catch (NotificationValidationException notificationValidationException)
@@ -117,8 +117,8 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
         /// <exception cref="GovUkNotifyProviderDependencyException" />
         /// <exception cref="GovUkNotifyProviderServiceException" />
         public async ValueTask<string> SendSmsAsync(
-            string templateId, 
-            string mobileNumber, 
+            string templateId,
+            string mobileNumber,
             Dictionary<string, dynamic> personalisation)
         {
             try
@@ -227,7 +227,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
             Xeption innerException)
         {
             return new GovUkNotifyProviderValidationException(
-                message: "Gov.UK Notify provider validation error occurred, fix errors and try again.",
+                message: innerException.Message,
                 innerException,
                 data: innerException.Data);
         }
@@ -236,15 +236,17 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
             Xeption innerException)
         {
             return new GovUkNotifyProviderDependencyException(
-                message: "Gov.UK Notify provider dependency error occurred, contact support.",
-                innerException);
+                message: innerException.Message,
+                innerException,
+                data: innerException.Data);
         }
 
         private static GovUkNotifyProviderServiceException CreateProviderServiceException(Xeption innerException)
         {
             return new GovUkNotifyProviderServiceException(
-                message: "Gov.UK Notify provider service error occurred, contact support.",
-                innerException);
+                message: innerException.Message,
+                innerException,
+                data: innerException.Data);
         }
 
         private void InitializeClients(IServiceProvider serviceProvider) =>
