@@ -19,61 +19,54 @@ namespace ISL.Providers.Notifications.Abstractions
             {
                 return await returningStringFunction();
             }
-            catch (Xeption ex) when (ex is INotificationProviderValidationException)
+            catch (Xeption exception) when (exception is INotificationProviderValidationException)
             {
-                throw CreateValidationException(ex);
+                throw CreateValidationException(exception);
             }
-            catch (Xeption ex) when (ex is INotificationProviderDependencyException)
+            catch (Xeption exception) when (exception is INotificationProviderDependencyException)
             {
-                throw CreateDependencyException(ex);
+                throw CreateDependencyException(exception);
             }
-            catch (Xeption ex) when (ex is INotificationProviderServiceException)
+            catch (Xeption exception) when (exception is INotificationProviderServiceException)
             {
-                throw CreateServiceException(ex);
+                throw CreateServiceException(exception);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                var uncatagorizedNotificationProviderException =
-                    new UncatagorizedNotificationProviderException(
-                        message: "Notification provider not properly implemented. Uncatagorized errors found, " +
-                            "contact the notification provider owner for support.",
-                        innerException: ex,
-                        data: ex.Data);
-
-                throw CreateUncatagorizedServiceException(uncatagorizedNotificationProviderException);
+                throw CreateUncatagorizedServiceException(exception);
             }
         }
 
         private NotificationProviderValidationException CreateValidationException(
-            Xeption innerException)
+            Xeption exception)
         {
             var notificationValidationProviderException =
                 new NotificationProviderValidationException(
-                    message: innerException.Message,
-                    innerException: innerException,
-                    data: innerException.Data);
+                    message: exception.Message,
+                    innerException: exception,
+                    data: exception.Data);
 
             return notificationValidationProviderException;
         }
 
         private NotificationProviderDependencyException CreateDependencyException(
-            Xeption innerException)
+            Xeption exception)
         {
             var notificationDependencyProviderException = new NotificationProviderDependencyException(
-                message: innerException.Message,
-                innerException: innerException,
-                data: innerException.Data);
+                message: exception.Message,
+                innerException: exception,
+                data: exception.Data);
 
             return notificationDependencyProviderException;
         }
 
         private NotificationProviderServiceException CreateServiceException(
-            Xeption innerException)
+            Xeption exception)
         {
             var notificationServiceProviderException = new NotificationProviderServiceException(
-                message: innerException.Message,
-                innerException: innerException,
-                data: innerException.Data);
+                message: exception.Message,
+                innerException: exception,
+                data: exception.Data);
 
             return notificationServiceProviderException;
         }
@@ -82,7 +75,8 @@ namespace ISL.Providers.Notifications.Abstractions
             Exception exception)
         {
             var notificationServiceProviderException = new NotificationProviderServiceException(
-                message: "Uncatagorized notification service error occurred, contact support.",
+                message: "Notificaton provider not properly implemented. Uncatagorized errors found, " +
+                    "contact the notification provider owner for support.",
                 innerException: exception as Xeption,
                 data: exception.Data);
 

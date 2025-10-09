@@ -28,7 +28,7 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
 
             NotificationProviderValidationException expectedNotificationValidationProviderException =
                 new NotificationProviderValidationException(
-                    message: "Notification validation errors occurred, please try again.",
+                    message: someNotificationValidationException.Message,
                     innerException: someNotificationValidationException);
 
             this.notificationProviderMock.Setup(provider =>
@@ -67,7 +67,7 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
 
             NotificationProviderDependencyException expectedNotificationDependencyProviderException =
                 new NotificationProviderDependencyException(
-                    message: "Notification dependency error occurred, contact support.",
+                    message: someNotificationValidationException.Message,
                     innerException: someNotificationValidationException);
 
             this.notificationProviderMock.Setup(provider =>
@@ -106,7 +106,7 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
 
             NotificationProviderServiceException expectedNotificationServiceProviderException =
                 new NotificationProviderServiceException(
-                    message: "Notification service error occurred, contact support.",
+                    message: someNotificationValidationException.Message,
                     innerException: someNotificationValidationException);
 
             this.notificationProviderMock.Setup(provider =>
@@ -138,17 +138,12 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
             // given
             var someException = new Xeption();
 
-            var uncatagorizedNotificationProviderException =
-                new UncatagorizedNotificationProviderException(
-                    message: "Notification provider not properly implemented. Uncatagorized errors found, " +
-                            "contact the notification provider owner for support.",
-                    innerException: someException,
-                    data: someException.Data);
-
             NotificationProviderServiceException expectedNotificationServiceProviderException =
                 new NotificationProviderServiceException(
-                    message: "Uncatagorized notification service error occurred, contact support.",
-                    innerException: uncatagorizedNotificationProviderException);
+                    message: "Notificaton provider not properly implemented. Uncatagorized errors found, " +
+                        "contact the notification provider owner for support.",
+
+                    innerException: someException);
 
             this.notificationProviderMock.Setup(provider =>
                 provider.SendSmsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Dictionary<string, dynamic>>()))
