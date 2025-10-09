@@ -159,7 +159,7 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
 
             NotificationProviderServiceException expectedNotificationServiceProviderException =
                 new NotificationProviderServiceException(
-                    message: "Notificaton provider not properly implemented. Uncatagorized errors found, " +
+                    message: "Notification provider not properly implemented. Uncatagorized errors found, " +
                         "contact the notification provider owner for support.",
 
                     innerException: someException,

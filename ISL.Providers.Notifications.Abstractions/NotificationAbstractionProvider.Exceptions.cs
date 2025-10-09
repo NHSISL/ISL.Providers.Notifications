@@ -75,7 +75,7 @@ namespace ISL.Providers.Notifications.Abstractions
             Exception exception)
         {
             var notificationServiceProviderException = new NotificationProviderServiceException(
-                message: "Notificaton provider not properly implemented. Uncatagorized errors found, " +
+                message: "Notification provider not properly implemented. Uncatagorized errors found, " +
                     "contact the notification provider owner for support.",
                 innerException: exception as Xeption,
                 data: exception.Data);
