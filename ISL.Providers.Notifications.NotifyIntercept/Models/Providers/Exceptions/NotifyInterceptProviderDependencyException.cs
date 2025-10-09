@@ -2,6 +2,7 @@
 // Copyright (c) North East London ICB. All rights reserved.
 // ---------------------------------------------------------
 
+using System.Collections;
 using ISL.Providers.Notifications.Abstractions.Models.Exceptions;
 using Xeptions;
 
@@ -13,8 +14,8 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Models.Providers.Exception
     /// </summary>
     public class NotifyInterceptProviderDependencyException : Xeption, INotificationProviderDependencyException
     {
-        public NotifyInterceptProviderDependencyException(string message, Xeption innerException)
-            : base(message, innerException)
+        public NotifyInterceptProviderDependencyException(string message, Xeption innerException, IDictionary data)
+            : base(message, innerException, data)
         { }
     }
 }

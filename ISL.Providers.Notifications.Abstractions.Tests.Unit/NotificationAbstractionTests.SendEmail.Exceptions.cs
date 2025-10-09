@@ -77,14 +77,14 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
             // given
             var someException = new Xeption();
 
+            someException.AddData(
+                key: "someKey",
+                values: "someValues");
+
             var someNotificationValidationException =
                 new SomeNotificationDependencyException(
                     message: "Some notification dependency exception occurred",
                     innerException: someException);
-
-            someNotificationValidationException.AddData(
-                key: "someKey",
-                values: "someValues");
 
             NotificationProviderDependencyException expectedNotificationDependencyProviderException =
                 new NotificationProviderDependencyException(
@@ -133,14 +133,14 @@ namespace ISL.Providers.Notifications.Abstractions.Tests.Unit
             // given
             var someException = new Xeption();
 
+            someException.AddData(
+                key: "someKey",
+                values: "someValues");
+
             var someNotificationValidationException =
                 new SomeNotificationServiceException(
                     message: "Some notification service exception occurred",
                     innerException: someException);
-
-            someNotificationValidationException.AddData(
-                key: "someKey",
-                values: "someValues");
 
             NotificationProviderServiceException expectedNotificationServiceProviderException =
                 new NotificationProviderServiceException(

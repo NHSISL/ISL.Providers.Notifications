@@ -237,14 +237,16 @@ namespace ISL.Providers.Notifications.GovukNotify.Providers.Notifications
         {
             return new GovUkNotifyProviderDependencyException(
                 message: innerException.Message,
-                innerException);
+                innerException,
+                data: innerException.Data);
         }
 
         private static GovUkNotifyProviderServiceException CreateProviderServiceException(Xeption innerException)
         {
             return new GovUkNotifyProviderServiceException(
                 message: innerException.Message,
-                innerException);
+                innerException,
+                data: innerException.Data);
         }
 
         private void InitializeClients(IServiceProvider serviceProvider) =>

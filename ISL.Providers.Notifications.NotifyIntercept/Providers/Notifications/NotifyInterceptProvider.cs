@@ -176,7 +176,8 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Providers.Notifications
         {
             return new NotifyInterceptProviderDependencyException(
                 message: innerException.Message,
-                innerException);
+                innerException,
+                data: innerException.Data);
         }
 
         private static NotifyInterceptProviderServiceException CreateProviderServiceException(
@@ -184,7 +185,8 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Providers.Notifications
         {
             return new NotifyInterceptProviderServiceException(
                 message: innerException.Message,
-                innerException);
+                innerException,
+                data: innerException.Data);
         }
 
         private void InitializeClients(IServiceProvider serviceProvider) =>
