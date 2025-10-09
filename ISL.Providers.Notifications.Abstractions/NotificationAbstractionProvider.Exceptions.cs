@@ -45,35 +45,35 @@ namespace ISL.Providers.Notifications.Abstractions
         }
 
         private NotificationProviderValidationException CreateValidationException(
-            Xeption exception)
+            Xeption innerException)
         {
             var notificationValidationProviderException =
                 new NotificationProviderValidationException(
-                    message: "Notification validation errors occurred, please try again.",
-                    innerException: exception,
-                    data: exception.Data);
+                    message: innerException.Message,
+                    innerException: innerException,
+                    data: innerException.Data);
 
             return notificationValidationProviderException;
         }
 
         private NotificationProviderDependencyException CreateDependencyException(
-            Xeption exception)
+            Xeption innerException)
         {
             var notificationDependencyProviderException = new NotificationProviderDependencyException(
-                message: "Notification dependency error occurred, contact support.",
-                innerException: exception,
-                data: exception.Data);
+                message: innerException.Message,
+                innerException: innerException,
+                data: innerException.Data);
 
             return notificationDependencyProviderException;
         }
 
         private NotificationProviderServiceException CreateServiceException(
-            Xeption exception)
+            Xeption innerException)
         {
             var notificationServiceProviderException = new NotificationProviderServiceException(
-                message: "Notification service error occurred, contact support.",
-                innerException: exception,
-                data: exception.Data);
+                message: innerException.Message,
+                innerException: innerException,
+                data: innerException.Data);
 
             return notificationServiceProviderException;
         }
