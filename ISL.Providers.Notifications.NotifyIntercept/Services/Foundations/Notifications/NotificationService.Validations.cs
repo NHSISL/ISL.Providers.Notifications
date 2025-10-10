@@ -37,10 +37,16 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Services.Foundations.Notif
 
         private static void ValidateOnSendLetter(
             string templateId,
+            string recipientName,
+            string addressLine1,
+            string postCode,
             Dictionary<string, dynamic> personalisation)
         {
             Validate(
-                (Rule: IsInvalid(templateId), Parameter: nameof(templateId)));
+                (Rule: IsInvalid(templateId), Parameter: nameof(templateId)),
+                (Rule: IsInvalid(recipientName), Parameter: nameof(recipientName)),
+                (Rule: IsInvalid(addressLine1), Parameter: nameof(addressLine1)),
+                (Rule: IsInvalid(postCode), Parameter: nameof(postCode)));
         }
 
         private static void ValidateNotificationConfiguration(NotifyConfigurations configurations)

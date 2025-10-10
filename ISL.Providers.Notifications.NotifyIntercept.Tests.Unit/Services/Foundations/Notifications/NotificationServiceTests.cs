@@ -241,5 +241,61 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
                 new List<string>()
             };
         }
+
+        private Dictionary<string, dynamic> UpdatePersonalisation(
+            string recipientName,
+            string addressLine1,
+            string addressLine2,
+            string addressLine3,
+            string addressLine4,
+            string addressLine5,
+            string postCode,
+            Dictionary<string, dynamic> personalisation)
+        {
+            personalisation ??= new Dictionary<string, dynamic>();
+
+            void UpsertAddress(string key, string value)
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    personalisation[key] = value;
+                }
+                else
+                {
+                    if (personalisation.ContainsKey(key))
+                    {
+                        personalisation.Remove(key);
+                    }
+                }
+            }
+
+            var lines = new List<string>
+            {
+                recipientName,
+                addressLine1,
+                addressLine2,
+                addressLine3,
+                addressLine4,
+                addressLine5,
+                postCode
+            }
+            .Where(s => !string.IsNullOrWhiteSpace(s))
+            .Select(s => s!.Trim())
+            .ToList();
+
+            for (int i = 0; i < lines.Count; i++)
+            {
+                string key = $"address_line_{i + 1}";
+                UpsertAddress(key, lines[i]);
+            }
+
+            for (int i = lines.Count + 1; i <= 7; i++)
+            {
+                string key = $"address_line_{i}";
+                UpsertAddress(key, null);
+            }
+
+            return personalisation;
+        }
     }
 }

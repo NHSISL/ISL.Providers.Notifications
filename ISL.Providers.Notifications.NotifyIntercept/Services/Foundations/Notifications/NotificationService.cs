@@ -62,30 +62,40 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Services.Foundations.Notif
 
         public ValueTask<string> SendLetterAsync(
             string templateId,
+            string recipientName,
             string addressLine1,
             string addressLine2,
             string addressLine3,
             string addressLine4,
             string addressLine5,
-            string addressLine6,
-            string addressLine7,
+            string postCode,
             Dictionary<string, dynamic> personalisation = null,
             string clientReference = null) =>
             TryCatch(async () =>
             {
-                ValidateOnSendLetter(templateId, personalisation);
+                personalisation = UpdatePersonalisation(
+                    recipientName,
+                    addressLine1,
+                    addressLine2,
+                    addressLine3,
+                    addressLine4,
+                    addressLine5,
+                    postCode,
+                    personalisation);
+
+                ValidateOnSendLetter(templateId, recipientName, addressLine1, postCode, personalisation);
                 ValidateNotificationConfiguration(notifyConfigurations);
                 SubstituteInfo substituteInfo = await SubstituteInfoAsync(personalisation);
 
                 return await this.interceptBroker.SendLetterAsync(
                     templateId: templateId,
-                    addressLine1: addressLine1,
-                    addressLine2: addressLine2,
-                    addressLine3: addressLine3,
-                    addressLine4: addressLine4,
-                    addressLine5: addressLine5,
-                    addressLine6: addressLine6,
-                    addressLine7: addressLine7,
+                    recipientName,
+                    addressLine1,
+                    addressLine2,
+                    addressLine3,
+                    addressLine4,
+                    addressLine5,
+                    postCode,
                     personalisation: substituteInfo.Personalisation,
                     clientReference: clientReference);
             });
@@ -146,6 +156,62 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Services.Foundations.Notif
                 AddressLines = addressLines,
                 Personalisation = personalisation
             };
+        }
+
+        private Dictionary<string, dynamic> UpdatePersonalisation(
+            string recipientName,
+            string addressLine1,
+            string addressLine2,
+            string addressLine3,
+            string addressLine4,
+            string addressLine5,
+            string postCode,
+            Dictionary<string, dynamic> personalisation)
+        {
+            personalisation ??= new Dictionary<string, dynamic>();
+
+            void UpsertAddress(string key, string value)
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    personalisation[key] = value;
+                }
+                else
+                {
+                    if (personalisation.ContainsKey(key))
+                    {
+                        personalisation.Remove(key);
+                    }
+                }
+            }
+
+            var lines = new List<string>
+            {
+                recipientName,
+                addressLine1,
+                addressLine2,
+                addressLine3,
+                addressLine4,
+                addressLine5,
+                postCode
+            }
+            .Where(s => !string.IsNullOrWhiteSpace(s))
+            .Select(s => s!.Trim())
+            .ToList();
+
+            for (int i = 0; i < lines.Count; i++)
+            {
+                string key = $"address_line_{i + 1}";
+                UpsertAddress(key, lines[i]);
+            }
+
+            for (int i = lines.Count + 1; i <= 7; i++)
+            {
+                string key = $"address_line_{i}";
+                UpsertAddress(key, null);
+            }
+
+            return personalisation;
         }
     }
 }

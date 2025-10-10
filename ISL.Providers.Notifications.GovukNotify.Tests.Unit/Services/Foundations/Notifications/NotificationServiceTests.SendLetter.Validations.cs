@@ -20,13 +20,13 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
         {
             // given
             string inputTemplateId = invalidText;
-            string inputAddressLine1 = GetRandomString();
-            string inputAddressLine2 = GetRandomString();
-            string inputAddressLine3 = GetRandomString();
-            string inputAddressLine4 = GetRandomString();
-            string inputAddressLine5 = GetRandomString();
-            string inputAddressLine6 = GetRandomString();
-            string inputAddressLine7 = GetRandomString();
+            string inputRecipientName = invalidText;
+            string inputAddressLine1 = invalidText;
+            string inputAddressLine2 = invalidText;
+            string inputAddressLine3 = invalidText;
+            string inputAddressLine4 = invalidText;
+            string inputAddressLine5 = invalidText;
+            string inputPostCode = invalidText;
             Dictionary<string, dynamic> inputPersonalization = null;
 
             var invalidArgumentNotificationException =
@@ -37,6 +37,18 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
                 key: "templateId",
                 values: "Text is required");
 
+            invalidArgumentNotificationException.AddData(
+                key: "recipientName",
+                values: "Text is required");
+
+            invalidArgumentNotificationException.AddData(
+                key: "addressLine1",
+                values: "Text is required");
+
+            invalidArgumentNotificationException.AddData(
+                key: "postCode",
+                values: "Text is required");
+
             var expectedNotificationValidationException =
                 new NotificationValidationException(
                     message: "Notification validation error occurred, please correct the errors and try again.",
@@ -45,13 +57,13 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             // when
             ValueTask<string> sendLetterTask = this.notificationService.SendLetterAsync(
                 templateId: inputTemplateId,
+                recipientName: inputRecipientName,
                 addressLine1: inputAddressLine1,
                 addressLine2: inputAddressLine2,
                 addressLine3: inputAddressLine3,
                 addressLine4: inputAddressLine4,
                 addressLine5: inputAddressLine5,
-                addressLine6: inputAddressLine6,
-                addressLine7: inputAddressLine7,
+                postCode: inputPostCode,
                 personalisation: inputPersonalization);
 
             NotificationValidationException actualNotificationValidationException =

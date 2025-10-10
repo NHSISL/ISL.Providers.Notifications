@@ -48,10 +48,16 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
 
         private static void ValidateOnSendLetter(
             string templateId,
+            string recipientName,
+            string addressLine1,
+            string postCode,
             Dictionary<string, dynamic> personalisation)
         {
             Validate(
-                (Rule: IsInvalid(templateId), Parameter: nameof(templateId)));
+                (Rule: IsInvalid(templateId), Parameter: nameof(templateId)),
+                (Rule: IsInvalid(recipientName), Parameter: nameof(recipientName)),
+                (Rule: IsInvalid(addressLine1), Parameter: nameof(addressLine1)),
+                (Rule: IsInvalid(postCode), Parameter: nameof(postCode)));
         }
 
         private static dynamic IsInvalid(string text, bool isDictionaryValue = false) => new

@@ -22,13 +22,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Services.Foundations.Notif
 
         ValueTask<string> SendLetterAsync(
             string templateId,
+            string recipientName,
             string addressLine1,
             string addressLine2,
             string addressLine3,
             string addressLine4,
             string addressLine5,
-            string addressLine6,
-            string addressLine7,
+            string postCode,
             Dictionary<string, dynamic> personalisation = null,
             string clientReference = null);
     }
