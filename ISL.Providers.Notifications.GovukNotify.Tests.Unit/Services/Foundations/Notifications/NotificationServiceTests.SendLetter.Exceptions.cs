@@ -25,6 +25,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             string inputAddressLine2 = GetRandomString();
             string inputAddressLine3 = GetRandomString();
             string inputAddressLine4 = GetRandomString();
+            string inputAddressLine5 = GetRandomString();
             string inputPostCode = GetRandomString();
             string inputAddressLine7 = GetRandomString();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
@@ -54,7 +55,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
                 addressLine2: inputAddressLine2,
                 addressLine3: inputAddressLine3,
                 addressLine4: inputAddressLine4,
-                addressLine5: inputPostCode,
+                addressLine5: inputAddressLine5,
                 postCode: inputAddressLine7,
                 personalisation: inputPersonalization,
                 clientReference: inputClientReference);
