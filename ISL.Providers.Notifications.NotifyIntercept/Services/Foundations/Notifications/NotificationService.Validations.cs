@@ -40,8 +40,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Services.Foundations.Notif
             Dictionary<string, dynamic> personalisation)
         {
             Validate(
-                (Rule: IsInvalid(templateId), Parameter: nameof(templateId)),
-                (Rule: IsInvalid(personalisation), Parameter: nameof(personalisation)));
+                (Rule: IsInvalid(templateId), Parameter: nameof(templateId)));
         }
 
         private static void ValidateNotificationConfiguration(NotifyConfigurations configurations)

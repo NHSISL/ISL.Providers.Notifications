@@ -20,10 +20,24 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             // given
             string inputTemplateId = GetRandomString();
             string inputClientReference = GetRandomString();
+            string inputAddressLine1 = GetRandomString();
+            string inputAddressLine2 = GetRandomString();
+            string inputAddressLine3 = GetRandomString();
+            string inputAddressLine4 = GetRandomString();
+            string inputAddressLine5 = GetRandomString();
+            string inputAddressLine6 = GetRandomString();
+            string inputAddressLine7 = GetRandomString();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
 
             this.interceptBroker.Setup(broker =>
                 broker.SendLetterAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
                     It.IsAny<string>(),
                     It.IsAny<Dictionary<string, dynamic>>(),
                     It.IsAny<string>()))
@@ -42,6 +56,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             // when
             ValueTask<string> sendLetterTask = this.notificationService.SendLetterAsync(
                 templateId: inputTemplateId,
+                addressLine1: inputAddressLine1,
+                addressLine2: inputAddressLine2,
+                addressLine3: inputAddressLine3,
+                addressLine4: inputAddressLine4,
+                addressLine5: inputAddressLine5,
+                addressLine6: inputAddressLine6,
+                addressLine7: inputAddressLine7,
                 personalisation: inputPersonalization);
 
             NotificationDependencyValidationException actualNotificationDependencyValidationException =
@@ -53,6 +74,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
 
             this.interceptBroker.Verify(broker =>
                 broker.SendLetterAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
                     It.IsAny<string>(),
                     It.IsAny<Dictionary<string, dynamic>>(),
                     It.IsAny<string>()),
@@ -68,10 +96,24 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             // given
             string inputTemplateId = GetRandomString();
             string inputClientReference = GetRandomString();
+            string inputAddressLine1 = GetRandomString();
+            string inputAddressLine2 = GetRandomString();
+            string inputAddressLine3 = GetRandomString();
+            string inputAddressLine4 = GetRandomString();
+            string inputAddressLine5 = GetRandomString();
+            string inputAddressLine6 = GetRandomString();
+            string inputAddressLine7 = GetRandomString();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
 
             this.interceptBroker.Setup(broker =>
                 broker.SendLetterAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
                     It.IsAny<string>(),
                     It.IsAny<Dictionary<string, dynamic>>(),
                     It.IsAny<string>()))
@@ -90,6 +132,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             // when
             ValueTask<string> sendLetterTask = this.notificationService.SendLetterAsync(
                 templateId: inputTemplateId,
+                addressLine1: inputAddressLine1,
+                addressLine2: inputAddressLine2,
+                addressLine3: inputAddressLine3,
+                addressLine4: inputAddressLine4,
+                addressLine5: inputAddressLine5,
+                addressLine6: inputAddressLine6,
+                addressLine7: inputAddressLine7,
                 personalisation: inputPersonalization,
                 clientReference: inputClientReference);
 
@@ -102,6 +151,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
 
             this.interceptBroker.Verify(broker =>
                 broker.SendLetterAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
                     It.IsAny<string>(),
                     It.IsAny<Dictionary<string, dynamic>>(),
                     It.IsAny<string>()),
@@ -116,11 +172,25 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             // given
             string inputTemplateId = GetRandomString();
             string inputClientReference = GetRandomString();
+            string inputAddressLine1 = GetRandomString();
+            string inputAddressLine2 = GetRandomString();
+            string inputAddressLine3 = GetRandomString();
+            string inputAddressLine4 = GetRandomString();
+            string inputAddressLine5 = GetRandomString();
+            string inputAddressLine6 = GetRandomString();
+            string inputAddressLine7 = GetRandomString();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
             var serviceException = new Exception();
 
             this.interceptBroker.Setup(broker =>
                 broker.SendLetterAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
                     It.IsAny<string>(),
                     It.IsAny<Dictionary<string, dynamic>>(),
                     It.IsAny<string>()))
@@ -138,6 +208,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             // when
             ValueTask<string> sendLetterTask = this.notificationService.SendLetterAsync(
                 templateId: inputTemplateId,
+                addressLine1: inputAddressLine1,
+                addressLine2: inputAddressLine2,
+                addressLine3: inputAddressLine3,
+                addressLine4: inputAddressLine4,
+                addressLine5: inputAddressLine5,
+                addressLine6: inputAddressLine6,
+                addressLine7: inputAddressLine7,
                 personalisation: inputPersonalization,
                 clientReference: inputClientReference);
 
@@ -150,6 +227,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
 
             this.interceptBroker.Verify(broker =>
                 broker.SendLetterAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
                     It.IsAny<string>(),
                     It.IsAny<Dictionary<string, dynamic>>(),
                     It.IsAny<string>()),

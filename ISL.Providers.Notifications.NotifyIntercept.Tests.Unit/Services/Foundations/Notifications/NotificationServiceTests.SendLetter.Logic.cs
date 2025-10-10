@@ -22,13 +22,20 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             string expectedIdentifier = randomIdentifier;
             string inputTemplateId = GetRandomString();
             string inputClientReference = GetRandomString();
+            string inputAddressLine1 = GetRandomString();
+            string inputAddressLine2 = GetRandomString();
+            string inputAddressLine3 = GetRandomString();
+            string inputAddressLine4 = GetRandomString();
+            string inputAddressLine5 = GetRandomString();
+            string inputAddressLine6 = GetRandomString();
+            string inputAddressLine7 = GetRandomString();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
             Dictionary<string, dynamic> updatedPersonalisation = inputPersonalization.DeepClone();
             SubstituteInfo randomSubstituteInfo = GetRandomSubstituteInfo(inputPersonalization);
 
             for (int i = 0; i < MaxAddressLines; i++)
             {
-                string key = $"addressLine{i + 1}";
+                string key = $"address_line_{i + 1}";
 
                 string? value =
                     i < randomSubstituteInfo.AddressLines.Count ? randomSubstituteInfo.AddressLines[i] : null;
@@ -52,6 +59,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
                 .Setup(broker =>
                     broker.SendLetterAsync(
                         inputTemplateId,
+                        inputAddressLine1,
+                        inputAddressLine2,
+                        inputAddressLine3,
+                        inputAddressLine4,
+                        inputAddressLine5,
+                        inputAddressLine6,
+                        inputAddressLine7,
                         It.Is(SameDictionaryAs(outputSubstituteInfo.Personalisation)),
                         inputClientReference))
                 .ReturnsAsync(expectedIdentifier);
@@ -59,6 +73,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             // when
             string actualIdentifier = await notificationServiceMock.Object.SendLetterAsync(
                 templateId: inputTemplateId,
+                addressLine1: inputAddressLine1,
+                addressLine2: inputAddressLine2,
+                addressLine3: inputAddressLine3,
+                addressLine4: inputAddressLine4,
+                addressLine5: inputAddressLine5,
+                addressLine6: inputAddressLine6,
+                addressLine7: inputAddressLine7,
                 personalisation: inputPersonalization,
                 clientReference: inputClientReference);
 
@@ -73,6 +94,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
                 .Verify(broker =>
                     broker.SendLetterAsync(
                         inputTemplateId,
+                        inputAddressLine1,
+                        inputAddressLine2,
+                        inputAddressLine3,
+                        inputAddressLine4,
+                        inputAddressLine5,
+                        inputAddressLine6,
+                        inputAddressLine7,
                         It.Is(SameDictionaryAs(outputSubstituteInfo.Personalisation)),
                         inputClientReference),
                 Times.Once);

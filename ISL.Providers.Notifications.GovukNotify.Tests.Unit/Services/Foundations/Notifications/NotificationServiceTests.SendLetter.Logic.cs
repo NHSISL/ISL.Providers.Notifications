@@ -19,6 +19,13 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             string expectedIdentifier = randomIdentifier;
             string inputTemplateId = GetRandomString();
             string inputClientReference = GetRandomString();
+            string inputAddressLine1 = GetRandomString();
+            string inputAddressLine2 = GetRandomString();
+            string inputAddressLine3 = GetRandomString();
+            string inputAddressLine4 = GetRandomString();
+            string inputAddressLine5 = GetRandomString();
+            string inputAddressLine6 = GetRandomString();
+            string inputAddressLine7 = GetRandomString();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
             inputPersonalization.Add("clientReference", inputClientReference);
 
@@ -33,6 +40,13 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             // when
             string actualIdentifier = await this.notificationService.SendLetterAsync(
                 templateId: inputTemplateId,
+                addressLine1: inputAddressLine1,
+                addressLine2: inputAddressLine2,
+                addressLine3: inputAddressLine3,
+                addressLine4: inputAddressLine4,
+                addressLine5: inputAddressLine5,
+                addressLine6: inputAddressLine6,
+                addressLine7: inputAddressLine7,
                 personalisation: inputPersonalization,
                 clientReference: inputClientReference);
 

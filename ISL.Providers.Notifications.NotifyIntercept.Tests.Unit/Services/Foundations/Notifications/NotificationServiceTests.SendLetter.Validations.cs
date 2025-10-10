@@ -21,6 +21,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
         {
             // given
             string inputTemplateId = invalidText;
+            string inputAddressLine1 = GetRandomString();
+            string inputAddressLine2 = GetRandomString();
+            string inputAddressLine3 = GetRandomString();
+            string inputAddressLine4 = GetRandomString();
+            string inputAddressLine5 = GetRandomString();
+            string inputAddressLine6 = GetRandomString();
+            string inputAddressLine7 = GetRandomString();
             Dictionary<string, dynamic> inputPersonalization = null;
 
             var invalidArgumentNotificationException =
@@ -31,10 +38,6 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
                 key: "templateId",
                 values: "Text is required");
 
-            invalidArgumentNotificationException.AddData(
-                key: "personalisation",
-                values: "Dictionary is required");
-
             var expectedNotificationValidationException =
                 new NotificationValidationException(
                     message: "Notification validation error occurred, please correct the errors and try again.",
@@ -43,6 +46,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             // when
             ValueTask<string> sendLetterTask = this.notificationService.SendLetterAsync(
                 templateId: inputTemplateId,
+                addressLine1: inputAddressLine1,
+                addressLine2: inputAddressLine2,
+                addressLine3: inputAddressLine3,
+                addressLine4: inputAddressLine4,
+                addressLine5: inputAddressLine5,
+                addressLine6: inputAddressLine6,
+                addressLine7: inputAddressLine7,
                 personalisation: inputPersonalization);
 
             NotificationValidationException actualNotificationValidationException =
@@ -55,6 +65,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
 
             this.interceptBroker.Verify(broker =>
                 broker.SendLetterAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
                     It.IsAny<string>(),
                     It.IsAny<Dictionary<string, dynamic>>(),
                     It.IsAny<string>()),
@@ -72,6 +89,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
         {
             // given
             string inputTemplateId = GetRandomString();
+            string inputAddressLine1 = GetRandomString();
+            string inputAddressLine2 = GetRandomString();
+            string inputAddressLine3 = GetRandomString();
+            string inputAddressLine4 = GetRandomString();
+            string inputAddressLine5 = GetRandomString();
+            string inputAddressLine6 = GetRandomString();
+            string inputAddressLine7 = GetRandomString();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
             NotificationOverride randomInvalidNotificationOverride = GetRandomNotificationOverride();
             randomInvalidNotificationOverride.Identifier = invalidText;
@@ -98,6 +122,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             // when
             ValueTask<string> sendLetterTask = this.notificationService.SendLetterAsync(
                 templateId: inputTemplateId,
+                addressLine1: inputAddressLine1,
+                addressLine2: inputAddressLine2,
+                addressLine3: inputAddressLine3,
+                addressLine4: inputAddressLine4,
+                addressLine5: inputAddressLine5,
+                addressLine6: inputAddressLine6,
+                addressLine7: inputAddressLine7,
                 personalisation: inputPersonalization);
 
             NotificationValidationException actualNotificationValidationException =
@@ -110,6 +141,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
 
             this.interceptBroker.Verify(broker =>
                 broker.SendLetterAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
                     It.IsAny<string>(),
                     It.IsAny<Dictionary<string, dynamic>>(),
                     It.IsAny<string>()),
@@ -127,6 +165,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
         {
             // given
             string inputTemplateId = GetRandomString();
+            string inputAddressLine1 = GetRandomString();
+            string inputAddressLine2 = GetRandomString();
+            string inputAddressLine3 = GetRandomString();
+            string inputAddressLine4 = GetRandomString();
+            string inputAddressLine5 = GetRandomString();
+            string inputAddressLine6 = GetRandomString();
+            string inputAddressLine7 = GetRandomString();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
             NotificationOverride randomInvalidNotificationOverride = GetRandomNotificationOverride();
             randomInvalidNotificationOverride.Identifier = invalidText;
@@ -152,6 +197,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             // when
             ValueTask<string> sendLetterTask = this.notificationService.SendLetterAsync(
                 templateId: inputTemplateId,
+                addressLine1: inputAddressLine1,
+                addressLine2: inputAddressLine2,
+                addressLine3: inputAddressLine3,
+                addressLine4: inputAddressLine4,
+                addressLine5: inputAddressLine5,
+                addressLine6: inputAddressLine6,
+                addressLine7: inputAddressLine7,
                 personalisation: inputPersonalization);
 
             NotificationValidationException actualNotificationValidationException =
@@ -164,6 +216,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
 
             this.interceptBroker.Verify(broker =>
                 broker.SendLetterAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
                     It.IsAny<string>(),
                     It.IsAny<Dictionary<string, dynamic>>(),
                     It.IsAny<string>()),

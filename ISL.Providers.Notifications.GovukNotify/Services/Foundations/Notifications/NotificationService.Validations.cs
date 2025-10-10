@@ -2,10 +2,10 @@
 // Copyright (c) North East London ICB. All rights reserved.
 // ---------------------------------------------------------
 
-using ISL.Providers.Notifications.GovukNotify.Models.Foundations.Notifications.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using ISL.Providers.Notifications.GovukNotify.Models.Foundations.Notifications.Exceptions;
 
 namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notifications
 {
@@ -47,7 +47,8 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
         }
 
         private static void ValidateOnSendLetter(
-            string templateId)
+            string templateId,
+            Dictionary<string, dynamic> personalisation)
         {
             Validate(
                 (Rule: IsInvalid(templateId), Parameter: nameof(templateId)));

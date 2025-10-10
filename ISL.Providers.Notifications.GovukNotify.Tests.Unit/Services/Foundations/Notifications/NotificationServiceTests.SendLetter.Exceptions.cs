@@ -2,12 +2,12 @@
 // Copyright (c) North East London ICB. All rights reserved.
 // ---------------------------------------------------------
 
-using FluentAssertions;
-using ISL.Providers.Notifications.GovukNotify.Models.Foundations.Notifications.Exceptions;
-using Moq;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FluentAssertions;
+using ISL.Providers.Notifications.GovukNotify.Models.Foundations.Notifications.Exceptions;
+using Moq;
 
 namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundations.Notifications
 {
@@ -20,7 +20,14 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             // given
             string inputTemplateId = GetRandomString();
             string inputClientReference = null;
-            Dictionary<string, dynamic> inputPersonalization = null;
+            string inputAddressLine1 = GetRandomString();
+            string inputAddressLine2 = GetRandomString();
+            string inputAddressLine3 = GetRandomString();
+            string inputAddressLine4 = GetRandomString();
+            string inputAddressLine5 = GetRandomString();
+            string inputAddressLine6 = GetRandomString();
+            string inputAddressLine7 = GetRandomString();
+            Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
 
             this.govukNotifyBroker.Setup(broker =>
                 broker.SendLetterAsync(
@@ -42,6 +49,13 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             // when
             ValueTask<string> sendLetterTask = this.notificationService.SendLetterAsync(
                 templateId: inputTemplateId,
+                addressLine1: inputAddressLine1,
+                addressLine2: inputAddressLine2,
+                addressLine3: inputAddressLine3,
+                addressLine4: inputAddressLine4,
+                addressLine5: inputAddressLine5,
+                addressLine6: inputAddressLine6,
+                addressLine7: inputAddressLine7,
                 personalisation: inputPersonalization,
                 clientReference: inputClientReference);
 
@@ -68,8 +82,15 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
         {
             // given
             string inputTemplateId = GetRandomString();
+            string inputAddressLine1 = GetRandomString();
+            string inputAddressLine2 = GetRandomString();
+            string inputAddressLine3 = GetRandomString();
+            string inputAddressLine4 = GetRandomString();
+            string inputAddressLine5 = GetRandomString();
+            string inputAddressLine6 = GetRandomString();
+            string inputAddressLine7 = GetRandomString();
             string inputClientReference = null;
-            Dictionary<string, dynamic> inputPersonalization = null;
+            Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
 
             this.govukNotifyBroker.Setup(broker =>
                 broker.SendLetterAsync(
@@ -91,6 +112,13 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             // when
             ValueTask<string> sendLetterTask = this.notificationService.SendLetterAsync(
                 templateId: inputTemplateId,
+                addressLine1: inputAddressLine1,
+                addressLine2: inputAddressLine2,
+                addressLine3: inputAddressLine3,
+                addressLine4: inputAddressLine4,
+                addressLine5: inputAddressLine5,
+                addressLine6: inputAddressLine6,
+                addressLine7: inputAddressLine7,
                 personalisation: inputPersonalization,
                 clientReference: inputClientReference);
 
@@ -116,8 +144,15 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
         {
             // given
             string inputTemplateId = GetRandomString();
+            string inputAddressLine1 = GetRandomString();
+            string inputAddressLine2 = GetRandomString();
+            string inputAddressLine3 = GetRandomString();
+            string inputAddressLine4 = GetRandomString();
+            string inputAddressLine5 = GetRandomString();
+            string inputAddressLine6 = GetRandomString();
+            string inputAddressLine7 = GetRandomString();
             string inputClientReference = null;
-            Dictionary<string, dynamic> inputPersonalization = null;
+            Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
             var serviceException = new Exception();
 
             this.govukNotifyBroker.Setup(broker =>
@@ -139,6 +174,13 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             // when
             ValueTask<string> sendLetterTask = this.notificationService.SendLetterAsync(
                 templateId: inputTemplateId,
+                addressLine1: inputAddressLine1,
+                addressLine2: inputAddressLine2,
+                addressLine3: inputAddressLine3,
+                addressLine4: inputAddressLine4,
+                addressLine5: inputAddressLine5,
+                addressLine6: inputAddressLine6,
+                addressLine7: inputAddressLine7,
                 personalisation: inputPersonalization,
                 clientReference: inputClientReference);
 

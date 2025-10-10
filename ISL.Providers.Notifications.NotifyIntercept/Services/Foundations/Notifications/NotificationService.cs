@@ -62,6 +62,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Services.Foundations.Notif
 
         public ValueTask<string> SendLetterAsync(
             string templateId,
+            string addressLine1,
+            string addressLine2,
+            string addressLine3,
+            string addressLine4,
+            string addressLine5,
+            string addressLine6,
+            string addressLine7,
             Dictionary<string, dynamic> personalisation = null,
             string clientReference = null) =>
             TryCatch(async () =>
@@ -72,6 +79,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Services.Foundations.Notif
 
                 return await this.interceptBroker.SendLetterAsync(
                     templateId: templateId,
+                    addressLine1: addressLine1,
+                    addressLine2: addressLine2,
+                    addressLine3: addressLine3,
+                    addressLine4: addressLine4,
+                    addressLine5: addressLine5,
+                    addressLine6: addressLine6,
+                    addressLine7: addressLine7,
                     personalisation: substituteInfo.Personalisation,
                     clientReference: clientReference);
             });

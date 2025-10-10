@@ -2,11 +2,11 @@
 // Copyright (c) North East London ICB. All rights reserved.
 // ---------------------------------------------------------
 
-using ISL.Providers.Notifications.GovukNotify.Brokers;
-using ISL.Providers.Notifications.GovukNotify.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ISL.Providers.Notifications.GovukNotify.Brokers;
+using ISL.Providers.Notifications.GovukNotify.Models;
 
 namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notifications
 {
@@ -85,11 +85,18 @@ namespace ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notificat
 
         public ValueTask<string> SendLetterAsync(
             string templateId,
-            Dictionary<string, dynamic> personalisation = null,
+            string addressLine1,
+            string addressLine2,
+            string addressLine3,
+            string addressLine4,
+            string addressLine5,
+            string addressLine6,
+            string addressLine7,
+            Dictionary<string, dynamic> personalisation,
             string clientReference = null) =>
             TryCatch(async () =>
             {
-                ValidateOnSendLetter(templateId);
+                ValidateOnSendLetter(templateId, personalisation);
 
                 return await this.govukNotifyBroker.SendLetterAsync(
                     templateId,
