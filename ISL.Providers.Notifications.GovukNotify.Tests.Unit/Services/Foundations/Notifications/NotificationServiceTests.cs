@@ -2,14 +2,14 @@
 // Copyright (c) North East London ICB. All rights reserved.
 // ---------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using ISL.Providers.Notifications.GovukNotify.Brokers;
 using ISL.Providers.Notifications.GovukNotify.Models;
 using ISL.Providers.Notifications.GovukNotify.Services.Foundations.Notifications;
 using KellermanSoftware.CompareNetObjects;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
 using Tynamix.ObjectFiller;
 
 namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundations.Notifications
@@ -115,6 +115,44 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
                 new Notify.Exceptions.NotifyClientException(
                     message: "Internal server error"),
             };
+        }
+
+        private Dictionary<string, dynamic> UpdatePersonalisation(
+            string addressLine1,
+            string addressLine2,
+            string addressLine3,
+            string addressLine4,
+            string addressLine5,
+            string addressLine6,
+            string addressLine7,
+            Dictionary<string, dynamic> personalisation)
+        {
+            personalisation ??= new Dictionary<string, dynamic>();
+
+            void UpsertAddress(string key, string value)
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    personalisation[key] = value;
+                }
+                else
+                {
+                    if (personalisation.ContainsKey(key))
+                    {
+                        personalisation.Remove(key);
+                    }
+                }
+            }
+
+            UpsertAddress("addressLine1", addressLine1);
+            UpsertAddress("addressLine2", addressLine2);
+            UpsertAddress("addressLine3", addressLine3);
+            UpsertAddress("addressLine4", addressLine4);
+            UpsertAddress("addressLine5", addressLine5);
+            UpsertAddress("addressLine6", addressLine6);
+            UpsertAddress("addressLine7", addressLine7);
+
+            return personalisation;
         }
     }
 }

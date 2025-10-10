@@ -5,6 +5,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Force.DeepCloner;
 using Moq;
 
 namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundations.Notifications
@@ -28,12 +29,23 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             string inputAddressLine7 = GetRandomString();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
             inputPersonalization.Add("clientReference", inputClientReference);
+            Dictionary<string, dynamic> updatedPersonalisation = inputPersonalization.DeepClone();
+
+            updatedPersonalisation = UpdatePersonalisation(
+                inputAddressLine1,
+                inputAddressLine2,
+                inputAddressLine3,
+                inputAddressLine4,
+                inputAddressLine5,
+                inputAddressLine6,
+                inputAddressLine7,
+                updatedPersonalisation);
 
             this.govukNotifyBroker
                 .Setup(broker =>
                     broker.SendLetterAsync(
                         inputTemplateId,
-                        It.Is(SameDictionaryAs(inputPersonalization)),
+                        It.Is(SameDictionaryAs(updatedPersonalisation)),
                         inputClientReference))
                 .ReturnsAsync(expectedIdentifier);
 
@@ -57,7 +69,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
                 .Verify(broker =>
                     broker.SendLetterAsync(
                         inputTemplateId,
-                        It.Is(SameDictionaryAs(inputPersonalization)),
+                        It.Is(SameDictionaryAs(updatedPersonalisation)),
                         inputClientReference),
                 Times.Once);
 
