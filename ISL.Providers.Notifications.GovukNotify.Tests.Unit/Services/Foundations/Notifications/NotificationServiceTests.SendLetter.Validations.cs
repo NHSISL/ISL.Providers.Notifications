@@ -20,13 +20,13 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
         {
             // given
             string inputTemplateId = invalidText;
+            string inputRecipientName = invalidText;
             string inputAddressLine1 = invalidText;
             string inputAddressLine2 = invalidText;
             string inputAddressLine3 = invalidText;
             string inputAddressLine4 = invalidText;
             string inputAddressLine5 = invalidText;
-            string inputAddressLine6 = invalidText;
-            string inputAddressLine7 = invalidText;
+            string inputPostCode = invalidText;
             Dictionary<string, dynamic> inputPersonalization = null;
 
             var invalidArgumentNotificationException =
@@ -38,15 +38,15 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
                 values: "Text is required");
 
             invalidArgumentNotificationException.AddData(
+                key: "recipientName",
+                values: "Text is required");
+
+            invalidArgumentNotificationException.AddData(
                 key: "addressLine1",
                 values: "Text is required");
 
             invalidArgumentNotificationException.AddData(
-                key: "addressLine2",
-                values: "Text is required");
-
-            invalidArgumentNotificationException.AddData(
-                key: "addressLine3",
+                key: "postCode",
                 values: "Text is required");
 
             var expectedNotificationValidationException =
@@ -57,13 +57,13 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             // when
             ValueTask<string> sendLetterTask = this.notificationService.SendLetterAsync(
                 templateId: inputTemplateId,
+                recipientName: inputRecipientName,
                 addressLine1: inputAddressLine1,
                 addressLine2: inputAddressLine2,
                 addressLine3: inputAddressLine3,
                 addressLine4: inputAddressLine4,
                 addressLine5: inputAddressLine5,
-                addressLine6: inputAddressLine6,
-                addressLine7: inputAddressLine7,
+                postCode: inputPostCode,
                 personalisation: inputPersonalization);
 
             NotificationValidationException actualNotificationValidationException =

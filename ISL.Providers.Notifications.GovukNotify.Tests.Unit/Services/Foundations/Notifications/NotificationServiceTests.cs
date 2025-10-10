@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using ISL.Providers.Notifications.GovukNotify.Brokers;
 using ISL.Providers.Notifications.GovukNotify.Models;
@@ -118,13 +119,13 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
         }
 
         private Dictionary<string, dynamic> UpdatePersonalisation(
+            string recipientName,
             string addressLine1,
             string addressLine2,
             string addressLine3,
             string addressLine4,
             string addressLine5,
-            string addressLine6,
-            string addressLine7,
+            string postCode,
             Dictionary<string, dynamic> personalisation)
         {
             personalisation ??= new Dictionary<string, dynamic>();
@@ -144,13 +145,31 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
                 }
             }
 
-            UpsertAddress("addressLine1", addressLine1);
-            UpsertAddress("addressLine2", addressLine2);
-            UpsertAddress("addressLine3", addressLine3);
-            UpsertAddress("addressLine4", addressLine4);
-            UpsertAddress("addressLine5", addressLine5);
-            UpsertAddress("addressLine6", addressLine6);
-            UpsertAddress("addressLine7", addressLine7);
+            var lines = new List<string>
+            {
+                recipientName,
+                addressLine1,
+                addressLine2,
+                addressLine3,
+                addressLine4,
+                addressLine5,
+                postCode
+            }
+            .Where(s => !string.IsNullOrWhiteSpace(s))
+            .Select(s => s!.Trim())
+            .ToList();
+
+            for (int i = 0; i < lines.Count; i++)
+            {
+                string key = $"address_line_{i + 1}";
+                UpsertAddress(key, lines[i]);
+            }
+
+            for (int i = lines.Count + 1; i <= 7; i++)
+            {
+                string key = $"address_line_{i}";
+                UpsertAddress(key, null);
+            }
 
             return personalisation;
         }

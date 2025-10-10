@@ -20,12 +20,12 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             // given
             string inputTemplateId = GetRandomString();
             string inputClientReference = null;
+            string inputRecipientName = GetRandomString();
             string inputAddressLine1 = GetRandomString();
             string inputAddressLine2 = GetRandomString();
             string inputAddressLine3 = GetRandomString();
             string inputAddressLine4 = GetRandomString();
-            string inputAddressLine5 = GetRandomString();
-            string inputAddressLine6 = GetRandomString();
+            string inputPostCode = GetRandomString();
             string inputAddressLine7 = GetRandomString();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
 
@@ -49,13 +49,13 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             // when
             ValueTask<string> sendLetterTask = this.notificationService.SendLetterAsync(
                 templateId: inputTemplateId,
+                recipientName: inputRecipientName,
                 addressLine1: inputAddressLine1,
                 addressLine2: inputAddressLine2,
                 addressLine3: inputAddressLine3,
                 addressLine4: inputAddressLine4,
-                addressLine5: inputAddressLine5,
-                addressLine6: inputAddressLine6,
-                addressLine7: inputAddressLine7,
+                addressLine5: inputPostCode,
+                postCode: inputAddressLine7,
                 personalisation: inputPersonalization,
                 clientReference: inputClientReference);
 
@@ -82,13 +82,13 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
         {
             // given
             string inputTemplateId = GetRandomString();
+            string inputRecipientName = GetRandomString();
             string inputAddressLine1 = GetRandomString();
             string inputAddressLine2 = GetRandomString();
             string inputAddressLine3 = GetRandomString();
             string inputAddressLine4 = GetRandomString();
             string inputAddressLine5 = GetRandomString();
-            string inputAddressLine6 = GetRandomString();
-            string inputAddressLine7 = GetRandomString();
+            string inputPostCode = GetRandomString();
             string inputClientReference = null;
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
 
@@ -112,13 +112,13 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             // when
             ValueTask<string> sendLetterTask = this.notificationService.SendLetterAsync(
                 templateId: inputTemplateId,
+                recipientName: inputRecipientName,
                 addressLine1: inputAddressLine1,
                 addressLine2: inputAddressLine2,
                 addressLine3: inputAddressLine3,
                 addressLine4: inputAddressLine4,
                 addressLine5: inputAddressLine5,
-                addressLine6: inputAddressLine6,
-                addressLine7: inputAddressLine7,
+                postCode: inputPostCode,
                 personalisation: inputPersonalization,
                 clientReference: inputClientReference);
 
@@ -144,13 +144,13 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
         {
             // given
             string inputTemplateId = GetRandomString();
+            string inputRecipientName = GetRandomString();
             string inputAddressLine1 = GetRandomString();
             string inputAddressLine2 = GetRandomString();
             string inputAddressLine3 = GetRandomString();
             string inputAddressLine4 = GetRandomString();
             string inputAddressLine5 = GetRandomString();
-            string inputAddressLine6 = GetRandomString();
-            string inputAddressLine7 = GetRandomString();
+            string inputPostCode = GetRandomString();
             string inputClientReference = null;
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
             var serviceException = new Exception();
@@ -174,13 +174,13 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             // when
             ValueTask<string> sendLetterTask = this.notificationService.SendLetterAsync(
                 templateId: inputTemplateId,
+                recipientName: inputRecipientName,
                 addressLine1: inputAddressLine1,
                 addressLine2: inputAddressLine2,
                 addressLine3: inputAddressLine3,
                 addressLine4: inputAddressLine4,
                 addressLine5: inputAddressLine5,
-                addressLine6: inputAddressLine6,
-                addressLine7: inputAddressLine7,
+                postCode: inputPostCode,
                 personalisation: inputPersonalization,
                 clientReference: inputClientReference);
 
