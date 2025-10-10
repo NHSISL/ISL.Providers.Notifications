@@ -27,7 +27,6 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             string inputAddressLine4 = GetRandomString();
             string inputAddressLine5 = GetRandomString();
             string inputPostCode = GetRandomString();
-            string inputAddressLine7 = GetRandomString();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
 
             this.govukNotifyBroker.Setup(broker =>
@@ -56,7 +55,7 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
                 addressLine3: inputAddressLine3,
                 addressLine4: inputAddressLine4,
                 addressLine5: inputAddressLine5,
-                postCode: inputAddressLine7,
+                postCode: inputPostCode,
                 personalisation: inputPersonalization,
                 clientReference: inputClientReference);
 
