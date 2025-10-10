@@ -21,13 +21,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
         {
             // given
             string inputTemplateId = invalidText;
-            string inputAddressLine1 = GetRandomString();
-            string inputAddressLine2 = GetRandomString();
-            string inputAddressLine3 = GetRandomString();
-            string inputAddressLine4 = GetRandomString();
-            string inputAddressLine5 = GetRandomString();
-            string inputAddressLine6 = GetRandomString();
-            string inputAddressLine7 = GetRandomString();
+            string inputAddressLine1 = invalidText;
+            string inputAddressLine2 = invalidText;
+            string inputAddressLine3 = invalidText;
+            string inputAddressLine4 = invalidText;
+            string inputAddressLine5 = invalidText;
+            string inputAddressLine6 = invalidText;
+            string inputAddressLine7 = invalidText;
             Dictionary<string, dynamic> inputPersonalization = null;
 
             var invalidArgumentNotificationException =
@@ -36,6 +36,18 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
 
             invalidArgumentNotificationException.AddData(
                 key: "templateId",
+                values: "Text is required");
+
+            invalidArgumentNotificationException.AddData(
+                key: "addressLine1",
+                values: "Text is required");
+
+            invalidArgumentNotificationException.AddData(
+                key: "addressLine2",
+                values: "Text is required");
+
+            invalidArgumentNotificationException.AddData(
+                key: "addressLine3",
                 values: "Text is required");
 
             var expectedNotificationValidationException =
