@@ -40,8 +40,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Services.Foundations.Notif
             Dictionary<string, dynamic> personalisation)
         {
             Validate(
-                (Rule: IsInvalid(templateId), Parameter: nameof(templateId)),
-                (Rule: IsInvalidLetterDictionary(personalisation), Parameter: nameof(personalisation)));
+                (Rule: IsInvalid(templateId), Parameter: nameof(templateId)));
         }
 
         private static void ValidateNotificationConfiguration(NotifyConfigurations configurations)
@@ -92,35 +91,6 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Services.Foundations.Notif
             Condition = dictionary == null,
             Message = "Dictionary is required"
         };
-
-        private static dynamic IsInvalidLetterDictionary(Dictionary<string, dynamic> dictionary)
-        {
-            if (dictionary == null)
-            {
-                return new
-                {
-                    Condition = true,
-                    Message = "Dictionary is required"
-                };
-            }
-
-            var addressLine1IsInvalid = !dictionary.ContainsKey("address_line_1")
-                || String.IsNullOrWhiteSpace(dictionary["address_line_1"]);
-
-            var addressLine2IsInvalid = !dictionary.ContainsKey("address_line_2")
-                || String.IsNullOrWhiteSpace(dictionary["address_line_2"]);
-
-            var addressLine7IsInvalid = !dictionary.ContainsKey("address_line_7")
-                || String.IsNullOrWhiteSpace(dictionary["address_line_7"]);
-
-            var letterDictionaryIsInvalid = addressLine1IsInvalid || addressLine2IsInvalid || addressLine7IsInvalid;
-
-            return new
-            {
-                Condition = letterDictionaryIsInvalid,
-                Message = "Address lines 1, 2 and 7 are required"
-            };
-        }
 
         private static dynamic IsInvalid(NotifyConfigurations configurations) => new
         {

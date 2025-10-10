@@ -122,6 +122,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Providers.Notifications
 
         public async ValueTask<string> SendLetterAsync(
             string templateId,
+            string addressLine1,
+            string addressLine2,
+            string addressLine3,
+            string addressLine4,
+            string addressLine5,
+            string addressLine6,
+            string addressLine7,
             Dictionary<string, dynamic> personalisation = null,
             string clientReference = null)
         {
@@ -129,6 +136,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Providers.Notifications
             {
                 return await this.notificationService.SendLetterAsync(
                     templateId,
+                    addressLine1,
+                    addressLine2,
+                    addressLine3,
+                    addressLine4,
+                    addressLine5,
+                    addressLine6,
+                    addressLine7,
                     personalisation,
                     clientReference);
             }
