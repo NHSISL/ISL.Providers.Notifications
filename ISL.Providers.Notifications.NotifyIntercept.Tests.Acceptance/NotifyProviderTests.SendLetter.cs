@@ -20,6 +20,9 @@ namespace ISL.NotificationClient.Tests.Acceptance
             string outputIdentifier = GetRandomString();
             string expectedIdentifier = outputIdentifier;
             Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>();
+            personalisation.Add("address_line_1", GetRandomString());
+            personalisation.Add("address_line_2", GetRandomString());
+            personalisation.Add("address_line_7", GetRandomString());
 
             notificationProvider.Setup(provider =>
                 provider.SendLetterAsync(

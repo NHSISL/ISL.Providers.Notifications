@@ -23,12 +23,15 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             string inputTemplateId = GetRandomString();
             string inputClientReference = GetRandomString();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
+            inputPersonalization.Add("address_line_1", GetRandomString());
+            inputPersonalization.Add("address_line_2", GetRandomString());
+            inputPersonalization.Add("address_line_7", GetRandomString());
             Dictionary<string, dynamic> updatedPersonalisation = inputPersonalization.DeepClone();
             SubstituteInfo randomSubstituteInfo = GetRandomSubstituteInfo(inputPersonalization);
 
             for (int i = 0; i < MaxAddressLines; i++)
             {
-                string key = $"addressLine{i + 1}";
+                string key = $"address_line_{i + 1}";
 
                 string? value =
                     i < randomSubstituteInfo.AddressLines.Count ? randomSubstituteInfo.AddressLines[i] : null;

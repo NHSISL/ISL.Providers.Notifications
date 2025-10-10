@@ -21,6 +21,9 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             string inputTemplateId = GetRandomString();
             string inputClientReference = GetRandomString();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
+            inputPersonalization.Add("address_line_1", GetRandomString());
+            inputPersonalization.Add("address_line_2", GetRandomString());
+            inputPersonalization.Add("address_line_7", GetRandomString());
 
             this.interceptBroker.Setup(broker =>
                 broker.SendLetterAsync(
@@ -69,6 +72,9 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             string inputTemplateId = GetRandomString();
             string inputClientReference = GetRandomString();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
+            inputPersonalization.Add("address_line_1", GetRandomString());
+            inputPersonalization.Add("address_line_2", GetRandomString());
+            inputPersonalization.Add("address_line_7", GetRandomString());
 
             this.interceptBroker.Setup(broker =>
                 broker.SendLetterAsync(
@@ -117,6 +123,9 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             string inputTemplateId = GetRandomString();
             string inputClientReference = GetRandomString();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
+            inputPersonalization.Add("address_line_1", GetRandomString());
+            inputPersonalization.Add("address_line_2", GetRandomString());
+            inputPersonalization.Add("address_line_7", GetRandomString());
             var serviceException = new Exception();
 
             this.interceptBroker.Setup(broker =>

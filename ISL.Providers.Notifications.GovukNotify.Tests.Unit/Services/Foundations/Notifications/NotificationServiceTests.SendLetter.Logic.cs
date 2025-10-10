@@ -21,6 +21,9 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             string inputClientReference = GetRandomString();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
             inputPersonalization.Add("clientReference", inputClientReference);
+            inputPersonalization.Add("address_line_1", GetRandomString());
+            inputPersonalization.Add("address_line_2", GetRandomString());
+            inputPersonalization.Add("address_line_7", GetRandomString());
 
             this.govukNotifyBroker
                 .Setup(broker =>

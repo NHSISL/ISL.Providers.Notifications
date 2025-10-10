@@ -2,12 +2,12 @@
 // Copyright (c) North East London ICB. All rights reserved.
 // ---------------------------------------------------------
 
-using FluentAssertions;
-using ISL.Providers.Notifications.GovukNotify.Models.Foundations.Notifications.Exceptions;
-using Moq;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FluentAssertions;
+using ISL.Providers.Notifications.GovukNotify.Models.Foundations.Notifications.Exceptions;
+using Moq;
 
 namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundations.Notifications
 {
@@ -20,7 +20,10 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             // given
             string inputTemplateId = GetRandomString();
             string inputClientReference = null;
-            Dictionary<string, dynamic> inputPersonalization = null;
+            Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
+            inputPersonalization.Add("address_line_1", GetRandomString());
+            inputPersonalization.Add("address_line_2", GetRandomString());
+            inputPersonalization.Add("address_line_7", GetRandomString());
 
             this.govukNotifyBroker.Setup(broker =>
                 broker.SendLetterAsync(
@@ -69,7 +72,10 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             // given
             string inputTemplateId = GetRandomString();
             string inputClientReference = null;
-            Dictionary<string, dynamic> inputPersonalization = null;
+            Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
+            inputPersonalization.Add("address_line_1", GetRandomString());
+            inputPersonalization.Add("address_line_2", GetRandomString());
+            inputPersonalization.Add("address_line_7", GetRandomString());
 
             this.govukNotifyBroker.Setup(broker =>
                 broker.SendLetterAsync(
@@ -117,7 +123,10 @@ namespace ISL.Providers.Notifications.GovukNotify.Tests.Unit.Services.Foundation
             // given
             string inputTemplateId = GetRandomString();
             string inputClientReference = null;
-            Dictionary<string, dynamic> inputPersonalization = null;
+            Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
+            inputPersonalization.Add("address_line_1", GetRandomString());
+            inputPersonalization.Add("address_line_2", GetRandomString());
+            inputPersonalization.Add("address_line_7", GetRandomString());
             var serviceException = new Exception();
 
             this.govukNotifyBroker.Setup(broker =>

@@ -63,6 +63,98 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             this.interceptBroker.VerifyNoOtherCalls();
         }
 
+        [Fact]
+        public async Task ShouldValidateDictionaryOnSendLetterAsyncWithNoAddressKeys()
+        {
+            // given
+            string inputTemplateId = GetRandomString();
+            Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
+
+            var invalidArgumentNotificationException =
+                new InvalidArgumentNotificationException(
+                    message: "Invalid notification argument exception. Please correct the errors and try again.");
+
+            invalidArgumentNotificationException.AddData(
+                key: "personalisation",
+                values: "Address lines 1, 2 and 7 are required");
+
+            var expectedNotificationValidationException =
+                new NotificationValidationException(
+                    message: "Notification validation error occurred, please correct the errors and try again.",
+                    innerException: invalidArgumentNotificationException);
+
+            // when
+            ValueTask<string> sendLetterTask = this.notificationService.SendLetterAsync(
+                templateId: inputTemplateId,
+                personalisation: inputPersonalization);
+
+            NotificationValidationException actualNotificationValidationException =
+                await Assert.ThrowsAsync<NotificationValidationException>(async () =>
+                    await sendLetterTask);
+
+            // then
+            actualNotificationValidationException.Should()
+                .BeEquivalentTo(expectedNotificationValidationException);
+
+            this.interceptBroker.Verify(broker =>
+                broker.SendLetterAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<Dictionary<string, dynamic>>(),
+                    It.IsAny<string>()),
+                Times.Never);
+
+            this.interceptBroker.VerifyNoOtherCalls();
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData(" ")]
+        public async Task ShouldValidateDictionaryOnSendLetterAsync(string invalidText)
+        {
+            // given
+            string inputTemplateId = GetRandomString();
+            Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
+            inputPersonalization.Add("address_line_1", invalidText);
+            inputPersonalization.Add("address_line_2", invalidText);
+            inputPersonalization.Add("address_line_7", invalidText);
+
+            var invalidArgumentNotificationException =
+                new InvalidArgumentNotificationException(
+                    message: "Invalid notification argument exception. Please correct the errors and try again.");
+
+            invalidArgumentNotificationException.AddData(
+                key: "personalisation",
+                values: "Address lines 1, 2 and 7 are required");
+
+            var expectedNotificationValidationException =
+                new NotificationValidationException(
+                    message: "Notification validation error occurred, please correct the errors and try again.",
+                    innerException: invalidArgumentNotificationException);
+
+            // when
+            ValueTask<string> sendLetterTask = this.notificationService.SendLetterAsync(
+                templateId: inputTemplateId,
+                personalisation: inputPersonalization);
+
+            NotificationValidationException actualNotificationValidationException =
+                await Assert.ThrowsAsync<NotificationValidationException>(async () =>
+                    await sendLetterTask);
+
+            // then
+            actualNotificationValidationException.Should()
+                .BeEquivalentTo(expectedNotificationValidationException);
+
+            this.interceptBroker.Verify(broker =>
+                broker.SendLetterAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<Dictionary<string, dynamic>>(),
+                    It.IsAny<string>()),
+                Times.Never);
+
+            this.interceptBroker.VerifyNoOtherCalls();
+        }
+
         [Theory]
         [InlineData(null)]
         [InlineData("")]
@@ -73,6 +165,9 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             // given
             string inputTemplateId = GetRandomString();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
+            inputPersonalization.Add("address_line_1", GetRandomString());
+            inputPersonalization.Add("address_line_2", GetRandomString());
+            inputPersonalization.Add("address_line_7", GetRandomString());
             NotificationOverride randomInvalidNotificationOverride = GetRandomNotificationOverride();
             randomInvalidNotificationOverride.Identifier = invalidText;
             randomInvalidNotificationOverride.AddressLines = null;
@@ -128,6 +223,9 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             // given
             string inputTemplateId = GetRandomString();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
+            inputPersonalization.Add("address_line_1", GetRandomString());
+            inputPersonalization.Add("address_line_2", GetRandomString());
+            inputPersonalization.Add("address_line_7", GetRandomString());
             NotificationOverride randomInvalidNotificationOverride = GetRandomNotificationOverride();
             randomInvalidNotificationOverride.Identifier = invalidText;
 
