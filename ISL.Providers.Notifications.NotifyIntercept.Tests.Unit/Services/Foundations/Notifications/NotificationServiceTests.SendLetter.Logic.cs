@@ -31,6 +31,17 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             string inputAddressLine7 = GetRandomString();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
             Dictionary<string, dynamic> updatedPersonalisation = inputPersonalization.DeepClone();
+
+            updatedPersonalisation = UpdatePersonalisation(
+                inputAddressLine1,
+                inputAddressLine2,
+                inputAddressLine3,
+                inputAddressLine4,
+                inputAddressLine5,
+                inputAddressLine6,
+                inputAddressLine7,
+                updatedPersonalisation);
+
             SubstituteInfo randomSubstituteInfo = GetRandomSubstituteInfo(inputPersonalization);
 
             for (int i = 0; i < MaxAddressLines; i++)
