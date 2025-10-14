@@ -50,13 +50,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
                 .Setup(broker =>
                     broker.SendLetterAsync(
                         inputTemplateId,
-                        outputSubstituteInfo.AddressLines.First(),
-                        outputSubstituteInfo.AddressLines.ElementAt(1),
-                        outputSubstituteInfo.AddressLines.ElementAt(2),
-                        outputSubstituteInfo.AddressLines.ElementAt(3),
-                        outputSubstituteInfo.AddressLines.ElementAt(4),
-                        outputSubstituteInfo.AddressLines.ElementAt(5),
-                        outputSubstituteInfo.AddressLines.Last(),
+                        outputSubstituteInfo.AddressLines.FirstOrDefault(),
+                        outputSubstituteInfo.AddressLines.ElementAtOrDefault(1),
+                        outputSubstituteInfo.AddressLines.ElementAtOrDefault(2),
+                        outputSubstituteInfo.AddressLines.ElementAtOrDefault(3),
+                        outputSubstituteInfo.AddressLines.ElementAtOrDefault(4),
+                        outputSubstituteInfo.AddressLines.ElementAtOrDefault(5),
+                        outputSubstituteInfo.AddressLines.LastOrDefault(),
                         It.Is(SameDictionaryAs(outputSubstituteInfo.Personalisation)),
                         inputClientReference))
                 .ReturnsAsync(expectedIdentifier);
@@ -85,13 +85,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
                 .Verify(broker =>
                     broker.SendLetterAsync(
                         inputTemplateId,
-                       outputSubstituteInfo.AddressLines.First(),
-                        outputSubstituteInfo.AddressLines.ElementAt(1),
-                        outputSubstituteInfo.AddressLines.ElementAt(2),
-                        outputSubstituteInfo.AddressLines.ElementAt(3),
-                        outputSubstituteInfo.AddressLines.ElementAt(4),
-                        outputSubstituteInfo.AddressLines.ElementAt(5),
-                        outputSubstituteInfo.AddressLines.Last(),
+                       outputSubstituteInfo.AddressLines.FirstOrDefault(),
+                        outputSubstituteInfo.AddressLines.ElementAtOrDefault(1),
+                        outputSubstituteInfo.AddressLines.ElementAtOrDefault(2),
+                        outputSubstituteInfo.AddressLines.ElementAtOrDefault(3),
+                        outputSubstituteInfo.AddressLines.ElementAtOrDefault(4),
+                        outputSubstituteInfo.AddressLines.ElementAtOrDefault(5),
+                        outputSubstituteInfo.AddressLines.LastOrDefault(),
                         It.Is(SameDictionaryAs(outputSubstituteInfo.Personalisation)),
                         inputClientReference),
                 Times.Once);

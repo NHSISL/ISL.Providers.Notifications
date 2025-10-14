@@ -80,13 +80,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Services.Foundations.Notif
 
                 return await this.interceptBroker.SendLetterAsync(
                     templateId: templateId,
-                    recipientName: substituteInfo.AddressLines.First(),
+                    recipientName: substituteInfo.AddressLines.FirstOrDefault(),
                     addressLine1: substituteInfo.AddressLines.ElementAtOrDefault(1),
                     addressLine2: substituteInfo.AddressLines.ElementAtOrDefault(2),
                     addressLine3: substituteInfo.AddressLines.ElementAtOrDefault(3),
                     addressLine4: substituteInfo.AddressLines.ElementAtOrDefault(4),
                     addressLine5: substituteInfo.AddressLines.ElementAtOrDefault(5),
-                    postCode: substituteInfo.AddressLines.Last(),
+                    postCode: substituteInfo.AddressLines.LastOrDefault(),
                     personalisation: substituteInfo.Personalisation,
                     clientReference: clientReference);
             });
