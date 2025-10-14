@@ -3,6 +3,7 @@
 // ---------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Force.DeepCloner;
@@ -31,29 +32,8 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             string inputPostCode = GetRandomString();
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
             Dictionary<string, dynamic> updatedPersonalisation = inputPersonalization.DeepClone();
-
-            updatedPersonalisation = UpdatePersonalisation(
-                recipientName: inputRecipientName,
-                addressLine1: inputAddressLine1,
-                addressLine2: inputAddressLine2,
-                addressLine3: inputAddressLine3,
-                addressLine4: inputAddressLine4,
-                addressLine5: inputAddressLine5,
-                postCode: inputPostCode,
-                personalisation: updatedPersonalisation);
-
+            updatedPersonalisation = GetSubstitutedLetterDictionary(updatedPersonalisation);
             SubstituteInfo randomSubstituteInfo = GetRandomSubstituteInfo(inputPersonalization);
-
-            for (int i = 0; i < MaxAddressLines; i++)
-            {
-                string key = $"address_line_{i + 1}";
-
-                string? value =
-                    i < randomSubstituteInfo.AddressLines.Count ? randomSubstituteInfo.AddressLines[i] : null;
-
-                updatedPersonalisation[key] = value;
-            }
-
             randomSubstituteInfo.Personalisation = updatedPersonalisation;
             SubstituteInfo outputSubstituteInfo = randomSubstituteInfo.DeepClone();
 
@@ -70,13 +50,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
                 .Setup(broker =>
                     broker.SendLetterAsync(
                         inputTemplateId,
-                        inputRecipientName,
-                        inputAddressLine1,
-                        inputAddressLine2,
-                        inputAddressLine3,
-                        inputAddressLine4,
-                        inputAddressLine5,
-                        inputPostCode,
+                        outputSubstituteInfo.AddressLines.FirstOrDefault(),
+                        outputSubstituteInfo.AddressLines.ElementAtOrDefault(1),
+                        outputSubstituteInfo.AddressLines.ElementAtOrDefault(2),
+                        outputSubstituteInfo.AddressLines.ElementAtOrDefault(3),
+                        outputSubstituteInfo.AddressLines.ElementAtOrDefault(4),
+                        outputSubstituteInfo.AddressLines.ElementAtOrDefault(5),
+                        outputSubstituteInfo.AddressLines.LastOrDefault(),
                         It.Is(SameDictionaryAs(outputSubstituteInfo.Personalisation)),
                         inputClientReference))
                 .ReturnsAsync(expectedIdentifier);
@@ -105,13 +85,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
                 .Verify(broker =>
                     broker.SendLetterAsync(
                         inputTemplateId,
-                        inputRecipientName,
-                        inputAddressLine1,
-                        inputAddressLine2,
-                        inputAddressLine3,
-                        inputAddressLine4,
-                        inputAddressLine5,
-                        inputPostCode,
+                        outputSubstituteInfo.AddressLines.FirstOrDefault(),
+                        outputSubstituteInfo.AddressLines.ElementAtOrDefault(1),
+                        outputSubstituteInfo.AddressLines.ElementAtOrDefault(2),
+                        outputSubstituteInfo.AddressLines.ElementAtOrDefault(3),
+                        outputSubstituteInfo.AddressLines.ElementAtOrDefault(4),
+                        outputSubstituteInfo.AddressLines.ElementAtOrDefault(5),
+                        outputSubstituteInfo.AddressLines.LastOrDefault(),
                         It.Is(SameDictionaryAs(outputSubstituteInfo.Personalisation)),
                         inputClientReference),
                 Times.Once);

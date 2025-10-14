@@ -19,6 +19,7 @@ namespace ISL.NotificationClient.Tests.Acceptance
             string toMobileNumber = TEST_MOBILE_NUMBER;
             string message = GetRandomString();
             string templateId = configuration.GetValue<string>("notifyConfigurations:smsTemplateId");
+            string overrideMobileNumber = configuration.GetValue<string>("notifyConfigurations:defaultOverride:phone");
             string outputIdentifier = GetRandomString();
             string expectedIdentifier = outputIdentifier;
             Dictionary<string, dynamic> personalisation = new Dictionary<string, dynamic>();
@@ -27,7 +28,7 @@ namespace ISL.NotificationClient.Tests.Acceptance
             notificationProvider.Setup(provider =>
                 provider.SendSmsAsync(
                     templateId,
-                    toMobileNumber,
+                    overrideMobileNumber,
                     personalisation))
                         .ReturnsAsync(outputIdentifier);
 

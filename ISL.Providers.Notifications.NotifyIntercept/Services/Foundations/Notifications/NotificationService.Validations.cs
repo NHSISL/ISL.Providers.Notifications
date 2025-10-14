@@ -64,8 +64,14 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Services.Foundations.Notif
                 (Rule: IsInvalidEmailAddress(configurations.DefaultOverride.Email),
                     Parameter: nameof(NotifyConfigurations.DefaultOverride.Email)),
 
-                (Rule: IsInvalid(configurations.DefaultOverride.AddressLines),
-                    Parameter: nameof(NotifyConfigurations.DefaultOverride.AddressLines)),
+                (Rule: IsInvalid(configurations.DefaultOverride.RecipientName),
+                    Parameter: nameof(NotifyConfigurations.DefaultOverride.RecipientName)),
+
+                (Rule: IsInvalid(configurations.DefaultOverride.AddressLine1),
+                    Parameter: nameof(NotifyConfigurations.DefaultOverride.AddressLine1)),
+
+                (Rule: IsInvalid(configurations.DefaultOverride.PostCode),
+                    Parameter: nameof(NotifyConfigurations.DefaultOverride.PostCode)),
 
                 (Rule: IsInvalid(configurations.IdentifierKey),
                     Parameter: nameof(NotifyConfigurations.IdentifierKey))

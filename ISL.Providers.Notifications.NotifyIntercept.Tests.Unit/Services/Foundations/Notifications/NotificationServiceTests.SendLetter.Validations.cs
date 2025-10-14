@@ -111,7 +111,13 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             Dictionary<string, dynamic> inputPersonalization = new Dictionary<string, dynamic>();
             NotificationOverride randomInvalidNotificationOverride = GetRandomNotificationOverride();
             randomInvalidNotificationOverride.Identifier = invalidText;
-            randomInvalidNotificationOverride.AddressLines = null;
+            randomInvalidNotificationOverride.RecipientName = null;
+            randomInvalidNotificationOverride.AddressLine1 = null;
+            randomInvalidNotificationOverride.AddressLine2 = null;
+            randomInvalidNotificationOverride.AddressLine3 = null;
+            randomInvalidNotificationOverride.AddressLine4 = null;
+            randomInvalidNotificationOverride.AddressLine5 = null;
+            randomInvalidNotificationOverride.PostCode = null;
             this.configurations.DefaultOverride = randomInvalidNotificationOverride;
 
             var invalidArgumentNotificationException =
@@ -123,8 +129,16 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
                 values: "Text is required");
 
             invalidArgumentNotificationException.AddData(
-                key: "AddressLines",
-                values: "List is required and cannot be empty");
+                key: "RecipientName",
+                values: "Text is required");
+
+            invalidArgumentNotificationException.AddData(
+                key: "AddressLine1",
+                values: "Text is required");
+
+            invalidArgumentNotificationException.AddData(
+                key: "PostCode",
+                values: "Text is required");
 
             var expectedNotificationValidationException =
                 new NotificationValidationException(
