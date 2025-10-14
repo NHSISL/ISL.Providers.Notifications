@@ -85,7 +85,7 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
                 .Verify(broker =>
                     broker.SendLetterAsync(
                         inputTemplateId,
-                       outputSubstituteInfo.AddressLines.FirstOrDefault(),
+                        outputSubstituteInfo.AddressLines.FirstOrDefault(),
                         outputSubstituteInfo.AddressLines.ElementAtOrDefault(1),
                         outputSubstituteInfo.AddressLines.ElementAtOrDefault(2),
                         outputSubstituteInfo.AddressLines.ElementAtOrDefault(3),
