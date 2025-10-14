@@ -63,7 +63,6 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
 
             filler.Setup()
                 .OnProperty(overrideConfig => overrideConfig.Identifier).Use(identifier)
-                .OnProperty(overrideConfig => overrideConfig.AddressLines).Use(GetRandomAddressLines())
                 .OnProperty(overrideConfig => overrideConfig.Email).Use(GetRandomEmailAddress())
                 .OnProperty(overrideConfig => overrideConfig.Phone).Use(GetRandomLocalMobileNumber());
 
@@ -142,8 +141,30 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             string email = notificationOverride is not null ?
                 notificationOverride.Email : notifyConfigurations.DefaultOverride.Email;
 
-            List<string> addressLines = notificationOverride is not null ?
-                notificationOverride.AddressLines : notifyConfigurations.DefaultOverride.AddressLines;
+            var addressParts = new List<string>
+            {
+                notifyConfigurations.DefaultOverride.RecipientName,
+                notifyConfigurations.DefaultOverride.AddressLine1,
+                notifyConfigurations.DefaultOverride.AddressLine2,
+                notifyConfigurations.DefaultOverride.AddressLine3,
+                notifyConfigurations.DefaultOverride.AddressLine4,
+                notifyConfigurations.DefaultOverride.AddressLine5,
+                notifyConfigurations.DefaultOverride.PostCode
+            };
+
+            if (notificationOverride is not null)
+            {
+                addressParts = new List<string>
+                {
+                    notificationOverride.RecipientName ?? notifyConfigurations.DefaultOverride.RecipientName,
+                    notificationOverride.AddressLine1 ?? notifyConfigurations.DefaultOverride.AddressLine1,
+                    notificationOverride.AddressLine2 ?? notifyConfigurations.DefaultOverride.AddressLine2,
+                    notificationOverride.AddressLine3 ?? notifyConfigurations.DefaultOverride.AddressLine3,
+                    notificationOverride.AddressLine4 ?? notifyConfigurations.DefaultOverride.AddressLine4,
+                    notificationOverride.AddressLine5 ?? notifyConfigurations.DefaultOverride.AddressLine5,
+                    notificationOverride.PostCode ?? notifyConfigurations.DefaultOverride.PostCode
+                };
+            }
 
             if (notifyConfigurations.SubstituteDictionaryValues)
             {
@@ -151,32 +172,34 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
                 personalisation[notifyConfigurations.EmailKey] = email;
             }
 
-            personalisation[notifyConfigurations.AddressLine1Key] =
-                    addressLines.ElementAtOrDefault(0) ?? string.Empty;
+            var populatedAddressParts = addressParts.Where(part => !string.IsNullOrWhiteSpace(part)).ToList();
 
-            personalisation[notifyConfigurations.AddressLine2Key] =
-                addressLines.ElementAtOrDefault(1) ?? string.Empty;
+            var addressKeys = new List<string>
+            {
+                notifyConfigurations.AddressLine1Key,
+                notifyConfigurations.AddressLine2Key,
+                notifyConfigurations.AddressLine3Key,
+                notifyConfigurations.AddressLine4Key,
+                notifyConfigurations.AddressLine5Key,
+                notifyConfigurations.AddressLine6Key,
+                notifyConfigurations.AddressLine7Key
+            };
 
-            personalisation[notifyConfigurations.AddressLine3Key] =
-                addressLines.ElementAtOrDefault(2) ?? string.Empty;
+            int linesToProcess = Math.Min(populatedAddressParts.Count, addressKeys.Count);
 
-            personalisation[notifyConfigurations.AddressLine4Key] =
-                addressLines.ElementAtOrDefault(3) ?? string.Empty;
-
-            personalisation[notifyConfigurations.AddressLine5Key] =
-                addressLines.ElementAtOrDefault(4) ?? string.Empty;
-
-            personalisation[notifyConfigurations.AddressLine6Key] =
-                addressLines.ElementAtOrDefault(5) ?? string.Empty;
-
-            personalisation[notifyConfigurations.AddressLine7Key] =
-                addressLines.ElementAtOrDefault(6) ?? string.Empty;
+            for (int i = 0; i < linesToProcess; i++)
+            {
+                if (!string.IsNullOrWhiteSpace(addressKeys[i]))
+                {
+                    personalisation[addressKeys[i]] = populatedAddressParts[i];
+                }
+            }
 
             SubstituteInfo substituteInfo = new SubstituteInfo
             {
                 MobileNumber = mobileNumber,
                 Email = email,
-                AddressLines = addressLines,
+                AddressLines = populatedAddressParts,
                 Personalisation = personalisation
             };
 
@@ -242,58 +265,17 @@ namespace ISL.Providers.Notifications.NotifyIntercept.Tests.Unit.Services.Founda
             };
         }
 
-        private Dictionary<string, dynamic> UpdatePersonalisation(
-            string recipientName,
-            string addressLine1,
-            string addressLine2,
-            string addressLine3,
-            string addressLine4,
-            string addressLine5,
-            string postCode,
-            Dictionary<string, dynamic> personalisation)
+        private Dictionary<string, dynamic> GetSubstitutedLetterDictionary(Dictionary<string, dynamic> personalisation)
         {
-            personalisation ??= new Dictionary<string, dynamic>();
+            NotificationOverride defaultOverride = configurations.DefaultOverride;
 
-            void UpsertAddress(string key, string value)
-            {
-                if (!string.IsNullOrWhiteSpace(value))
-                {
-                    personalisation[key] = value;
-                }
-                else
-                {
-                    if (personalisation.ContainsKey(key))
-                    {
-                        personalisation.Remove(key);
-                    }
-                }
-            }
-
-            var lines = new List<string>
-            {
-                recipientName,
-                addressLine1,
-                addressLine2,
-                addressLine3,
-                addressLine4,
-                addressLine5,
-                postCode
-            }
-            .Where(s => !string.IsNullOrWhiteSpace(s))
-            .Select(s => s!.Trim())
-            .ToList();
-
-            for (int i = 0; i < lines.Count; i++)
-            {
-                string key = $"address_line_{i + 1}";
-                UpsertAddress(key, lines[i]);
-            }
-
-            for (int i = lines.Count + 1; i <= 7; i++)
-            {
-                string key = $"address_line_{i}";
-                UpsertAddress(key, null);
-            }
+            personalisation.Add(configurations.AddressLine1Key, defaultOverride.RecipientName);
+            personalisation.Add(configurations.AddressLine2Key, defaultOverride.AddressLine1);
+            personalisation.Add(configurations.AddressLine3Key, defaultOverride.AddressLine2);
+            personalisation.Add(configurations.AddressLine4Key, defaultOverride.AddressLine3);
+            personalisation.Add(configurations.AddressLine5Key, defaultOverride.AddressLine4);
+            personalisation.Add(configurations.AddressLine6Key, defaultOverride.AddressLine5);
+            personalisation.Add(configurations.AddressLine7Key, defaultOverride.PostCode);
 
             return personalisation;
         }
